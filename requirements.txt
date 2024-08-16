@@ -1,0 +1,5 @@
+ply==3.11
+pygame==2.6.0
+python-dateutil==2.9.0.post0
+rule-engine==4.5.0
+six==1.16.0
