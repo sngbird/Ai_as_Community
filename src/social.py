@@ -25,21 +25,39 @@ context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict(
     'opinions': rule_engine.DataType.ARRAY,
     #'sck': rule_engine.DataType.ARRAY
 }))
-# Classes Defender = index 0, Healer 1, ...
+# Class index, Defender  0, Healer 1, ...
 # social_history float values to be added to opinions at start of game
 # relationships [Friends, Dating, Enemies, Current Party Member], discrete values
 # Opinions threshold values, updated dynamically, each index represents other potential party members
+traits = [{
+    #Character classes
+    ('Knight', 0),
+    ('Healer', 0),
+
+    #
+    ('oblivious', 0),
+    ('alcoholic', 0),
+    ('loyal', 0),
+    ('aggressive', 0),
+    ('overprotective', 0),
+    ('clumsy', 0),
+    ('romantic', 0),
+    ('charming', 0),
+    ('religious', 0),
+}]
+
+
 characters = [
   {
     'name': 'BucketKnight',
-    'class': [1,0],
+    'traits': traits,
     'social_history': [0,0],
     'relationships': [1,0,0,1],
     'opnions': [0,0],
   },
   {
     'name': 'SheepGirl',
-    'class': [0,1],
+    'traits': traits,
     'social_history': [0,0],
     'relationships': [1,0,0,1],
     'opnions': [0,0],
