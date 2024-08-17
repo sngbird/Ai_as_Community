@@ -17,6 +17,35 @@ class Social:
                 print("Rule violated:", rule)
 
 
+context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict({
+    'name': rule_engine.DataType.STRING,
+    'class': rule_engine.DataType.ARRAY,
+    'social_history': rule_engine.DataType.ARRAY,
+    'relationships': rule_engine.DataType.ARRAY,
+    'opinions': rule_engine.DataType.ARRAY,
+    #'sck': rule_engine.DataType.ARRAY
+}))
+# Classes Defender = index 0, Healer 1, ...
+# social_history float values to be added to opinions at start of game
+# relationships [Friends, Dating, Enemies, Current Party Member], discrete values
+# Opinions threshold values, updated dynamically, each index represents other potential party members
+characters = [
+  {
+    'name': 'BucketKnight',
+    'class': [1,0],
+    'social_history': [0,0],
+    'relationships': [1,0,0,1],
+    'opnions': [0,0],
+  },
+  {
+    'name': 'SheepGirl',
+    'class': [0,1],
+    'social_history': [0,0],
+    'relationships': [1,0,0,1],
+    'opnions': [0,0],
+  },
+]
+
 # match a literal first name and applying a regex to the email
 rule = rule_engine.Rule(
     'first_name == "Luke" and email =~ ".*@rebels.org$"'
@@ -28,26 +57,8 @@ rule.matches({
    'first_name': 'Darth', 'last_name': 'Vader', 'email': 'dvader@empire.net'
 }) # => False
 
-
-
-characters = [
-  {
-    'name': 'BucketKnight',
-    'Class': 'Defender',
-  },
-  {
-    'name': 'SheepGirl',
-    'Class': 'Healer',
-  },
-]
-
-context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict({
-    'first_name': rule_engine.DataType.STRING,
-    'age': rule_engine.DataType.FLOAT
-}))
-
 # receive an error when an unknown symbol is used
-rule = rule_engine.Rule('last_name == "Vader"', context=context)
+rule = rule_engine.Rule('class == "Defender"', context=context)
 # => SymbolResolutionError: last_name
 
 # receive an error when an invalid operation is used
