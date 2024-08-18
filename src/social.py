@@ -7,7 +7,7 @@ class Social:
         self.setup_rules()
 
     def setup_rules(self):
-        # Example rule: reflexivity of friends if X -> Y then Y -> X
+        # Example rule: if opinion > threshold, 
         rule = rule_engine.Rule("Friend Tim Jerry, Friend Jerry Tim")
         self.rules.append(rule)
 
