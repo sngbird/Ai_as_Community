@@ -1,4 +1,6 @@
 import rule_engine
+from utils import load_characters_from_xml
+
 
 class Social:
     def __init__(self):
@@ -7,90 +9,65 @@ class Social:
         self.setup_rules()
 
     def setup_rules(self):
-        # Example rule: if opinion > threshold, 
-        rule = rule_engine.Rule("Friend Tim Jerry, Friend Jerry Tim")
-        self.rules.append(rule)
+
+        pass
 
     def apply_rules(self, context):
         for rule in self.rules:
-            if not rule.matches(context):
+            if rule.matches(context):
+                print("Rule applied:", rule)
+            else:
                 print("Rule violated:", rule)
 
+    def initialize_opinions(self, character):
+        # Convert the tuples into a dictionary for easier manipulation
+        opinions_dict = dict(character['opinions'])
+        social_history_dict = dict(character['social_history'])
+
+        for name, history_value in social_history_dict.items():
+            if name in opinions_dict:
+                opinions_dict[name] += history_value
+            else:
+                opinions_dict[name] = history_value
+
+        # Convert the dictionary back to a list of tuples
+        character['opinions'] = list(opinions_dict.items())
+
+        # Now apply the rules to see if they are satisfied
+        self.apply_rules(character)
 
 context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict({
     'name': rule_engine.DataType.STRING,
-    'class': rule_engine.DataType.ARRAY,
-    'social_history': rule_engine.DataType.ARRAY,
-    'relationships': rule_engine.DataType.ARRAY,
-    'opinions': rule_engine.DataType.ARRAY,
-    #'sck': rule_engine.DataType.ARRAY
+    'traits': rule_engine.DataType.LIST,
+    'social_history': rule_engine.DataType.LIST,
+    'relationships': rule_engine.DataType.LIST,
+    'opinions': rule_engine.DataType.LIST,
 }))
-# Class index, Defender  0, Healer 1, ...
-traits = [{
-    #Character classes
-    ('Knight', 0),
-    ('Healer', 0),
-    #Character Traits
-    ('oblivious', 0),
-    ('alcoholic', 0),
-    ('loyal', 0),
-    ('aggressive', 0),
-    ('overprotective', 0),
-    ('clumsy', 0),
-    ('romantic', 0),
-    ('charming', 0),
-    ('religious', 0),
-}]
 
-# social_history float values to be added to opinions at start of game
-history = [{
-    ('BucketKnight', 0),
-    ('SheepGirl', 0),
-}]
 
-# relationships [Friends, Dating, Enemies, Current Party Member], boolean values
-relationships = [{
-    ('BucketKnight', [0,0,0,0]),
-    ('SheepGirl', [0,0,0,0]),
-}]
+social_engine = Social()
 
-opinions = [{
-    ('BucketKnight', 0),
-    ('SheepGirl', 0),
-}]
+characters = load_characters_from_xml('characters.xml')
+for character in characters:
+    print(f"Character: {character['name']}")
+    print(f"Traits: {character['traits']}")
+    print(f"Social History: {character['social_history']}")
+    print(f"Relationships: {character['relationships']}")
+    print(f"Opinions: {character['opinions']}")
+    print()
 
-characters = [
-  {
-    'name': 'BucketKnight',
-    'traits': traits,
-    'social_history': history,
-    'relationships': relationships,
-    'opnions': opinions,
-  },
-  {
-    'name': 'SheepGirl',
-    'traits': traits,
-    'social_history': history,
-    'relationships': relationships,
-    'opnions': opinions,
-  },
-]
+for character in characters:
+    print(f"Character: {character['name']}")
+    print(f"Opinions: {character['opinions']}")
+    print()
 
-# match a literal first name and applying a regex to the email
-rule = rule_engine.Rule(
-    'first_name == "Luke" and email =~ ".*@rebels.org$"'
-) # => <Rule text='first_name == "Luke" and email =~ ".*@rebels.org$"' >
-rule.matches({
-    'first_name': 'Luke', 'last_name': 'Skywalker', 'email': 'luke@rebels.org'
-}) # => True
-rule.matches({
-   'first_name': 'Darth', 'last_name': 'Vader', 'email': 'dvader@empire.net'
-}) # => False
+# Initialize opinions based on social history for all characters
+for character in characters:
+    social_engine.initialize_opinions(character)
 
-# receive an error when an unknown symbol is used
-rule = rule_engine.Rule('class == "Defender"', context=context)
-# => SymbolResolutionError: last_name
+# Output the characters to see the modified opinions
+for character in characters:
+    print(f"Character: {character['name']}")
+    print(f"Opinions: {character['opinions']}")
+    print()
 
-# receive an error when an invalid operation is used
-rule = rule_engine.Rule('first_name + 1', context=context)
-# => EvaluationError: data type mismatch
