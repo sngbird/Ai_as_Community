@@ -2,7 +2,11 @@
 <Characters>
     <Character name="BucketKnight">
         <Traits>
-            <Trait name="Knight" value="0"/>
+            <Trait name="Knight" value="1"/>
+            <Trait name="Healer" value="0"/>
+            <Trait name="Mage" value="0"/>
+            <Trait name="Rogue" value="0"/>
+
             <Trait name="oblivious" value="0"/>
             <Trait name="alcoholic" value="0"/>
             <Trait name="loyal" value="0"/>
@@ -14,18 +18,21 @@
             <Trait name="religious" value="0"/>
         </Traits>
         <SocialHistory>
-            <History name="SheepGirl" value="10"/>
+            <History name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
         </SocialHistory>
         <Relationships>
             <Relationship name="SheepGirl" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
         <Opinions>
-            <Opinion name="SheepGirl" alliance="5.0" romance="3.0" reverence="2.0"/>
+            <Opinion name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
         </Opinions>
     </Character>
     <Character name="SheepGirl">
         <Traits>
-            <Trait name="Healer" value="0"/>
+            <Trait name="Knight" value="0"/>
+            <Trait name="Healer" value="1"/>
+            <Trait name="Mage" value="0"/>
+            <Trait name="Rogue" value="0"/>
             <Trait name="oblivious" value="0"/>
             <Trait name="alcoholic" value="0"/>
             <Trait name="loyal" value="0"/>
@@ -37,13 +44,13 @@
             <Trait name="religious" value="0"/>
         </Traits>
         <SocialHistory>
-            <History name="BucketKnight" value="7"/>
+            <History name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
         </SocialHistory>
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
         <Opinions>
-            <Opinion name="BucketKnight" alliance="4.0" romance="2.0" reverence="5.0"/>
+            <Opinion name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
         </Opinions>
     </Character>
 </Characters>

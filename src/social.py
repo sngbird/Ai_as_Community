@@ -9,8 +9,9 @@ class Social:
         self.setup_rules()
 
     def setup_rules(self):
+        self.rules.append(rule_engine.Rule('$check_opinion_and_update_relationship()'))
 
-        pass
+  
 
     def apply_rules(self, context):
         for rule in self.rules:
@@ -18,6 +19,43 @@ class Social:
                 print("Rule applied:", rule)
             else:
                 print("Rule violated:", rule)
+    
+    def check_opinion_and_update_relationship(self, context):
+        # Extract the character's name and opinions from the context
+        character_name = context.get('name')
+        opinions = context.get('opinions', [])
+        
+        for opinion in opinions:
+            other_name, (alliance, _, _) = opinion
+            if alliance > 10:
+                relationship = context.get('relationships')
+                relationship[0] = True
+                break
+    
+    def update_relationship_status(self, current_character_name, other_character_name):
+    # Access the relationships from the context
+        relationships = context.get('relationships', {})
+    
+        # Ensure that the current character and other character have entries in the relationships
+        if current_character_name in relationships and other_character_name in relationships:
+            # Update the status (assuming the status is a list with the same structure as described)
+            current_status = relationships[current_character_name]
+            
+            # For demonstration, let's say we want to set 'friends' to True (index 0)
+            # You should adjust this based on the actual index and status you want to update
+            current_status[0] = True
+            
+            # Save the updated status back
+            relationships[current_character_name] = current_status
+            
+            # If relationships need to be updated in both directions
+            other_status = relationships[other_character_name]
+            other_status[0] = True  # Update status for the other character as well
+            relationships[other_character_name] = other_status
+
+            print(f"Updated relationship status for {current_character_name} and {other_character_name}")
+        else:
+            print(f"One or both characters not found in relationships: {current_character_name}, {other_character_name}")       
 
     def initialize_opinions(self, character):
         # Convert the tuples into a dictionary for easier manipulation
@@ -38,10 +76,10 @@ class Social:
 
 context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict({
     'name': rule_engine.DataType.STRING,
-    'traits': rule_engine.DataType.LIST,
-    'social_history': rule_engine.DataType.LIST,
-    'relationships': rule_engine.DataType.LIST,
-    'opinions': rule_engine.DataType.LIST,
+    'traits': rule_engine.DataType.ARRAY,
+    'social_history': rule_engine.DataType.ARRAY,
+    'relationships': rule_engine.DataType.ARRAY,
+    'opinions': rule_engine.DataType.ARRAY,
 }))
 
 

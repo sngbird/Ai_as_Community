@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+
 def load_characters_from_xml(file_path):
     tree = ET.parse(file_path)
     root = tree.getroot()
@@ -22,8 +24,10 @@ def load_characters_from_xml(file_path):
         # Load social history
         for history_elem in character_elem.find('SocialHistory').findall('History'):
             history_name = history_elem.get('name')
-            history_value = int(history_elem.get('value'))
-            character['social_history'].append((history_name, history_value))
+            alliance = float(history_elem.get('alliance', '0.0'))
+            romance = float(history_elem.get('romance', '0.0'))
+            reverence = float(history_elem.get('reverence', '0.0'))
+            character['social_history'].append((history_name, alliance, romance, reverence))
 
         # Load relationships
         for relationship_elem in character_elem.find('Relationships').findall('Relationship'):
