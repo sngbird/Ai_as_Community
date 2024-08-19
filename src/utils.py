@@ -27,7 +27,7 @@ def load_characters_from_xml(file_path):
             alliance = float(history_elem.get('alliance', '0.0'))
             romance = float(history_elem.get('romance', '0.0'))
             reverence = float(history_elem.get('reverence', '0.0'))
-            character['social_history'].append((history_name, alliance, romance, reverence))
+            character['social_history'].append((history_name, (alliance, romance, reverence)))
 
         # Load relationships
         for relationship_elem in character_elem.find('Relationships').findall('Relationship'):

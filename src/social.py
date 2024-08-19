@@ -9,7 +9,13 @@ class Social:
         self.setup_rules()
 
     def setup_rules(self):
-        self.rules.append(rule_engine.Rule('$check_opinion_and_update_relationship()'))
+        rule = rule_engine.Rule(
+            # match books published by DC
+            'self.name == "BucketKnight"'
+            )
+        self.rules.append(rule)
+        #self.rules.append(rule_engine.Rule('Array.opinion[0] >= 10.0',context))
+        
 
   
 
@@ -64,7 +70,11 @@ class Social:
 
         for name, history_value in social_history_dict.items():
             if name in opinions_dict:
-                opinions_dict[name] += history_value
+                print('test')
+                print(opinions_dict[name])
+                print(history_value)
+                result = [x + y for x, y in zip(opinions_dict[name], history_value)]
+                opinions_dict[name] = result
             else:
                 opinions_dict[name] = history_value
 
@@ -72,7 +82,7 @@ class Social:
         character['opinions'] = list(opinions_dict.items())
 
         # Now apply the rules to see if they are satisfied
-        self.apply_rules(character)
+        #self.apply_rules(character)
 
 context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict({
     'name': rule_engine.DataType.STRING,
@@ -109,3 +119,4 @@ for character in characters:
     print(f"Opinions: {character['opinions']}")
     print()
 
+social_engine.apply_rules(context)
