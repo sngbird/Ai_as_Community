@@ -1,6 +1,8 @@
 import rule_engine
+import re
 from utils import load_characters_from_xml
 
+debug = True
 
 class Social:
     def __init__(self,context):
@@ -9,56 +11,29 @@ class Social:
         self.setup_rules(context)
 
     def setup_rules(self,context):
-        # rule = rule_engine.Rule('name == "BucketKnight"', context=context)
-        # self.rules.append(rule)
-        print(context)
-        rule = rule_engine.Rule('opinions[0][1][0] >= 10.0', context=context)
-        self.rules.append(rule)
-        #self.rules.append(rule_engine.Rule('opinions[1] >= 10.0',context)) 
+        #Alliance Threshold Check
+        self.rules.append(rule_engine.Rule('opinions[0][1][0] >= 10.0', context=context))
+        #Alliance Reflexivity
+        self.rules.append(rule_engine.Rule('relationships[0][0] == 1', context=context))
 
     def apply_rules(self, context):
+        if debug: print(self.rules)
         for rule in self.rules:
             if rule.matches(context):
                 print(context['name'] + ' applied: ', rule)
-            else:
-                print(context['name'] + ' violated: ', rule)
+                self.update_relationship_status(context,rule)
+            #else:
+                #if debug: print(context['name'] + ' violated: ', rule)
     
-    def check_opinion_and_update_relationship(self, context):
-        # Extract the character's name and opinions from the context
-        character_name = context.get('name')
-        opinions = context.get('opinions', [])
-        
-        for opinion in opinions:
-            other_name, (alliance, _, _) = opinion
-            if alliance > 10:
-                relationship = context.get('relationships')
-                relationship[0] = True
-                break
-    
-    def update_relationship_status(self, current_character_name, other_character_name):
+    def update_relationship_status(self, context, rule):
     # Access the relationships from the context
         relationships = context.get('relationships', {})
-    
-        # Ensure that the current character and other character have entries in the relationships
-        if current_character_name in relationships and other_character_name in relationships:
-            # Update the status (assuming the status is a list with the same structure as described)
-            current_status = relationships[current_character_name]
-            
-            # For demonstration, let's say we want to set 'friends' to True (index 0)
-            # You should adjust this based on the actual index and status you want to update
-            current_status[0] = True
-            
-            # Save the updated status back
-            relationships[current_character_name] = current_status
-            
-            # If relationships need to be updated in both directions
-            other_status = relationships[other_character_name]
-            other_status[0] = True  # Update status for the other character as well
-            relationships[other_character_name] = other_status
-
-            print(f"Updated relationship status for {current_character_name} and {other_character_name}")
-        else:
-            print(f"One or both characters not found in relationships: {current_character_name}, {other_character_name}")       
+        #Parse the rule to perform appropriate relationship update
+        match = re.search(r'(>=|<=|>|<|==|!=)', str(rule))
+        if match.group() == ">=":
+            #This is super barebones and will only work on this test example for proof of concept.
+            #We need a more robust method when we want to include more people
+            relationships[0] = [True,False,False,False]
 
     def initialize_opinions(self, character):
         # Convert the tuples into a dictionary for easier manipulation
@@ -75,8 +50,6 @@ class Social:
         # Convert the dictionary back to a list of tuples
         character['opinions'] = list(opinions_dict.items())
 
-        # Now apply the rules to see if they are satisfied
-        #self.apply_rules(character)
 
 context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict({
     'name': rule_engine.DataType.STRING,
@@ -90,30 +63,32 @@ context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict(
 social_engine = Social(context)
 
 characters = load_characters_from_xml('characters.xml')
-for character in characters:
-    print(f"Character: {character['name']}")
-    print(f"Traits: {character['traits']}")
-    print(f"Social History: {character['social_history']}")
-    print(f"Relationships: {character['relationships']}")
-    print(f"Opinions: {character['opinions']}")
-    print()
+if debug:
+    for character in characters:
+        print(f"Character: {character['name']}")
+        print(f"Traits: {character['traits']}")
+        print(f"Social History: {character['social_history']}")
+        print(f"Relationships: {character['relationships']}")
+        print(f"Opinions: {character['opinions']}")
+        print()
 
-for character in characters:
-    print(f"Character: {character['name']}")
-    print(f"Opinions: {character['opinions']}")
-    print()
+    for character in characters:
+        print(f"Character: {character['name']}")
+        print(f"Opinions: {character['opinions']}")
+        print()
 
 # Initialize opinions based on social history for all characters
-print('Adding social_history to opinions')
-print()
+    print('Adding social_history to opinions')
+    print()
 for character in characters:
     social_engine.initialize_opinions(character)
 
 # Output the characters to see the modified opinions
-for character in characters:
-    print(f"Character: {character['name']}")
-    print(f"Opinions: {character['opinions']}")
-    print()
+if debug:
+    for character in characters:
+        print(f"Character: {character['name']}")
+        print(f"Opinions: {character['opinions']}")
+        print()
 for character in characters:
     # Create context with character's data
     context_data = {
@@ -125,3 +100,7 @@ for character in characters:
     }
     # Apply rules for the current character
     social_engine.apply_rules(context_data)
+    if debug:
+        print(f"Character: {character['name']}")
+        print(f"Relationships: {character['relationships']}")
+        print()
