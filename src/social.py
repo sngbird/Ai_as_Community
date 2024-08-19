@@ -34,6 +34,8 @@ class Social:
             #This is super barebones and will only work on this test example for proof of concept.
             #We need a more robust method when we want to include more people
             relationships[0] = [True,False,False,False]
+        if match.group() == "==":   
+            pass 
 
     def initialize_opinions(self, character):
         # Convert the tuples into a dictionary for easier manipulation
