@@ -9,16 +9,19 @@ class Social:
         self.setup_rules(context)
 
     def setup_rules(self,context):
-        rule = rule_engine.Rule('name == "BucketKnight"', context=context)
+        # rule = rule_engine.Rule('name == "BucketKnight"', context=context)
+        # self.rules.append(rule)
+        print(context)
+        rule = rule_engine.Rule('opinions[0][1][0] >= 10.0', context=context)
         self.rules.append(rule)
-        #self.rules.append(rule_engine.Rule('Array.opinion[0] >= 10.0',context)) 
+        #self.rules.append(rule_engine.Rule('opinions[1] >= 10.0',context)) 
 
     def apply_rules(self, context):
         for rule in self.rules:
             if rule.matches(context):
-                print("Rule applied:", rule)
+                print(context['name'] + ' applied: ', rule)
             else:
-                print("Rule violated:", rule)
+                print(context['name'] + ' violated: ', rule)
     
     def check_opinion_and_update_relationship(self, context):
         # Extract the character's name and opinions from the context
@@ -64,9 +67,6 @@ class Social:
 
         for name, history_value in social_history_dict.items():
             if name in opinions_dict:
-                print('test')
-                print(opinions_dict[name])
-                print(history_value)
                 result = [x + y for x, y in zip(opinions_dict[name], history_value)]
                 opinions_dict[name] = result
             else:
@@ -104,6 +104,8 @@ for character in characters:
     print()
 
 # Initialize opinions based on social history for all characters
+print('Adding social_history to opinions')
+print()
 for character in characters:
     social_engine.initialize_opinions(character)
 
