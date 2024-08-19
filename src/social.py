@@ -3,21 +3,15 @@ from utils import load_characters_from_xml
 
 
 class Social:
-    def __init__(self):
+    def __init__(self,context):
         # Initialize rules here
         self.rules = []
-        self.setup_rules()
+        self.setup_rules(context)
 
-    def setup_rules(self):
-        rule = rule_engine.Rule(
-            # match books published by DC
-            'self.name == "BucketKnight"'
-            )
+    def setup_rules(self,context):
+        rule = rule_engine.Rule('name == "BucketKnight"', context=context)
         self.rules.append(rule)
-        #self.rules.append(rule_engine.Rule('Array.opinion[0] >= 10.0',context))
-        
-
-  
+        #self.rules.append(rule_engine.Rule('Array.opinion[0] >= 10.0',context)) 
 
     def apply_rules(self, context):
         for rule in self.rules:
@@ -93,7 +87,7 @@ context = rule_engine.Context(type_resolver=rule_engine.type_resolver_from_dict(
 }))
 
 
-social_engine = Social()
+social_engine = Social(context)
 
 characters = load_characters_from_xml('characters.xml')
 for character in characters:
@@ -118,5 +112,14 @@ for character in characters:
     print(f"Character: {character['name']}")
     print(f"Opinions: {character['opinions']}")
     print()
-
-social_engine.apply_rules(context)
+for character in characters:
+    # Create context with character's data
+    context_data = {
+        'name': character['name'],
+        'traits': character['traits'],
+        'social_history': character['social_history'],
+        'relationships': character['relationships'],
+        'opinions': character['opinions'],
+    }
+    # Apply rules for the current character
+    social_engine.apply_rules(context_data)
