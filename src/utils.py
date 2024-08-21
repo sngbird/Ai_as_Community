@@ -18,7 +18,7 @@ def load_characters_from_xml(file_path):
         # Load traits
         for trait_elem in character_elem.find('Traits').findall('Trait'):
             trait_name = trait_elem.get('name')
-            trait_value = int(trait_elem.get('value'))
+            trait_value = bool(trait_elem.get('value'))
             character['traits'][trait_name] = trait_value
 
         # Load social history

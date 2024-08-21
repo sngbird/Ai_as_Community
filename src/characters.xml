@@ -2,21 +2,21 @@
 <Characters>
     <Character name="BucketKnight">
         <Traits>
-            <Trait name="Knight" value="1"/>
-            <Trait name="Healer" value="0"/>
-            <Trait name="Mage" value="0"/>
-            <Trait name="Rogue" value="0"/>
-            <Trait name="overly confident" value="0"/>
-            <Trait name="cunning" value="0"/>
-            <Trait name="oblivious" value="0"/>
-            <Trait name="alcoholic" value="0"/>
-            <Trait name="loyal" value="0"/>
-            <Trait name="aggressive" value="0"/>
-            <Trait name="overprotective" value="0"/>
-            <Trait name="clumsy" value="0"/>
-            <Trait name="romantic" value="0"/>
-            <Trait name="charming" value="0"/>
-            <Trait name="religious" value="0"/>
+            <Trait name="Knight" value="True"/>
+            <Trait name="Healer" value="False"/>
+            <Trait name="Mage" value="False"/>
+            <Trait name="Rogue" value="False"/>
+            <Trait name="overly confident" value="False"/>
+            <Trait name="cunning" value="False"/>
+            <Trait name="oblivious" value="False"/>
+            <Trait name="alcoholic" value="False"/>
+            <Trait name="loyal" value="False"/>
+            <Trait name="aggressive" value="False"/>
+            <Trait name="overprotective" value="False"/>
+            <Trait name="clumsy" value="False"/>
+            <Trait name="romantic" value="False"/>
+            <Trait name="charming" value="False"/>
+            <Trait name="religious" value="False"/>
         </Traits>
         <SocialHistory>
             <History name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
@@ -30,21 +30,21 @@
     </Character>
     <Character name="SheepGirl">
         <Traits>
-            <Trait name="Knight" value="0"/>
-            <Trait name="Healer" value="1"/>
-            <Trait name="Mage" value="0"/>
-            <Trait name="Rogue" value="0"/>
-            <Trait name="overly confident" value="0"/>
-            <Trait name="cunning" value="0"/>
-            <Trait name="oblivious" value="0"/>
-            <Trait name="alcoholic" value="0"/>
-            <Trait name="loyal" value="0"/>
-            <Trait name="aggressive" value="0"/>
-            <Trait name="overprotective" value="0"/>
-            <Trait name="clumsy" value="0"/>
-            <Trait name="romantic" value="0"/>
-            <Trait name="charming" value="0"/>
-            <Trait name="religious" value="0"/>
+            <Trait name="Knight" value="False"/>
+            <Trait name="Healer" value="True"/>
+            <Trait name="Mage" value="False"/>
+            <Trait name="Rogue" value="False"/>
+            <Trait name="overly confident" value="False"/>
+            <Trait name="cunning" value="False"/>
+            <Trait name="oblivious" value="False"/>
+            <Trait name="alcoholic" value="False"/>
+            <Trait name="loyal" value="False"/>
+            <Trait name="aggressive" value="False"/>
+            <Trait name="overprotective" value="False"/>
+            <Trait name="clumsy" value="False"/>
+            <Trait name="romantic" value="False"/>
+            <Trait name="charming" value="False"/>
+            <Trait name="religious" value="False"/>
         </Traits>
         <SocialHistory>
             <History name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
