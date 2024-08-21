@@ -6,7 +6,8 @@
             <Trait name="Healer" value="0"/>
             <Trait name="Mage" value="0"/>
             <Trait name="Rogue" value="0"/>
-
+            <Trait name="overly confident" value="0"/>
+            <Trait name="cunning" value="0"/>
             <Trait name="oblivious" value="0"/>
             <Trait name="alcoholic" value="0"/>
             <Trait name="loyal" value="0"/>
@@ -33,6 +34,8 @@
             <Trait name="Healer" value="1"/>
             <Trait name="Mage" value="0"/>
             <Trait name="Rogue" value="0"/>
+            <Trait name="overly confident" value="0"/>
+            <Trait name="cunning" value="0"/>
             <Trait name="oblivious" value="0"/>
             <Trait name="alcoholic" value="0"/>
             <Trait name="loyal" value="0"/>
