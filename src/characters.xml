@@ -1,35 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Characters>
-    <Character name="BucketKnight">
-        <Traits>
-            <Trait name="Knight" value="True"/>
-            <Trait name="Healer" value="False"/>
-            <Trait name="Mage" value="False"/>
-            <Trait name="Rogue" value="False"/>
-            <Trait name="overly confident" value="False"/>
-            <Trait name="cunning" value="False"/>
-            <Trait name="oblivious" value="False"/>
-            <Trait name="alcoholic" value="False"/>
-            <Trait name="loyal" value="False"/>
-            <Trait name="aggressive" value="False"/>
-            <Trait name="overprotective" value="False"/>
-            <Trait name="clumsy" value="False"/>
-            <Trait name="romantic" value="False"/>
-            <Trait name="charming" value="False"/>
-            <Trait name="religious" value="False"/>
-        </Traits>
-        <SocialHistory>
-            <History name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
-        </SocialHistory>
-        <Relationships>
-            <Relationship name="SheepGirl" friends="false" dating="false" enemies="false" party_member="false"/>
-        </Relationships>
-        <Opinions>
-            <Opinion name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
-        </Opinions>
-    </Character>
-    <Character name="SheepGirl">
-        <Traits>
+            <!-- Possible Traits
             <Trait name="Knight" value="False"/>
             <Trait name="Healer" value="True"/>
             <Trait name="Mage" value="False"/>
@@ -44,7 +14,26 @@
             <Trait name="clumsy" value="False"/>
             <Trait name="romantic" value="False"/>
             <Trait name="charming" value="False"/>
-            <Trait name="religious" value="False"/>
+            <Trait name="religious" value="False"/> -->
+<Characters>
+    <Character name="BucketKnight">
+        <Traits>
+            <Trait name="Knight" value="True"/>
+            <Trait name="overprotective" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="SheepGirl" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
+    <Character name="SheepGirl">
+        <Traits>
+            <Trait name="Healer" value="True"/>
         </Traits>
         <SocialHistory>
             <History name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
