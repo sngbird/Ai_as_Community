@@ -177,4 +177,21 @@
             <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
         </Opinions>
     </Character>
+    <Character name="MossaWillows">
+        <Traits>
+            <Trait name="Rogue" value="True"/>
+            <Trait name="cunning" value="True"/>
+            <Trait name="romantic" value="True"/>
+            <Trait name="overprotective" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
 </Characters>
