@@ -49,6 +49,7 @@
         </SocialHistory>
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
+            <Relationship name="VanessaConfessa" friends="false" dating="true" enemies="false" party_member="false"/>
         </Relationships>
         <Opinions>
             <Opinion name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
@@ -139,6 +140,41 @@
         </Relationships>
         <Opinions>
             <Opinion name="GrumblarTheDestructor" alliance="0.0" romance="0.0" reverence="4.0"/>
+        </Opinions>
+    </Character>
+    <Character name="DJWizard">
+        <Traits>
+            <Trait name="Mage" value="True"/>
+            <Trait name="overly confident" value="True"/>
+            <Trait name="cheerful" value="True"/>
+            <Trait name="oddball" value="True"/>
+            <Trait name="aggressive" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
+    <Character name="TamberGauzeman">
+        <Traits>
+            <Trait name="Healer" value="True"/>
+            <Trait name="aggressive" value="True"/>
+            <Trait name="loyal" value="True"/>
+            <Trait name="overprotective" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
         </Opinions>
     </Character>
 </Characters>
