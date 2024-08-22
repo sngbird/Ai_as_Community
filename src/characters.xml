@@ -8,6 +8,7 @@
             <Trait name="overly confident" value="False"/>
             <Trait name="cunning" value="False"/>
             <Trait name="oblivious" value="False"/>
+            <Trait name="oddball" value="False"/>
             <Trait name="alcoholic" value="False"/>
             <Trait name="loyal" value="False"/>
             <Trait name="aggressive" value="False"/>
@@ -15,6 +16,7 @@
             <Trait name="clumsy" value="False"/>
             <Trait name="romantic" value="False"/>
             <Trait name="charming" value="False"/>
+            <Trait name="cheerful" value="False"/>
             <Trait name="secretive" value="False"/>
             <Trait name="religious" value="False"/> -->
 <Characters>
@@ -40,6 +42,7 @@
         <Traits>
             <Trait name="Healer" value="True"/>
             <Trait name="oblivious" value="True"/>
+            <Trait name="oddball" value="True"/>
         </Traits>
         <SocialHistory>
             <History name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
@@ -73,7 +76,8 @@
             <Trait name="Rogue" value="True"/>
             <Trait name="cunning" value="True"/>
             <Trait name="charming" value="True"/>
-            <Trait name="alcoholic" value="False"/>
+            <Trait name="alcoholic" value="True"/>
+            <Trait name="overprotective" value="True"/>
         </Traits>
         <SocialHistory>
             <History name="SheepGirl" alliance="3.0" romance="5.0" reverence="0.0"/>
@@ -91,6 +95,7 @@
             <Trait name="loyal" value="True"/>
             <Trait name="aggressive" value="True"/>
             <Trait name="alcoholic" value="True"/>
+            <Trait name="cheerful" value="True"/>
         </Traits>
         <SocialHistory>
             <History name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
@@ -117,6 +122,23 @@
         </Relationships>
         <Opinions>
             <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
+    <Character name="WillabeeFreaky">
+        <Traits>
+            <Trait name="Barbarian" value="True"/>
+            <Trait name="oddball" value="True"/>
+            <Trait name="charming" value="True"/>
+            <Trait name="cheerful" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="GrumblarTheDestructor" alliance="0.0" romance="0.0" reverence="4.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="GrumblarTheDestructor" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="GrumblarTheDestructor" alliance="0.0" romance="0.0" reverence="4.0"/>
         </Opinions>
     </Character>
 </Characters>
