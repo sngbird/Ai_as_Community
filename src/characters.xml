@@ -4,6 +4,7 @@
             <Trait name="Healer" value="True"/>
             <Trait name="Mage" value="False"/>
             <Trait name="Rogue" value="False"/>
+            <Trait name="Barbarian" value="False"/>
             <Trait name="overly confident" value="False"/>
             <Trait name="cunning" value="False"/>
             <Trait name="oblivious" value="False"/>
@@ -14,18 +15,22 @@
             <Trait name="clumsy" value="False"/>
             <Trait name="romantic" value="False"/>
             <Trait name="charming" value="False"/>
+            <Trait name="secretive" value="False"/>
             <Trait name="religious" value="False"/> -->
 <Characters>
     <Character name="BucketKnight">
         <Traits>
             <Trait name="Knight" value="True"/>
             <Trait name="overprotective" value="True"/>
+            <Trait name="loyal" value="True"/>
+            <Trait name="clumsy" value="True"/>
         </Traits>
         <SocialHistory>
             <History name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
         </SocialHistory>
         <Relationships>
             <Relationship name="SheepGirl" friends="false" dating="false" enemies="false" party_member="false"/>
+            <Relationship name="SheepGirl" friends="false" dating="false" enemies="true" party_member="false"/>
         </Relationships>
         <Opinions>
             <Opinion name="SheepGirl" alliance="5.0" romance="0.0" reverence="0.0"/>
@@ -34,6 +39,7 @@
     <Character name="SheepGirl">
         <Traits>
             <Trait name="Healer" value="True"/>
+            <Trait name="oblivious" value="True"/>
         </Traits>
         <SocialHistory>
             <History name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
@@ -43,6 +49,72 @@
         </Relationships>
         <Opinions>
             <Opinion name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
+    <Character name="StarboFantastica">
+        <Traits>
+            <Trait name="Knight" value="True"/>
+            <Trait name="overly confident" value="True"/>
+            <Trait name="charming" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="BucketKnight" friends="false" dating="false" enemies="true" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
+    <Character name="VanessaConfessa">
+        <Traits>
+            <Trait name="Rogue" value="True"/>
+            <Trait name="cunning" value="True"/>
+            <Trait name="charming" value="True"/>
+            <Trait name="alcoholic" value="False"/>
+        </Traits>
+        <SocialHistory>
+            <History name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
+    <Character name="GrumblarTheDestructor">
+        <Traits>
+            <Trait name="Barbarian" value="True"/>
+            <Trait name="loyal" value="True"/>
+            <Trait name="aggressive" value="True"/>
+            <Trait name="alcoholic" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </Opinions>
+    </Character>
+    <Character name="BarklerTrobbofield">
+        <Traits>
+            <Trait name="Mage" value="True"/>
+            <Trait name="secretive" value="True"/>
+            <Trait name="cunning" value="True"/>
+        </Traits>
+        <SocialHistory>
+            <History name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
+        </SocialHistory>
+        <Relationships>
+            <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
+        </Relationships>
+        <Opinions>
+            <Opinion name="BucketKnight" alliance="0.0" romance="0.0" reverence="0.0"/>
         </Opinions>
     </Character>
 </Characters>
