@@ -4,15 +4,17 @@ def load_characters_from_xml(file_path):
     tree = ET.parse(file_path)
     root = tree.getroot()
 
-    characters = []
+    character_names = [character_elem.get('name') for character_elem in root.findall('Character')]
 
+    characters = []
     for character_elem in root.findall('Character'):
+        character_name = character_elem.get('name')
+
         character = {
-            'name': character_elem.get('name'),
+            'name': character_name,
             'traits': {},
             'social_history': [],
-            'relationships': [],
-            'opinions': [],
+            'relationships': [], #This is for building the relationship matrix from XML given values
         }
 
         # Load traits
@@ -23,30 +25,21 @@ def load_characters_from_xml(file_path):
 
         # Load social history
         for history_elem in character_elem.find('SocialHistory').findall('History'):
-            history_name = history_elem.get('name')
+            target_name = history_elem.get('name')
             alliance = float(history_elem.get('alliance', '0.0'))
             romance = float(history_elem.get('romance', '0.0'))
             reverence = float(history_elem.get('reverence', '0.0'))
-            character['social_history'].append((history_name, (alliance, romance, reverence)))
+            character['social_history'].append((target_name, (alliance, romance, reverence)))
 
-        # Load relationships
         for relationship_elem in character_elem.find('Relationships').findall('Relationship'):
-            relationship_name = relationship_elem.get('name')
-            relationship_values = [
-                relationship_elem.get('friends') == 'true',
-                relationship_elem.get('dating') == 'true',
-                relationship_elem.get('enemies') == 'true',
-                relationship_elem.get('party_member') == 'true',
-            ]
-            character['relationships'].append((relationship_name, relationship_values))
+            target_name = relationship_elem.get('name')
+            friends = relationship_elem.get('friends') == 'true'
+            couples = relationship_elem.get('dating') == 'true'
+            enemies = relationship_elem.get('enemies') == 'true'
+            teammates = relationship_elem.get('party_member') == 'true'
+            character['relationships'].append((target_name, (friends, couples, enemies, teammates)))
 
-        # Load opinions
-        for opinion_elem in character_elem.find('Opinions').findall('Opinion'):
-            opinion_name = opinion_elem.get('name')
-            alliance = float(opinion_elem.get('alliance', '0.0'))
-            romance = float(opinion_elem.get('romance', '0.0'))
-            reverence = float(opinion_elem.get('reverence', '0.0'))
-            character['opinions'].append((opinion_name, (alliance, romance, reverence)))
+
 
         characters.append(character)
 
