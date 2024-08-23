@@ -19,6 +19,8 @@
             <Trait name="cheerful" value="False"/>
             <Trait name="secretive" value="False"/>
             <Trait name="religious" value="False"/> -->
+
+            <!-- For Knowledge, Opinion should be Like/Dislike/None -->
 <Characters>
     <Character name="BucketKnight">
         <Traits>
@@ -34,6 +36,9 @@
             <Relationship name="SheepGirl" friends="false" dating="false" enemies="false" party_member="false"/>
             <Relationship name="StarboFantastica" friends="false" dating="false" enemies="true" party_member="false"/>
         </Relationships>
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="SheepGirl">
         <Traits>
@@ -48,6 +53,9 @@
             <Relationship name="BucketKnight" friends="true" dating="false" enemies="false" party_member="false"/>
             <Relationship name="VanessaConfessa" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="StarboFantastica">
         <Traits>
@@ -62,6 +70,9 @@
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="true" party_member="false"/>
         </Relationships>
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="VanessaConfessa">
         <Traits>
@@ -77,6 +88,9 @@
         <Relationships>
             <Relationship name="SheepGirl" friends="false" dating="true" enemies="false" party_member="false"/>
         </Relationships>
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="GrumblarTheDestructor">
         <Traits>
@@ -92,6 +106,9 @@
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="BarklerTrobbofield">
         <Traits>
@@ -106,6 +123,9 @@
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="WillabeeFreaky">
         <Traits>
@@ -120,7 +140,9 @@
         <Relationships>
             <Relationship name="GrumblarTheDestructor" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
-
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="DJWizard">
         <Traits>
@@ -136,7 +158,9 @@
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
-
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="TamberGauzeman">
         <Traits>
@@ -151,7 +175,9 @@
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
-
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
     <Character name="MossaWillows">
         <Traits>
@@ -166,6 +192,8 @@
         <Relationships>
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
-
+        <SCK>
+            <Knowledge name="Demon Lord" opinion="Dislike"/>
+        </SCK>
     </Character>
 </Characters>

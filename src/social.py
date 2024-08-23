@@ -1,6 +1,6 @@
 import rule_engine
 import re
-from utils import load_characters_from_xml
+from utils import load_characters_from_xml, load_sck_from_xml
 
 debug = True
 
@@ -12,9 +12,9 @@ class Social:
         Args:
             character_names (list of str): List of character names to initialize the matrices.
         """
-        self.rules = []
+        #Preparing Context and DataStructures
+        #Create the Matrices for Character Opinions and Relationship information
         self.characters = characters
-        #a list of character_names is passed to Social, we use the size for sizing the matrix
         character_names = [character['name'] for character in characters]
         self.character_names = character_names
         self.num_characters = len(character_names)
@@ -27,6 +27,19 @@ class Social:
             [{name: [0.0, 0.0, 0.0] for name in character_names} for _ in range(self.num_characters)]
             for _ in range(self.num_characters)
         ]
+        #Setup for SCK Matrix (holds SCK and which Opinions is associated )
+        self.shared_cultural_matrix = {}
+        load_sck_from_xml('SCK.xml',self) #Loads the SCK directly into the shared_cultural_matrix
+        #and SCK_Character_Opinion_Matrix (which holds each characters opinions of the knowledge items)
+        self.cultural_opinion_matrix = {}
+
+        # Initialize opinions based on social history for all characters
+        for i, character in enumerate(characters):
+            self.initialize_opinions(i, character['social_history'])
+            self.initialize_relationships(i, character['relationships'])
+            self.initialize_sck(i, character['SCK'])
+        #Rules Section
+        self.rules = []
         self.setup_rules()
 
     def update_opinion(self, source_index, target_index, alliance, romance, reverence):
@@ -92,6 +105,22 @@ class Social:
                 target_index = self.character_names.index(target_name)
                 self.update_relationship(index, target_index, [friends, couples, enemies, teammates])
     
+    def initialize_sck(self, index, sck):
+        """
+        Initialize SCK opinions for a character based on their SCK.
+
+        Args:
+            index (int): Index of the character in the matrix.
+            sck (list of tuples): List where each tuple contains (target_name, opinion).
+        """
+        for knowledge_item_name, opinion_value in sck:
+            print(knowledge_item_name)
+            print(opinion_value)
+            if knowledge_item_name not in self.cultural_opinion_matrix:
+                    self.cultural_opinion_matrix[knowledge_item_name] = {}
+            self.cultural_opinion_matrix[knowledge_item_name][self.character_names[index]] = opinion_value
+                
+
     def setup_rules(self):
         self.rules.append(rule_engine.Rule('reflexive_relationships()'))
 
@@ -116,10 +145,7 @@ class Social:
                         if source_relationships[2] != target_relationships[2]:
                             if debug: print(f"Updated {target_name}'s relationship towards {source_name} to match reflexive status.")
                             self.update_relationship(j, i, source_relationships)
-
-                    
-
-    
+                
     def apply_rules(self):
         """
         Apply all the rules to the given list of characters.
@@ -194,35 +220,33 @@ characters = load_characters_from_xml('characters.xml')
 # Create the Social engine
 social_engine = Social(characters)
 
-# Initialize opinions based on social history for all characters
-for i, character in enumerate(characters):
-    social_engine.initialize_opinions(i, character['social_history'])
-    social_engine.initialize_relationships(i, character['relationships'])
 
-# Test getters
-print("Getter Test: Traits: BucketKnight")
-print(social_engine.get_traits('BucketKnight'))  
-print("Getter Test: Opinions: BucketKnight and SheepGirl ")
-print(social_engine.get_opinions('BucketKnight', 'SheepGirl'))
+# # Test getters
+# print("Getter Test: Traits: BucketKnight")
+# print(social_engine.get_traits('BucketKnight'))  
+# print("Getter Test: Opinions: BucketKnight and SheepGirl ")
+# print(social_engine.get_opinions('BucketKnight', 'SheepGirl'))
 
-print("Relationship between SheepGirl and BucketKnight: ")
-print(social_engine.get_relationships('SheepGirl', 'BucketKnight'))  
-print(social_engine.get_relationships('BucketKnight', 'SheepGirl'))
+# print("Relationship between SheepGirl and BucketKnight: ")
+# print(social_engine.get_relationships('SheepGirl', 'BucketKnight'))  
+# print(social_engine.get_relationships('BucketKnight', 'SheepGirl'))
 
-print("Relationship between SheepGirl and VanessaConfessa: ")
-print(social_engine.get_relationships('SheepGirl', 'VanessaConfessa'))
-print(social_engine.get_relationships('VanessaConfessa', 'SheepGirl'))  
+# print("Relationship between SheepGirl and VanessaConfessa: ")
+# print(social_engine.get_relationships('SheepGirl', 'VanessaConfessa'))
+# print(social_engine.get_relationships('VanessaConfessa', 'SheepGirl'))  
 
 
 
-social_engine.apply_rules()
+# social_engine.apply_rules()
 
-print("Relationship between SheepGirl and BucketKnight: ")
-print(social_engine.get_relationships('SheepGirl', 'BucketKnight'))  
-print(social_engine.get_relationships('BucketKnight', 'SheepGirl'))  
+# print("Relationship between SheepGirl and BucketKnight: ")
+# print(social_engine.get_relationships('SheepGirl', 'BucketKnight'))  
+# print(social_engine.get_relationships('BucketKnight', 'SheepGirl'))  
 
-print("Relationship between SheepGirl and VanessaConfessa: ")
-print(social_engine.get_relationships('SheepGirl', 'VanessaConfessa'))
-print(social_engine.get_relationships('VanessaConfessa', 'SheepGirl'))  
+# print("Relationship between SheepGirl and VanessaConfessa: ")
+# print(social_engine.get_relationships('SheepGirl', 'VanessaConfessa'))
+# print(social_engine.get_relationships('VanessaConfessa', 'SheepGirl'))  
 
 #print(social_engine.get_opinions('BucketKnight', 'SheepGirl'))  
+print(social_engine.shared_cultural_matrix)
+print(social_engine.cultural_opinion_matrix)
