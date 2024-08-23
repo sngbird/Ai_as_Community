@@ -65,5 +65,4 @@ def load_sck_from_xml(filename, social_engine):
     for knowledge in root.findall('Knowledge'):
         name = knowledge.get('name')
         opinion = knowledge.get('opinion')
-        print(opinion)
         social_engine.shared_cultural_matrix[name] = opinion

@@ -31,7 +31,7 @@ class Social:
         self.shared_cultural_matrix = {}
         load_sck_from_xml('SCK.xml',self) #Loads the SCK directly into the shared_cultural_matrix
         #and SCK_Character_Opinion_Matrix (which holds each characters opinions of the knowledge items)
-        self.cultural_opinion_matrix = {}
+        self.character_cultural_opinion_mat = {}
 
         # Initialize opinions based on social history for all characters
         for i, character in enumerate(characters):
@@ -114,11 +114,9 @@ class Social:
             sck (list of tuples): List where each tuple contains (target_name, opinion).
         """
         for knowledge_item_name, opinion_value in sck:
-            print(knowledge_item_name)
-            print(opinion_value)
-            if knowledge_item_name not in self.cultural_opinion_matrix:
-                    self.cultural_opinion_matrix[knowledge_item_name] = {}
-            self.cultural_opinion_matrix[knowledge_item_name][self.character_names[index]] = opinion_value
+            if knowledge_item_name not in self.character_cultural_opinion_mat:
+                    self.character_cultural_opinion_mat[knowledge_item_name] = {}
+            self.character_cultural_opinion_mat[knowledge_item_name][self.character_names[index]] = opinion_value
                 
 
     def setup_rules(self):
@@ -211,6 +209,45 @@ class Social:
 
         return relationship_status
 
+    def get_sck_opinions(self,character_name):
+        """
+        Get SCK opinions of a specific character
+        Args:
+        character_name (str): name of the character whose cultural opinion you want.
+        returns:
+        dictionary containing name and opinion
+        """
+        target_index = self.character_names.index(character_name)
+        target_char = self.characters[target_index]
+        #print(target_char)
+        return target_char['SCK']
+    
+    def compare_sck_opinions(self, char1_name, char2_name):
+        """
+        Compare the SCK opinions between two characters.
+
+        Args:
+            char1_name (str): Name of the first character.
+            char2_name (str): Name of the second character.
+
+        Returns:
+            list of tuples: List of differing SCK opinions between the two characters.
+        """
+        sck1 = self.get_sck_opinions(char1_name)
+        sck2 = self.get_sck_opinions(char2_name)
+        differences = []
+
+        # Convert list2 to a dictionary for quick lookups
+        sck2_dict = dict(sck2)
+
+        # Compare the second elements of tuples with the same first element
+        for item, value in sck1:
+            if item in sck2_dict and value != sck2_dict[item]:
+                differences.append((item, sck2_dict[item]))  
+
+        return differences
+
+
 
 # Test examples
 
@@ -249,4 +286,10 @@ social_engine = Social(characters)
 
 #print(social_engine.get_opinions('BucketKnight', 'SheepGirl'))  
 print(social_engine.shared_cultural_matrix)
-print(social_engine.cultural_opinion_matrix)
+#print(social_engine.character_cultural_opinion_mat)
+
+print("Bucket Knights SCK Opinion")
+print(social_engine.get_sck_opinions('BucketKnight'))
+
+print("Compare Bucket with Mossa, should return Demon Lord")
+print(social_engine.compare_sck_opinions('BucketKnight', 'MossaWillows'))
