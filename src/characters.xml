@@ -107,7 +107,7 @@
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
         <SCK>
-            <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Demon Lord" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="BarklerTrobbofield">
@@ -124,7 +124,7 @@
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
         <SCK>
-            <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Demon Lord" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="WillabeeFreaky">
@@ -176,7 +176,7 @@
             <Relationship name="BucketKnight" friends="false" dating="false" enemies="false" party_member="false"/>
         </Relationships>
         <SCK>
-            <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Demon Lord" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="MossaWillows">
