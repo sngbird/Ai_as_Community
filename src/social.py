@@ -42,7 +42,7 @@ class Social:
         self.rules = []
         self.setup_rules()
 
-    def update_opinion(self, source_index, target_index, alliance, romance, reverence):
+    def update_opinion(self, source_name, target_name, alliance, romance, reverence):
         """
             Update the opinion matrix with the given values, performing element-wise addition.
 
@@ -53,7 +53,8 @@ class Social:
                 romance (float): Romance value to update.
                 reverence (float): Reverence value to update.
             """
-        target_name = self.character_names[target_index]
+        target_index = self.character_names[target_name]
+        source_index = self.character_names[source_name]
         current_opinions = self.opinions_matrix[source_index][target_index].get(target_name, [0.0, 0.0, 0.0])
         updated_opinions = [
             current_opinions[0] + alliance,
