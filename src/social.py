@@ -90,8 +90,7 @@ class Social:
         """
         for target_name, (alliance, romance, reverence) in social_history:
             if target_name in self.character_names:
-                target_index = self.character_names.index(target_name)
-                self.update_opinion(index, target_index, alliance, romance, reverence)
+                self.update_opinion(index, target_name, alliance, romance, reverence)
     
     def initialize_relationships(self, index, relationships):
         """
