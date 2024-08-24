@@ -1,4 +1,7 @@
 <!-- SCK definitions-->
 <SCK>
     <Knowledge name="Demon Lord" opinion="Alliance"/>
+    <Knowledge name="Booze" opinion="Alliance"/>
+    <Knowledge name="Steve Guy (the town guy)" opinion="Alliance"/>
+    <Knowledge name="Clown Flowers" opinion="Alliance"/>
 </SCK>

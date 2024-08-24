@@ -23,6 +23,8 @@
             <!-- For Knowledge, Opinion should be Like/Dislike/None -->
 <Characters>
     <Character name="BucketKnight">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Knight" value="True"/>
             <Trait name="overprotective" value="True"/>
@@ -38,9 +40,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Booze" opinion="Dislike"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Like"/>
+            <Knowledge name="Clown Flowers" opinion="Dislike"/>
         </SCK>
     </Character>
     <Character name="SheepGirl">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Healer" value="True"/>
             <Trait name="oblivious" value="True"/>
@@ -55,9 +62,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Booze" opinion="Like"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Like"/>
+            <Knowledge name="Clown Flowers" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="StarboFantastica">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Knight" value="True"/>
             <Trait name="overly confident" value="True"/>
@@ -72,9 +84,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Booze" opinion="Like"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Like"/>
+            <Knowledge name="Clown Flowers" opinion="Dislike"/>
         </SCK>
     </Character>
     <Character name="VanessaConfessa">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Rogue" value="True"/>
             <Trait name="cunning" value="True"/>
@@ -90,9 +107,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Booze" opinion="Like"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Dislike"/>
+            <Knowledge name="Clown Flowers" opinion="Dislike"/>
         </SCK>
     </Character>
     <Character name="GrumblarTheDestructor">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Barbarian" value="True"/>
             <Trait name="loyal" value="True"/>
@@ -108,9 +130,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Like"/>
+            <Knowledge name="Booze" opinion="Like"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Like"/>
+            <Knowledge name="Clown Flowers" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="BarklerTrobbofield">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Mage" value="True"/>
             <Trait name="secretive" value="True"/>
@@ -125,9 +152,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Like"/>
+            <Knowledge name="Booze" opinion="Dislike"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Dislike"/>
+            <Knowledge name="Clown Flowers" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="WillabeeFreaky">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Barbarian" value="True"/>
             <Trait name="oddball" value="True"/>
@@ -142,9 +174,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Booze" opinion="Like"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Dislike"/>
+            <Knowledge name="Clown Flowers" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="DJWizard">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Mage" value="True"/>
             <Trait name="overly confident" value="True"/>
@@ -160,9 +197,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Dislike"/>
+            <Knowledge name="Booze" opinion="Like"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Like"/>
+            <Knowledge name="Clown Flowers" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="TamberGauzeman">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Healer" value="True"/>
             <Trait name="aggressive" value="True"/>
@@ -177,9 +219,14 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Like"/>
+            <Knowledge name="Booze" opinion="Like"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Dislike"/>
+            <Knowledge name="Clown Flowers" opinion="Like"/>
         </SCK>
     </Character>
     <Character name="MossaWillows">
+        <Background>
+        </Background>
         <Traits>
             <Trait name="Rogue" value="True"/>
             <Trait name="cunning" value="True"/>
