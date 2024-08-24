@@ -241,6 +241,9 @@
         </Relationships>
         <SCK>
             <Knowledge name="Demon Lord" opinion="Like"/>
+            <Knowledge name="Booze" opinion="Dislike"/>
+            <Knowledge name="Steve Guy (the town guy)" opinion="Like"/>
+            <Knowledge name="Clown Flowers" opinion="Dislike"/>
         </SCK>
     </Character>
 </Characters>
