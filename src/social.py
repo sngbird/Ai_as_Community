@@ -53,8 +53,8 @@ class Social:
                 romance (float): Romance value to update.
                 reverence (float): Reverence value to update.
             """
-        target_index = self.character_names[target_name]
-        source_index = self.character_names[source_name]
+        source_index = self.character_names.index(source_name)
+        target_index = self.character_names.index(target_name)
         current_opinions = self.opinions_matrix[source_index][target_index].get(target_name, [0.0, 0.0, 0.0])
         updated_opinions = [
             current_opinions[0] + alliance,
@@ -72,6 +72,7 @@ class Social:
             target_index (int): Index of the target character in the matrix.
             relationship_status (list of bool): List indicating the relationship status [friends, dating, enemies, party_member].
         """
+        #source_index = self.character_names.index(source_name)
         target_name = self.character_names[target_index]
         current_status = self.relationships_matrix[source_index][target_index].get(target_name, [False, False, False, False])
         
@@ -88,9 +89,10 @@ class Social:
             index (int): Index of the character in the matrix.
             social_history (list of tuples): List where each tuple contains (target_name, (alliance, romance, reverence)).
         """
+        source_name = self.character_names[index]
         for target_name, (alliance, romance, reverence) in social_history:
             if target_name in self.character_names:
-                self.update_opinion(index, target_name, alliance, romance, reverence)
+                self.update_opinion(source_name,target_name, alliance, romance, reverence)
     
     def initialize_relationships(self, index, relationships):
         """
@@ -188,7 +190,7 @@ class Social:
         """
         source_index = self.character_names.index(source_name)
         target_index = self.character_names.index(target_name)
-        opinion = self.opinions_matrix[source_index][target_index].get(target_name, (0.0,0.0,0.0))
+        opinion = self.opinions_matrix[source_index][target_name].get(target_name, (0.0,0.0,0.0))
 
         return self.opinions_matrix[source_index][target_index]
 
