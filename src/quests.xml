@@ -1,0 +1,44 @@
+<Quests>
+    <Quest name="Artifact Retrieval" description="Retrieve the artifact of a local god from some ruins and deliver it to the local temple.">
+        <Requirements>
+            <Requirement type="Class" value="Monk" quantity=1/>
+            <Requirement type="Class" value="Paladin" quantity=1/>
+            <Requirement type="Trait" value="Religious" quantity=1/>
+        </Requirements>
+        <Risks>
+            <Risk type="SCK" value="Demon Lord" opinion="Like" quantity=1/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity=2/>
+            <Maximum quantity=8/>
+        </PartyNumbers>
+    </Quest>
+    <Quest name="Diplomatic Rendezvous" description="We need to mend relationships with our neighboring town by sending an envoy.">
+        <Requirements>
+            <Requirement type="Class" value="Bard" quantity=1/>
+            <Requirement type="Trait" value="Charming" quantity=1/>
+            <Requirement type="Trait" value="Loyal" quantity=1/>
+        </Requirements>
+        <Risks>
+            <Risk type="Class" value="Barbarian" quantity=1/>
+            <Risk type="Trait" value="Aggressive" quantity=1/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity=4/>
+            <Maximum quantity=6/>
+        </PartyNumbers>
+    </Quest>
+    <Quest name="Message Delivery" description="One of the town's nobles wants us to deliver a letter to his mother in another city.">
+        <Requirements>
+            <Requirement type="Class" value="Ranger" alt_value="Rogue" quantity=1/>
+        </Requirements>
+        <Risks>
+            <Risk type="Trait" value="Clumsy" quantity=1/>
+            <Risk type="Trait" value="Alcoholic" quantity=1/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity=1/>
+            <Maximum quantity=3/>
+        </PartyNumbers>
+    </Quest>
+</Quests>

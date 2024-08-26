@@ -66,3 +66,43 @@ def load_sck_from_xml(filename, social_engine):
         name = knowledge.get('name')
         opinion = knowledge.get('opinion')
         social_engine.shared_cultural_matrix[name] = opinion
+
+def load_quest_from_xml(filename, quest_manager):
+    tree = ET.parse(filename)
+    root = tree.getroot()
+
+    for quest in root.find('Quests').findall('Quest'):
+        name = quest.get('name')
+        quest_manager.quests[name] = {}
+        quest_manager.quests[name]["description"] = quest.get('description')
+
+        requirements = []
+        #<Requirement type="Class" value="Ranger" alt_value="Rogue" quantity=1/>
+        for requirement in quest.find('Requirements').findall('Requirement'):
+            requirement_attr = {
+                "type": requirement.get('type'), 
+                "value": requirement.get('value'), 
+                "quantity": requirement.get('quantity')}
+            #Also an alt value, don't forget that.
+            alt_value = requirement.get('alt_value')
+            if alt_value is not None:
+                requirement_attr["alt_value"] = alt_value
+            requirements.append(requirement_attr)
+        quest_manager.quests[name]["requirements"] = requirements
+
+        risks = []
+        #<Risk type="Trait" value="Clumsy" quantity=1/>
+        for risk in quest.find('Risks').findall('Risk'):
+            risk_attr = {
+                "type": risk.get('type'), 
+                "value": risk.get('value'), 
+                "quantity": risk.get('quantity')}
+            #Also an alt value.
+            alt_value = risk.get('alt_value')
+            if alt_value is not None:
+                risk_attr["alt_value"] = alt_value
+            risks.append(risk_attr)
+        quest_manager.quests[name]["risks"] = risks
+
+        quest_manager.quests[name]["minimum"] = quest.find('PartyNumbers').find('Minimum').get('quantity')
+        quest_manager.quests[name]["minimum"] = quest.find('PartyNumbers').find('Maximum').get('quantity')
