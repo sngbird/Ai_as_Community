@@ -343,9 +343,9 @@ while True:
         exit(0)
     elif user_input == 'char':
         print("\n")
-        print("Which adventurer?")
         # Loop allowing player to select character
         while True:
+            print("Which adventurer?")
             print("NAME LIST")
             print("--------------------------")
             print("BucketKnight")
