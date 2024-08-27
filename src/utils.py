@@ -73,6 +73,17 @@ def load_quests_from_xml(filename, quest_manager):
     root = tree.getroot()
 
     quests = {}
+
+    quest = {
+            'name': character_name,
+            'description': {},
+            'requirements': [],
+            'risks': [],
+            'min_party_size': int,
+            'max_party_size': int,
+            'current_members': []
+    }
+        
     for quest in root.findall('Quest'):
         name = quest.get('name')
         quests[name] = {}

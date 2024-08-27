@@ -1,7 +1,7 @@
 import rule_engine
 from social import Social
 from suggestions import suggestion
-from quest import QuestManager, Quest
+from quest import QuestManager
 from utils import load_characters_from_xml
 import curses
 
@@ -129,8 +129,8 @@ def character_menu(stdscr):
 def quest_menu(stdscr):
     current_row = 0
     menu = ["View Available Quests", "View Deployed Quests", "Advance Week", "Back"]
-    
-    while 1:
+
+    while True:
         draw_menu(stdscr, current_row, menu)
         key = stdscr.getch()
 
@@ -141,12 +141,26 @@ def quest_menu(stdscr):
         elif key == curses.KEY_ENTER or key in [10, 13]:
             if current_row == 0:
                 stdscr.clear()
-                quest_keeper.get_quests('all')
-                stdscr.getch()
+                quests = quest_keeper.get_quests('all')  # Adjusted to get available quests
+                display_quests(stdscr, quests)
+                selected_index = get_selection(stdscr, quests)  # Function to get user's choice
+                if selected_index is not None:
+                    selected_quest = quests[selected_index]
+                    stdscr.clear()
+                    quest_info = format_quest_info(quest_keeper.quests[selected_quest])
+                    stdscr.addstr(0, 0, quest_info)
+                    stdscr.getch()
             elif current_row == 1:
                 stdscr.clear()
-                quest_keeper.get_quests('deployed')
-                stdscr.getch()
+                quests = quest_keeper.get_quests('deployed')  # Adjusted to get deployed quests
+                display_quests(stdscr, quests)
+                selected_index = get_selection(stdscr, quests)  # Function to get user's choice
+                if selected_index is not None:
+                    selected_quest = quests[selected_index]
+                    stdscr.clear()
+                    quest_info = format_quest_info(quest_keeper.quests[selected_quest])
+                    stdscr.addstr(0, 0, quest_info)
+                    stdscr.getch()
             elif current_row == 2:
                 stdscr.clear()
                 quest_keeper.run_quest()
@@ -154,8 +168,33 @@ def quest_menu(stdscr):
             elif current_row == 3:
                 break
         stdscr.refresh()
-# The main entry point of the program.
-# This function wraps the main menu in the curses environment.
+
+def format_quest_info(quest_info):
+    description = quest_info['description']
+    requirements = ', '.join([f"{req['type']}: {req['value']} (Quantity: {req['quantity']})" for req in quest_info['requirements']])
+    risks = ', '.join([f"{risk['type']}: {risk['value']} (Quantity: {risk['quantity']})" for risk in quest_info['risks']])
+    return (f"Description: {description}\n"
+            f"Requirements: {requirements}\n"
+            f"Risks: {risks}\n"
+            f"Minimum Party Size: {quest_info['minimum']}\n"
+            f"Maximum Party Size: {quest_info['maximum']}")
+
+def display_quests(stdscr, quests):
+    stdscr.clear()
+    for idx, quest in enumerate(quests):
+        stdscr.addstr(idx, 0, f"{idx + 1}. {quest}")
+    stdscr.addstr(len(quests) + 1, 0, "Select a quest by number or press 'q' to go back.")
+    stdscr.refresh()
+
+def get_selection(stdscr, quests):
+    key = stdscr.getch()
+    if key in [ord(str(i + 1)) for i in range(len(quests))]:
+        return int(chr(key)) - 1
+    elif key == ord('q'):
+        return None
+    return None
+
+
 def main():
     curses.wrapper(main_menu)
 

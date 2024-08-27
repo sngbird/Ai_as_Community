@@ -6,7 +6,18 @@ from social import Social
 class QuestManager:
     def __init__(self, social_engine):
         #Holds data about all quests, currently possible quests, & deployed quests.
-        self.quests = load_quests_from_xml('quests.xml',self)
+        raw_quests = load_quests_from_xml('quests.xml',self)
+        self.quests = {
+            name: Quest(
+                name,
+                info['description'],
+                info['requirements'],
+                info['risks'],
+                info['minimum'],
+                info['maximum']
+            )
+            for name, info in raw_quests.items()
+        }
         self.possible_quests = []
         self.deployed_quests = []
         self.social_engine = social_engine
@@ -70,17 +81,8 @@ class QuestManager:
         print("Temp")
 
     def get_quests(self, quest_type):
-        """
-        Returns a list of tuples with quest names and descriptions from the specified quest type.
-        
-        Parameters:
-        - quest_type (str): Type of quests to return ('all', 'possible', 'deployed').
-        
-        Returns:
-        - list of tuples (quest_name, quest_description)
-        """
         if quest_type == 'all':
-            return [(name, info['description']) for name, info in self.quests.items()]
+            return [(quest.title, quest.description) for quest in self.quests.values()]
         elif quest_type == 'possible':
             return [(quest.title, quest.description) for quest in self.possible_quests]
         elif quest_type == 'deployed':
@@ -88,54 +90,24 @@ class QuestManager:
         else:
             raise ValueError("Invalid quest type specified. Choose 'all', 'possible', or 'deployed'.")
 
-
-
 #Quest class!
-class Quest: #each Quest is an instance of this - just stores dictionary info into a more easier-to-access format
-    def __init__(self, name, info):
-        #Quest-type evident
+# quest.py
+
+class Quest:
+    def __init__(self, name, description, requirements, risks, min_party_size, max_party_size):
         self.title = name
-        self.description = info['description']
-
-        #Reqs & Risks
-        self.requirements = info['requirements']
-        self.risks = info['risks']
-        
-        #Party Numbers
-        self.party_max = info['minimum']
-        self.party_min = info['maximum']
-
-        #Randomly rolled
-        self.danger_level = randint(0, 5)
-        
-        #World-state determinant - haven't figured out how to do this yet
-        self.time_left = 0
-
-        #Player-state determinant
+        self.description = description
+        self.requirements = requirements
+        self.risks = risks
+        self.party_min = min_party_size
+        self.party_max = max_party_size
+        self.danger_level = randint(0, 5)  # or any other default value or calculation
         self.current_members = []
-    
+
     def representation(self):
         return f"Quest(title={self.title}, description={self.description})"
-    
-    def format_quest_information(quest):
-        # Format the quest details into a single string
-        quest_info = []
-        quest_info.append(f"Title: {quest.title}")
-        quest_info.append(f"Description: {quest.description}")
-        
-        # Format the requirements and risks using list comprehensions
-        requirements_str = ', '.join([f"{req['type']}: {req['value']} (Quantity: {req['quantity']})" for req in quest.requirements])
-        risks_str = ', '.join([f"{risk['type']}: {risk['value']} (Quantity: {risk['quantity']})" for risk in quest.risks])
-        
-        quest_info.append(f"Requirements: {requirements_str}")
-        quest_info.append(f"Risks: {risks_str}")
-        quest_info.append(f"Party Size: {quest.party_min} - {quest.party_max}")
-        quest_info.append(f"Danger Level: {quest.danger_level}")
-        quest_info.append(f"Current Members: {', '.join(quest.current_members) if quest.current_members else 'None'}")
-        quest_info.append("\nPress any key to continue...")
 
-        return "\n".join(quest_info)
-            
+    
 social_engine = Social()
 quest_man = QuestManager(social_engine)
 print(quest_man.get_quests('all'))
