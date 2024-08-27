@@ -8,7 +8,7 @@ def main():
 
     # Set up the game window
     screen = pygame.display.set_mode((800, 600))  # Set window size (width, height)
-    pygame.display.set_caption("My Pygame Project")
+    pygame.display.set_caption("Tavern Week")
 
     # Create a clock object to manage frame rate
     clock = pygame.time.Clock()
