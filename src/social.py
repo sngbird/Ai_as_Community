@@ -319,6 +319,54 @@ class Social:
         target_char = self.characters[target_index]
         #print(target_char)
         target_char['injured'] = injury
+    
+    def display_character_information(self, character_name):
+        """
+        Get a readout of the character's information.
+
+        Args:
+            character_name (str): Name of the character.
+            
+        Returns:
+            Formatted String
+        """
+        if character_name not in self.character_names:
+            return f"Character '{character_name}' not found."
+
+        # Get the index of the character
+        target_index = self.character_names.index(character_name)
+        target_char = self.characters[target_index]
+
+        # Get character traits
+        traits = self.get_traits(character_name)
+
+        # Get relationship information
+        relationships = {}
+        for other_name in self.character_names:
+            if other_name != character_name:
+                relationship_status = self.get_relationships(character_name, other_name)
+                if any(relationship_status):  # Check if there's at least one True value
+                    relationships[other_name] = relationship_status
+
+        # Get SCK opinions
+        sck_opinions = self.get_sck_opinions(character_name)
+
+        # Get injury status
+        injured_status = self.is_injured(character_name)
+
+        # Format the output string
+        info = [f"Character Name: {character_name}"]
+        info.append(f"Traits: {traits}")
+        info.append("Relationships with at least one 'True' status:")
+        for other_name, status in relationships.items():
+            info.append(f"  - {other_name}: {status}")
+        info.append("SCK Opinions:")
+        for item, opinion in sck_opinions:
+            info.append(f"  - {item}: {opinion}")
+        info.append(f"Injured: {'Yes' if injured_status else 'No'}")
+
+        return "\n".join(info)
+
 
 
 # Test examples

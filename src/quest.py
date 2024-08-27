@@ -1,7 +1,7 @@
 # import rule-engine
 from utils import load_quests_from_xml
 from random import randint
-import Social
+from social import Social
 
 class QuestManager:
     def __init__(self, social_engine):

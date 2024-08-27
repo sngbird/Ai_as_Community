@@ -68,7 +68,7 @@ def load_sck_from_xml(filename, social_engine):
         opinion = knowledge.get('opinion')
         social_engine.shared_cultural_matrix[name] = opinion
 
-def load_quest_from_xml(filename, quest_manager):
+def load_quests_from_xml(filename, quest_manager):
     tree = ET.parse(filename)
     root = tree.getroot()
 
