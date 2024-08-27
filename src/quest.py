@@ -1,13 +1,15 @@
 # import rule-engine
 from utils import load_quests_from_xml
 from random import randint
+import Social
 
 class QuestManager:
-    def __init__(self):
+    def __init__(self, social_engine):
         #Holds data about all quests, currently possible quests, & deployed quests.
         self.quests = {} #quests are loaded straight from XML into here
         self.possible_quests = []
         self.deployed_quests = []
+        self.social_engine = social_engine
 
     #Add a slightly varying number (3-5?) of quests for the week.
     def add_quests_weekly(self):
@@ -30,13 +32,13 @@ class QuestManager:
         self.deployed_quests.append(quest)
 
     #Remove a character from a quest
-    def remove_members(self, quest, character):
-        quest.current_members.remove(character)
+    def remove_members(self, quest, character_name):
+        quest.current_members.remove(character_name)
 
     #-----Unfinished------
     #Add a party member to the quest. Also requires social meddling, so I haven't done this yet either.
     #Also thinking of moving this from here to be a Quest class method instead.
-    def add_members(self, quest, character):
+    def add_members(self, quest, character_name):
         print("Temp")
         able_to_add = True
         #Check if:
@@ -44,14 +46,23 @@ class QuestManager:
         #   - character is not already in party
         #   - character is not injured
         #   - character has no conflicts
+
         if len(quest.current_members) >= quest.party_max:
             able_to_add = False
-        elif character in quest.current_members: #These all have the same result, but separating them for clarity
+        elif character_name in quest.current_members: #These all have the same result, but separating them for clarity
             able_to_add = False
         #Insert "elif character not injured" here
+        elif self.social_engine.is_injured(character_name) == True:
+            able_to_add = False
         #Insert "elif some social conflicts" here
+        for current_member_name in quest.current_members:
+            relationships = self.social_engine.get_relationships(character_name, current_member_name)
+            if relationships[2] is True:
+                able_to_add = False
+                break
+        
         if able_to_add:
-            quest.current_members.append(character)
+            quest.current_members.append(character_name)
     
     #Actually run the quest and add the results to the player's gold count/stats, plus altering social states.
     def run_quest(self, quest_name):

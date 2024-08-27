@@ -16,6 +16,7 @@ def load_characters_from_xml(file_path):
             'social_history': [],
             'relationships': [], #This is for building the relationship matrix from XML given values
             'SCK': [], #Builds cultural_opinion matrix
+            'injured': False,
         }
 
         # Load traits

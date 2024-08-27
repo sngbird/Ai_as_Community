@@ -292,6 +292,35 @@ class Social:
 
         return differences
 
+    def is_injured(self, character_name):
+        """
+        Returns whether the character is injured or not. 
+
+        Args:
+            charachter_name (str): Name of the character.
+            
+        Returns:
+            True/False, whether the character is injured
+        """
+        target_index = self.character_names.index(character_name)
+        target_char = self.characters[target_index]
+        #print(target_char)
+        return target_char['injured']
+    
+    def set_injury(self, character_name, injury):
+        """
+        Set the character's injury status
+
+        Args:
+            charachter_name (str): Name of the character.
+            
+        Returns:
+            True/False, whether the character is injured
+        """
+        target_index = self.character_names.index(character_name)
+        target_char = self.characters[target_index]
+        #print(target_char)
+        target_char['injured'] = injury
 
 
 # Test examples
@@ -440,3 +469,7 @@ while True:
 
 # print("Compare Bucket with Mossa, should return Demon Lord")
 # print(social_engine.compare_sck_opinions('BucketKnight', 'MossaWillows'))
+
+# print(social_engine.is_injured('BucketKnight'))
+# social_engine.set_injury('BucketKnight', True)
+# print(social_engine.is_injured('BucketKnight'))
