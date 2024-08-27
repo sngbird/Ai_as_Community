@@ -141,24 +141,25 @@ def quest_menu(stdscr):
         elif key == curses.KEY_ENTER or key in [10, 13]:
             if current_row == 0:
                 stdscr.clear()
-                quests = quest_keeper.get_quests('all')  # Adjusted to get available quests
+                quests = quest_keeper.get_quests_description('all')  # Adjusted to get available quests
                 display_quests(stdscr, quests)
                 selected_index = get_selection(stdscr, quests)  # Function to get user's choice
                 if selected_index is not None:
                     selected_quest = quests[selected_index]
                     stdscr.clear()
-                    quest_info = format_quest_info(quest_keeper.quests[selected_quest])
+                    quest_name = selected_quest[0]
+                    quest_info = format_quest_info(quest_keeper.quests[quest_name])
                     stdscr.addstr(0, 0, quest_info)
                     stdscr.getch()
             elif current_row == 1:
                 stdscr.clear()
-                quests = quest_keeper.get_quests('deployed')  # Adjusted to get deployed quests
+                quests = quest_keeper.get_quests_description('deployed')  # Adjusted to get deployed quests
                 display_quests(stdscr, quests)
                 selected_index = get_selection(stdscr, quests)  # Function to get user's choice
                 if selected_index is not None:
                     selected_quest = quests[selected_index]
                     stdscr.clear()
-                    quest_info = format_quest_info(quest_keeper.quests[selected_quest])
+                    quest_info = format_quest_info(quest_keeper.quests[selected_quest.get('name')])
                     stdscr.addstr(0, 0, quest_info)
                     stdscr.getch()
             elif current_row == 2:
@@ -169,15 +170,32 @@ def quest_menu(stdscr):
                 break
         stdscr.refresh()
 
-def format_quest_info(quest_info):
-    description = quest_info['description']
-    requirements = ', '.join([f"{req['type']}: {req['value']} (Quantity: {req['quantity']})" for req in quest_info['requirements']])
-    risks = ', '.join([f"{risk['type']}: {risk['value']} (Quantity: {risk['quantity']})" for risk in quest_info['risks']])
-    return (f"Description: {description}\n"
+def format_quest_info(quest):
+    # Adjust these attributes based on the actual Quest class implementation
+    title = quest.get_title()
+    description = quest.get_description()
+    requirements = ', '.join([f"{req['type']}: {req['value']} (Quantity: {req['quantity']})" for req in quest.get_requirements()])
+    risks = ', '.join([f"{risk['type']}: {risk['value']} (Quantity: {risk['quantity']})" for risk in quest.get_risks()])
+    
+    # Get current party members and format them
+    current_party = quest.print_current_members()
+
+    menu_options = (
+        "1. Add Character to Party\n"
+        "2. Remove Character from Party\n"
+        "3. Deploy Quest\n"
+        "4. Back\n"
+    )
+    
+    return (f"{title}\n"
+            f"Description: {description}\n"
             f"Requirements: {requirements}\n"
             f"Risks: {risks}\n"
-            f"Minimum Party Size: {quest_info['minimum']}\n"
-            f"Maximum Party Size: {quest_info['maximum']}")
+            f"Minimum Party Size: {quest.get_minimum()}\n"
+            f"Maximum Party Size: {quest.get_maximum()}\n"
+            f"Current Party:\n{current_party}\n"
+            f"\n{menu_options}")
+
 
 def display_quests(stdscr, quests):
     stdscr.clear()

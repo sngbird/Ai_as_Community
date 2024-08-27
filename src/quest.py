@@ -21,6 +21,8 @@ class QuestManager:
         self.possible_quests = []
         self.deployed_quests = []
         self.social_engine = social_engine
+        self.available_members = social_engine.character_names
+        self.unavailable_members = []
 
     #Add a slightly varying number (3-5?) of quests for the week.
     def add_quests_weekly(self):
@@ -80,7 +82,7 @@ class QuestManager:
         #Instead of giving a name, it will just run the ones in deployed for simplicity
         print("Temp")
 
-    def get_quests(self, quest_type):
+    def get_quests_description(self, quest_type):
         if quest_type == 'all':
             return [(quest.title, quest.description) for quest in self.quests.values()]
         elif quest_type == 'possible':
@@ -89,6 +91,13 @@ class QuestManager:
             return [(quest.title, quest.description) for quest in self.deployed_quests]
         else:
             raise ValueError("Invalid quest type specified. Choose 'all', 'possible', or 'deployed'.")
+        
+    def get_quest_by_title(self, title):
+        quest = self.quests.get(title)
+        if quest:
+            return quest
+        else:
+            raise ValueError(f"No quest found with title: {title}")
 
 #Quest class!
 # quest.py
@@ -104,10 +113,41 @@ class Quest:
         self.danger_level = randint(0, 5)  # or any other default value or calculation
         self.current_members = []
 
+    def get_title(self):
+        return self.title
+
+    def get_description(self):
+        return self.description
+
+    def get_requirements(self):
+        return self.requirements
+
+    def get_risks(self):
+        return self.risks
+
+    def get_minimum(self):
+        return self.party_min
+
+    def get_maximum(self):
+        return self.party_max
+
+    def get_danger_level(self):
+        return self.danger_level
+
+    def get_current_members(self):
+        return self.current_members
+
     def representation(self):
         return f"Quest(title={self.title}, description={self.description})"
+    
+    def get_current_members(self):
+        return self.current_members
 
+    def print_current_members(self):
+        if not self.current_members:
+            return "No current members in the party."
+        return "Current party members:\n" + "\n".join(self.current_members)
     
 social_engine = Social()
 quest_man = QuestManager(social_engine)
-print(quest_man.get_quests('all'))
+print(quest_man.get_quests_description('all'))
