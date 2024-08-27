@@ -392,7 +392,7 @@ while True:
                 elif user_input == 'relation':
                     print("player enters character name and gets relationship, too tired to do this rn")
                 elif user_input == 'sck':
-                    print("gets sck, too tired to do this rn")
+                    print(social_engine.get_sck_opinions(adv_name))
                 else:
                     print("Unknown command.")
     elif user_input == 'suggest':
