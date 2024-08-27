@@ -81,6 +81,24 @@ class Social:
         
         self.relationships_matrix[source_index][target_index][target_name] = updated_status
 
+    def update_relationship_name(self, source_name, target_name, relationship_status):
+        """
+        Update the relationship matrix with the given status, performing an "and" operation.
+
+        Args:
+            source_name (string): Name of the source character in the matrix.
+            target_name (string): Name of the target character in the matrix.
+            relationship_status (list of bool): List indicating the relationship status [friends, dating, enemies, party_member].
+        """
+        source_index = self.character_names.index(source_name)
+        target_index = self.character_names.index(target_name)
+        current_status = self.relationships_matrix[source_index][target_index].get(target_name, [False, False, False, False])
+        
+        # Perform logical "and" operation between the existing status and the new status
+        updated_status = [current or new for current, new in zip(current_status, relationship_status)]
+        
+        self.relationships_matrix[source_index][target_index][target_name] = updated_status
+
     def initialize_opinions(self, index, social_history):
         """
         Initialize opinions for a character based on their social history.
@@ -245,6 +263,31 @@ class Social:
         # Compare the second elements of tuples with the same first element
         for item, value in sck1:
             if item in sck2_dict and value != sck2_dict[item]:
+                differences.append((item, sck2_dict[item]))  
+
+        return differences
+    
+    def compare_sck_opinions_same(self, char1_name, char2_name):
+        """
+        Compare the SCK opinions between two characters, and finds shared opinions.
+
+        Args:
+            char1_name (str): Name of the first character.
+            char2_name (str): Name of the second character.
+
+        Returns:
+            list of tuples: List of shared SCK opinions between the two characters.
+        """
+        sck1 = self.get_sck_opinions(char1_name)
+        sck2 = self.get_sck_opinions(char2_name)
+        differences = []
+
+        # Convert list2 to a dictionary for quick lookups
+        sck2_dict = dict(sck2)
+
+        # Compare the second elements of tuples with the same first element
+        for item, value in sck1:
+            if item in sck2_dict and value == sck2_dict[item]:
                 differences.append((item, sck2_dict[item]))  
 
         return differences
