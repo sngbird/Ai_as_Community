@@ -1,5 +1,6 @@
 import rule_engine
 from social import Social
+from quest import QuestManager, Quest
 from utils import load_characters_from_xml, load_sck_from_xml
 
 
