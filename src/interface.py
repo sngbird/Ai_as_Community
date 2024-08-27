@@ -71,7 +71,7 @@ def main_menu(stdscr):
 def game_menu(stdscr):
     current_row = 0
     # In-game menu options
-    menu = ["View Characters", "Suggest Action", "View Quests", "Exit"]
+    menu = ["View Characters", "Suggest Action", "Quests", "Exit"]
     
     # Infinite loop to keep the in-game menu active
     while 1:
@@ -91,7 +91,7 @@ def game_menu(stdscr):
             elif current_row == 1:  # Suggest Action
                 pass  # Implement suggestion logic here
             elif current_row == 2:  # View Quests
-                pass  # Implement quest logic here
+                quest_menu(stdscr)
             elif current_row == 3:  # Exit
                 break
         stdscr.refresh()
@@ -126,6 +126,34 @@ def character_menu(stdscr):
                 stdscr.getch()  # Wait for key press to continue
         stdscr.refresh()
 
+def quest_menu(stdscr):
+    current_row = 0
+    menu = ["View Available Quests", "View Deployed Quests", "Advance Week", "Back"]
+    
+    while 1:
+        draw_menu(stdscr, current_row, menu)
+        key = stdscr.getch()
+
+        if key == curses.KEY_UP and current_row > 0:
+            current_row -= 1
+        elif key == curses.KEY_DOWN and current_row < len(menu) - 1:
+            current_row += 1
+        elif key == curses.KEY_ENTER or key in [10, 13]:
+            if current_row == 0:
+                stdscr.clear()
+                quest_keeper.get_quests('all')
+                stdscr.getch()
+            elif current_row == 1:
+                stdscr.clear()
+                quest_keeper.get_quests('deployed')
+                stdscr.getch()
+            elif current_row == 2:
+                stdscr.clear()
+                quest_keeper.run_quest()
+                stdscr.getch()
+            elif current_row == 3:
+                break
+        stdscr.refresh()
 # The main entry point of the program.
 # This function wraps the main menu in the curses environment.
 def main():
