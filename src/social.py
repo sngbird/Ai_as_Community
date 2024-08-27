@@ -3,7 +3,7 @@ from utils import load_characters_from_xml, load_sck_from_xml
 debug = True
 
 class Social:
-    def __init__(self, characters):
+    def __init__(self):
         """
         Initialize the Social class with the given character names.
 
@@ -12,8 +12,8 @@ class Social:
         """
         #Preparing Context and DataStructures
         #Create the Matrices for Character Opinions and Relationship information
-        self.characters = characters
-        character_names = [character['name'] for character in characters]
+        self.characters = load_characters_from_xml('characters.xml')
+        character_names = [character['name'] for character in self.characters]
         self.character_names = character_names
         self.num_characters = len(character_names)
         # Initialize 2D matrices for relationships and opinions
@@ -32,7 +32,7 @@ class Social:
         self.character_cultural_opinion_mat = {}
 
         # Initialize opinions based on social history for all characters
-        for i, character in enumerate(characters):
+        for i, character in enumerate(self.characters):
             self.initialize_opinions(i, character['social_history'])
             self.initialize_relationships(i, character['relationships'])
             self.initialize_sck(i, character['SCK'])
@@ -188,7 +188,7 @@ class Social:
         Returns:
             dict: Dictionary of traits for the specified character. Keys are trait names, and values are boolean.
         """
-        for character in characters:
+        for character in self.characters:
             if character['name'] == character_name:
                 return character.get('traits', {})
         return {}
@@ -323,11 +323,10 @@ class Social:
 
 # Test examples
 
-characters = load_characters_from_xml('characters.xml')
 
 
 # Create the Social engine
-social_engine = Social(characters)
+social_engine = Social()
 
 
 # # Test getters

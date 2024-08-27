@@ -1,13 +1,14 @@
 import rule_engine
 from social import Social
+from suggestions import suggestion
 from quest import QuestManager, Quest
-from utils import load_characters_from_xml, load_sck_from_xml
+from utils import load_characters_from_xml
 
 
-characters = load_characters_from_xml('characters.xml')
+
 # Create the Social engine
-social_engine = Social(characters)
-
+social_engine = Social()
+quest_keeper = QuestManager(social_engine)
 # Everything below here is interface stuff
 
 # Main menu setup
@@ -106,6 +107,29 @@ while True:
         # add loop allowing player to select suggestion
     elif user_input == 'quest':
         print("Here are available quests!")
+        while True:
+            print("Which adventurer?")
+            print("NAME LIST")
+            print("--------------------------")
+            print("BucketKnight")
+            print("SheepGirl")
+            print("StarboFantastica")
+            print("VanessaConfessa")
+            print("GrumblarTheDestructor")
+            print("BarklerTrobbofield")
+            print("WillabeeFreaky")
+            print("DJWizard")
+            print("TamberGauzeman")
+            print("MossaWillows")
+            print("exit - Return to previous menu")
+            print("--------------------------")
+            user_input = input("Enter a name or command: ")
+
+            if user_input == 'exit':
+                break
+            elif user_input not in char_names:
+                print("Unknown command.")
+                continue
         # add loop allowing player to select quest
     else:
         print("Unknown command.")
