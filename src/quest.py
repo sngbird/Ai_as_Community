@@ -47,35 +47,40 @@ class QuestManager:
     #Remove a character from a quest
     def remove_members(self, quest, character_name):
         quest.current_members.remove(character_name)
+        self.move_character_to_unavailable(character_name)
 
     #-----Unfinished------
     #Add a party member to the quest. Also requires social meddling, so I haven't done this yet either.
     #Also thinking of moving this from here to be a Quest class method instead.
     def add_members(self, quest, character_name):
-        print("Temp")
         able_to_add = True
         #Check if:
         #   - party is not full
         #   - character is not already in party
         #   - character is not injured
         #   - character has no conflicts
-
-        if len(quest.current_members) >= quest.party_max:
-            able_to_add = False
-        elif character_name in quest.current_members: #These all have the same result, but separating them for clarity
-            able_to_add = False
-        #Insert "elif character not injured" here
-        elif self.social_engine.is_injured(character_name) == True:
-            able_to_add = False
-        #Insert "elif some social conflicts" here
-        for current_member_name in quest.current_members:
-            relationships = self.social_engine.get_relationships(character_name, current_member_name)
-            if relationships[2] is True:
+        while able_to_add is True:
+            if len(quest.current_members) >= int(quest.party_max):
                 able_to_add = False
-                break
+            elif character_name in quest.current_members: #These all have the same result, but separating them for clarity
+                able_to_add = False
+            elif character_name in self.unavailable_members:
+                able_to_add = False
+            elif self.social_engine.is_injured(character_name) == True:
+                able_to_add = False
+            #Insert "elif some social conflicts" here
+            for current_member_name in quest.current_members:
+                relationships = self.social_engine.get_relationships(character_name, current_member_name)
+                if relationships[2] is True:
+                    able_to_add = False
+                    
         
         if able_to_add:
             quest.current_members.append(character_name)
+            self.move_character_to_unavailable(character_name)
+            return "Successfully Added"
+        else:
+            return "Character Can't Join Party"
     
     #Actually run the quest and add the results to the player's gold count/stats, plus altering social states.
     def run_quest(self):
@@ -98,7 +103,24 @@ class QuestManager:
             return quest
         else:
             raise ValueError(f"No quest found with title: {title}")
+    def get_available_characters(self):
+        return self.available_members
 
+    # Get a list of unavailable characters
+    def get_unavailable_characters(self):
+        return self.unavailable_members
+
+    # Move a character to the unavailable list
+    def move_character_to_unavailable(self, character_name):
+        if character_name in self.available_members:
+            self.available_members.remove(character_name)
+            self.unavailable_members.append(character_name)
+
+    # Move a character to the available list
+    def move_character_to_available(self, character_name):
+        if character_name in self.unavailable_members:
+            self.unavailable_members.remove(character_name)
+            self.available_members.append(character_name)
 #Quest class!
 # quest.py
 
@@ -148,6 +170,6 @@ class Quest:
             return "No current members in the party."
         return "Current party members:\n" + "\n".join(self.current_members)
     
-social_engine = Social()
-quest_man = QuestManager(social_engine)
-print(quest_man.get_quests_description('all'))
+# social_engine = Social()
+# quest_man = QuestManager(social_engine)
+# #print(quest_man.get_quests_description('all'))
