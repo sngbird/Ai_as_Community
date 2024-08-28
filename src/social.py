@@ -206,9 +206,10 @@ class Social:
         """
         source_index = self.character_names.index(source_name)
         target_index = self.character_names.index(target_name)
-        opinion = self.opinions_matrix[source_index][target_name].get(target_name, (0.0,0.0,0.0))
+        opinion = self.opinions_matrix[source_index][target_index].get(target_name, (0.0,0.0,0.0))
 
-        return self.opinions_matrix[source_index][target_index]
+        return opinion
+    
 
     def get_relationships(self, source_name, target_name):
         """
@@ -339,6 +340,7 @@ class Social:
 
         # Get character traits
         traits = self.get_traits(character_name)
+        trait_keys = list(traits.keys())
 
         # Get relationship information
         relationships = {}
@@ -356,7 +358,7 @@ class Social:
 
         # Format the output string
         info = [f"Character Name: {character_name}"]
-        info.append(f"Traits: {traits}")
+        info.append(f"Traits: {trait_keys}")
         info.append("Relationships with at least one 'True' status:")
         for other_name, status in relationships.items():
             info.append(f"  - {other_name}: {status}")
@@ -379,9 +381,9 @@ social_engine = Social()
 
 # # Test getters
 # print("Getter Test: Traits: BucketKnight")
-# print(social_engine.get_traits('BucketKnight'))  
-# # print("Getter Test: Opinions: BucketKnight and SheepGirl ")
-# # print(social_engine.get_opinions('BucketKnight', 'SheepGirl'))
+# # print(social_engine.get_traits('BucketKnight'))  
+# print("Getter Test: Opinions: BucketKnight and SheepGirl ")
+# print(social_engine.get_opinions('BucketKnight', 'SheepGirl'))
 
 # print("Relationship between SheepGirl and BucketKnight: ")
 # print(social_engine.get_relationships('SheepGirl', 'BucketKnight'))  

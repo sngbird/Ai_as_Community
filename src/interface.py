@@ -11,7 +11,7 @@ from utils import load_characters_from_xml
 social_engine = Social()
 quest_keeper = QuestManager(social_engine)
 
-def draw_menu(stdscr, selected_row_idx, menu_items):
+def draw_menu(stdscr, selected_row_idx, menu_items, output_text):
     """
     Draws the menu with selectable options.
 
@@ -187,8 +187,11 @@ def quest_menu(stdscr):
                     if current_action_row == 0:  # Add Character to Party
                         # Debug message
                         stdscr.addstr(action_menu_start_row + len(action_menu), 0, "Debug: Add Character to Party selected.")
+                        available_characters = quest_keeper.get_available_characters()
+                        display_characters(stdscr, available_characters)
                         stdscr.refresh()
                         stdscr.getch()  # Wait for key press to continue
+                        selected_index = get_selection(stdscr, available_characters)  # Function to get user's choice
 
                         # Implement logic to add a character to the party
                         pass
@@ -203,63 +206,6 @@ def quest_menu(stdscr):
             break  # Exit the quest menu if 'q' is pressed in the quest selection
         stdscr.refresh()
 
-
-
-# def action_menu(stdscr, quest):
-#     """
-#     Displays a menu for actions related to the selected quest.
-
-#     Parameters:
-#     - stdscr: The curses screen object.
-#     - quest: The current quest object.
-#     """
-#     current_row = 0
-#     menu = ["Add Character to Party", "Remove Character from Party", "Deploy Quest", "Back"]
-
-#     while True:
-#         draw_menu(stdscr, current_row, menu)
-#         key = stdscr.getch()
-
-#         if key == curses.KEY_UP and current_row > 0:
-#             current_row -= 1
-#         elif key == curses.KEY_DOWN and current_row < len(menu) - 1:
-#             current_row += 1
-#         elif key == curses.KEY_ENTER or key in [10, 13]:
-#             if current_row == 0:  # Add Character to Party
-#                 stdscr.clear()
-#                 available_characters = social_engine.character_names
-#                 display_characters(stdscr, available_characters)
-#                 selected_index = get_selection(stdscr, available_characters)
-#                 if selected_index is not None:
-#                     selected_character = available_characters[selected_index]
-#                     quest.add_character(selected_character)  # Implement add_character in Quest
-#                     stdscr.addstr(0, 0, f"Added {selected_character} to party.")
-#                     stdscr.refresh()
-#                     stdscr.getch()  # Wait for key press to continue
-
-#             elif current_row == 1:  # Remove Character from Party
-#                 stdscr.clear()
-#                 current_party = quest.get_current_party()  # Implement get_current_party in Quest
-#                 display_characters(stdscr, current_party)
-#                 selected_index = get_selection(stdscr, current_party)
-#                 if selected_index is not None:
-#                     selected_character = current_party[selected_index]
-#                     quest.remove_character(selected_character)  # Implement remove_character in Quest
-#                     stdscr.addstr(0, 0, f"Removed {selected_character} from party.")
-#                     stdscr.refresh()
-#                     stdscr.getch()  # Wait for key press to continue
-
-#             elif current_row == 2:  # Deploy Quest
-#                 stdscr.clear()
-#                 quest.deploy()  # Implement deploy in Quest
-#                 stdscr.addstr(0, 0, "Quest deployed.")
-#                 stdscr.refresh()
-#                 stdscr.getch()  # Wait for key press to continue
-
-#             elif current_row == 3:  # Back
-#                 break
-
-#         stdscr.refresh()
 
 def display_characters(stdscr, characters):
     """
@@ -321,6 +267,19 @@ def display_quests(stdscr, quests):
     """
     Displays a list of quests for user selection.
 
+    Parameters:
+    - stdscr: The curses screen object.
+    - quests: List of quest tuples (name, description).
+    """
+    stdscr.clear()
+    for idx, quest in enumerate(quests):
+        stdscr.addstr(idx, 0, f"{idx + 1}. {quest[0]}")
+    stdscr.addstr(len(quests) + 1, 0, "Select a quest by number or press 'q' to go back.")
+    stdscr.refresh()
+
+def display_available_character_select(stdscr):
+    """
+    Displays a list of available characters
     Parameters:
     - stdscr: The curses screen object.
     - quests: List of quest tuples (name, description).
