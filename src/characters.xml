@@ -24,7 +24,11 @@
 <Characters>
     <Character name="BucketKnight">
         <Background>
+            <Description name="Ever since he was a little boy, the bucket knight wanted to become a great and righteous royal knight. For years (from childhood to adulthood), he trained for knighthood wearing a makeshift helmet he crafted from a nearby bucket he found as a child. (The bucket was always too big for his head until he fully grew into it as an adult). However, when he finally had his chance, he was deemed by his kingdom to be unfit for knighthood. He was a reckless and clumsy warrior who frequently embarrassed himself trying to help others in need. Heartbroken by this outcome, the bucket knight ran off (sobbing uncontrollably) on a grand quest to slay the demon king, hoping to prove his worthiness as a knight."/>
         </Background>
+        <Quotes>
+            <Quote name="“I&apos;m on my way to becoming a great and righteous knight worthy of the royal guard! I only dropped my weapon eight times today, that&apos;s a new recor- WHOOPS!! Sorry, I didn&apos;t mean to smack you with my shield…”"/>
+        </Quotes>
         <Traits>
             <Trait name="Knight" value="True"/>
             <Trait name="overprotective" value="True"/>
@@ -47,7 +51,11 @@
     </Character>
     <Character name="SheepGirl">
         <Background>
+            <Description name="The Sheep Girl is a dreamkin healer with a very odd and airheaded personality hailing from the mountainous and cloudy Land of Dreams. No one knows if she has an actual name because whenever anyone asks, she ends up getting sidetracked by going on strange, nonsensical rambles. This dream world depends on maintaining a certain minimum level of worldwide mental peace, and the demon king&apos;s growing presence has caused a rise in the number of nightmares experienced: compromising this land&apos;s safety. Only defeating the demon king can save the dream world from imminent destruction… THIS is not the reason the sheep girl wants to defeat the demon king. She got really into weapon enchantment as a hobby and wants to try out her dream-infused morning star on him."/>
         </Background>
+        <Quotes>
+            <Quote name="“Did you know that birds fly because they don&apos;t know where else to go…? Did you? I didn&apos;t. I think I made that up actually… Did I? I don&apos;t know…”"/>
+        </Quotes>
         <Traits>
             <Trait name="Healer" value="True"/>
             <Trait name="oblivious" value="True"/>
@@ -69,7 +77,11 @@
     </Character>
     <Character name="StarboFantastica">
         <Background>
+            <Description name="Starbo Fantastica is a big-shot, cocky, pretty-boy knight who dresses in very gaudy, flamboyant armor, born from fallen stardust that fell into a royal wizard&apos;s brewing pot. Considered a gift from the heavens, Starbo was showered with praise, training, and special treatment his entire life. To many, Starbo is considered the face of knighthood, displaying incredible charm and skillfulness. However, his overconfidence is often his downfall. He sees demons as beneath him and wears very unprotected (but very flashy) armor when fighting them to prove that point."/>
         </Background>
+        <Quotes>
+            <Quote name="“Oh please, what armor is worth covering this beautiful stardust specimen I see in the mirror here? Those poor demons would never even land a scratch on a knight of my caliber. Pshaw! Fools I say, fools!”"/>
+        </Quotes>
         <Traits>
             <Trait name="Knight" value="True"/>
             <Trait name="overly confident" value="True"/>
@@ -91,7 +103,11 @@
     </Character>
     <Character name="VanessaConfessa">
         <Background>
+            <Description name="Vanessa Confessa is a human rogue with a taste for money/jewels and expensive booze who uses her cunning and charm to deceive others and get what she wants. She comes off very cool, charming, and level headed most of the time, but she can get really flustered and overwhelmed when she&apos;s caught completely off guard. People who have worked with Vanessa describe her as “a bit bossy but she knows what she&apos;s doing.” She despises the demon king because he issued a raid on her village that orphaned her at a young age, causing her to get involved with thievery and the underworld out of necessity and a desire to cope by obtaining riches and alcohol."/>
         </Background>
+        <Quotes>
+            <Quote name="“You&apos;d be surprised how easy it is to pickpocket a demon. How do I do it? Well I can&apos;t just reveal all my secrets, can I? Buy me some nice booze and maybe you&apos;ll get it out of me ;)”"/>
+        </Quotes>
         <Traits>
             <Trait name="Rogue" value="True"/>
             <Trait name="cunning" value="True"/>
@@ -114,7 +130,11 @@
     </Character>
     <Character name="GrumblarTheDestructor">
         <Background>
+            <Description name="Grumblar the Destructor is a famed ogre warrior known across the lands for being an incredibly powerful and fearsome force to be reckoned with. He is also known across many bars for being a rowdy, boisterous, and cheerful drunk that forms strong bonds with others fast, maybe a bit too fast. He personally likes the demon king because he had a drink with the king once during his travels and believes that he&apos;s “a good guy deep down who just has a bit of a bad rep”."/>
         </Background>
+        <Quotes>
+            <Quote name="“PHEW! After a long day of conquest and bloodshed, I could definitely use a couple thousand drinks and some great company, AM I RIGHT FELLAS?!?! GAHAHAHA!!!!!”"/>
+        </Quotes>
         <Traits>
             <Trait name="Barbarian" value="True"/>
             <Trait name="loyal" value="True"/>
@@ -137,7 +157,11 @@
     </Character>
     <Character name="BarklerTrobbofield">
         <Background>
+            <Description name="Barkler Trobbofield is a tree-person mage who aligns with the demon king. In the plant world, many species of mythical fungi align with the demon king and Barkler Trobbofield nurtures magic mushrooms growing on their body in order to enhance their control over unsanctioned demon magic. Barkler has a religious dedication to plant life and the natural world, revering all that encompass it."/>
         </Background>
+        <Quotes>
+            <Quote name="“No, no there&apos;s so much more to uncover within… more to become and surpass. I must deepen my connection with the holy soil that birthed me and my flora brethren if I am ever to discover my true potential.”"/>
+        </Quotes>
         <Traits>
             <Trait name="Mage" value="True"/>
             <Trait name="secretive" value="True"/>
@@ -159,7 +183,11 @@
     </Character>
     <Character name="WillabeeFreaky">
         <Background>
+            <Description name="Just a silly guy :)  Also they&apos;re an ex-court-jester that lost their limbs and went a tiny bit mad (just a little) after encountering an eldritch god (don&apos;t ask). Willabee&apos;s limbs were replaced with accordion bellows (the stretchy part of the accordion) with attachable hand/feet parts. They often attach huge boxing gloves to the end of their arms to hit hard in hand-to-hand combat."/>
         </Background>
+        <Quotes>
+            <Quote name="“Yippee!! So many cool and interesting and super duper strong people wowie :00  I wonder if any of these new friends wanna play a game of SLAM BAM WHAAAABAM with me, eheheHAheheheeeehHEebHAAHAehehe…”"/>
+        </Quotes>
         <Traits>
             <Trait name="Barbarian" value="True"/>
             <Trait name="oddball" value="True"/>
@@ -181,7 +209,11 @@
     </Character>
     <Character name="DJWizard">
         <Background>
+            <Description name="The DJ Wizard is one of the most powerful magic users in this world&apos;s mythos but instead of using this power to accomplish a greater profound purpose, they use these powers to run a pirate radio station that is forcefully blared out of random household objects. They&apos;re seeking to slay the demon king so that they can host the largest rave in the land in front of the king&apos;s corpse."/>
         </Background>
+        <Quotes>
+            <Quote name="“HUZZAH!!!!! GOD HATES ME YET HERE I STAND!!! THIS NEXT BEAT DROP SHALL BE TRUUULYY B-B-B-BLASPHEMOUS!!!”"/>
+        </Quotes>
         <Traits>
             <Trait name="Mage" value="True"/>
             <Trait name="overly confident" value="True"/>
@@ -204,7 +236,11 @@
     </Character>
     <Character name="TamberGauzeman">
         <Background>
+            <Description name="Tamber Gauzeman is a human healer who gained her powers after being saved by the demon king. After the town she lived in was attacked by the royal army for some political reason she had no grasp of at the time, she was left in a mutilated and near-death state. The demon king came across Tamber and offered to save her life and grant her powers of healing in exchange for her allegiance, which she gladly accepted after this event ignited her disdain for the royal establishment. She&apos;s now covered in bandages and demonic seals that keep her body alive and intact. Tamber is very hot headed and holds a disdain for the royal authority, wearing clothes that would fall under the in-universe “demon punk” fashion style. She&apos;s been a part of various punk bands (usually the lead singer/guitarist), but has never been able to find a band she could truly stick with."/>
         </Background>
+        <Quotes>
+            <Quote name="“The demons saved my life, took me in, gave me a place to belong, and what has the royal army ever done for us? Destroy our towns?? Manipulate our people??? WE WILL NOT BE SILENCED!!! UPON THIS SCORCHED LAND, WE WILL PLAY OUR MUSIC LOUD ENOUGH TO BLEED THOSE FASCISTS&apos; EARS DRY!!! WE ARE APOCALYPSE DEMON CORPSE!!! 1-2-3-4!!!”"/>
+        </Quotes>
         <Traits>
             <Trait name="Healer" value="True"/>
             <Trait name="aggressive" value="True"/>
@@ -226,7 +262,11 @@
     </Character>
     <Character name="MossaWillows">
         <Background>
+            <Description name="Mossa Willows is a swamp mermaid rogue who can camouflage herself really well within plant life and bodies of water. She&apos;s very cunning, able to utilize her environment well in order to gain the upper hand against enemies she comes across. The royalty is planning to expand their land over the swampland where Mossa resides, destroying that environment and leaving her completely displaced. All she wants is a peaceful existence, living amongst the croaking frogs, soft moss, and chirping crickets with her future beloved. In order to protect this peace (and to seek out a beloved), she ventures out in hopes of finding a way to protect her precious swampland."/>
         </Background>
+        <Quotes>
+            <Quote name="“Oh my, this place is so bustling and busy, how does everyone stay sane with all this dang noise and foot traffic? Oh how I miss my chirping crickets, the comfy moist moss, and the heavenly willow branches gently kissing the surface of the pond. Come to me my beloved, our peaceful swamp life together awaits…”"/>
+        </Quotes>
         <Traits>
             <Trait name="Rogue" value="True"/>
             <Trait name="cunning" value="True"/>
