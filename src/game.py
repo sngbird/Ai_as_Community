@@ -168,15 +168,15 @@ class Game:
 
         # Render each line on the screen
         placeholder = self.draw_multiline_text(lines, (20, 50), (255, 255, 255))
-
+        
         # Draw the submenu for getting opinions
         # Smaller font for the opinion menu
         smaller_font = pygame.font.Font(None, 20)
         opinion_text = "Opinion of:"
-        self.draw_text(opinion_text, (20, 240), (255, 255, 255), smaller_font)  # Adjust Y position as needed
+        self.draw_text(opinion_text, (20, placeholder[1]+30), (255, 255, 255), smaller_font)  # Adjust Y position as needed
 
         # List other characters to get opinion
-        y_offset = 270  # Start a bit lower for character names
+        y_offset = placeholder[1] + 60  # Start a bit lower for character names
         for idx, character in enumerate(self.characters):
             if character != self.selected_character:  # Exclude the displayed character from the list
                 color = (255, 0, 0) if idx == self.menu_index else (255, 255, 255)

@@ -39,6 +39,7 @@ class Social:
         #Rules Section
         self.rules = []
         self.setup_rules()
+        self.apply_rules()
 
     def update_opinion(self, source_name, target_name, alliance, romance, reverence):
         """
