@@ -1,10 +1,12 @@
+import sys
 from social import Social
 from quest import QuestManager
 import pygame
-import sys
 import queue
 from menus.Menu import Menu
 from menus.QuestMenu import QuestMenu
+from menus.MainMenu import MainMenu, MainGameMenu
+from menus.CharacterMenu import CharacterMenu, CharacterDisplay
 
 # Define Colors
 TEXT = (255, 255, 255)
@@ -12,185 +14,25 @@ BLACK = (0, 0, 0)
 GRAY = (136, 136, 136)
 BORDER = (77,17,150)
 
-social_engine = Social()
-quest_keeper = QuestManager(social_engine)
 
 
-class MainMenu(Menu):
-    def handle_input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            if self.game.menu_index == 0:  # Start Game
-                self.game.state = "main_game_menu"
-                self.game.state_queue.put(self.game.state)
-            elif self.game.menu_index == 1:  # Exit
-                pygame.quit()
-                sys.exit()
-        elif keys[pygame.K_UP]:
-            self.game.menu_index = (self.game.menu_index - 1) % 2
-        elif keys[pygame.K_DOWN]:
-            self.game.menu_index = (self.game.menu_index + 1) % 2
-    
-    def draw(self):
-        options = ["Start Game", "Exit"]
-        welcome_text = "Welcome to Tavern Week"
-        self.game.draw_text(welcome_text, (self.game.screen.get_width() // 2, 20), TEXT, center=True)
-        for idx, option in enumerate(options):
-            color = (255, 0, 0) if idx == self.game.menu_index else TEXT
-            self.game.draw_text(option, (self.game.screen.get_width() // 2, 50 + idx * 50), color, center=True)
-
-
-class MainGameMenu(Menu):
-    def handle_input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            if self.game.menu_index == 0:  # Characters
-                self.game.state = "character_menu"
-                self.game.menu_index = 0
-                self.game.state_queue.put(self.game.state)
-            elif self.game.menu_index == 1:  # Quests
-                self.game.state = "quest_menu"
-                self.game.menu_index = 0
-                self.game.state_queue.put(self.game.state)
-            elif self.game.menu_index == 2:  # Suggest Action
-                pass  # Implement suggestion logic here
-            elif self.game.menu_index == 3:  # Exit
-                pygame.quit()
-                sys.exit()
-        elif keys[pygame.K_UP]:
-            self.game.menu_index = (self.game.menu_index - 1) % 4
-        elif keys[pygame.K_DOWN]:
-            self.game.menu_index = (self.game.menu_index + 1) % 4
-    
-    def draw(self):
-        options = ["Characters", "Quests", "Suggest Action", "Exit"]
-        for idx, option in enumerate(options):
-            color = (255, 0, 0) if idx == self.game.menu_index else TEXT
-            self.game.draw_text(option, (self.game.screen.get_width() // 2, 50 + idx * 50), color, center=True)
-
-
-class CharacterMenu(Menu):
-    def handle_input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            self.game.selected_character = self.game.characters[self.game.menu_index]
-            self.game.state = "character_display"
-            self.game.state_queue.put(self.game.state)
-        elif keys[pygame.K_UP]:
-            self.game.menu_index = (self.game.menu_index - 1) % len(self.game.characters)
-        elif keys[pygame.K_DOWN]:
-            self.game.menu_index = (self.game.menu_index + 1) % len(self.game.characters)
-    
-    def draw(self):
-        for idx, character in enumerate(self.game.characters):
-            color = (255, 0, 0) if idx == self.game.menu_index else TEXT
-            self.game.draw_text(character, (self.game.screen.get_width() // 2, 50 + idx * 50), color, center=True)
-        self.game.draw_text("Press Enter to select", (self.game.screen.get_width() // 2, self.game.screen.get_height() - 50), TEXT, center=True)
-
-
-class DeployedDisplay(Menu):
-    def handle_input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            if self.game.menu_index == 0:  # Available Quests
-                self.game.state = "available_quest_menu"
-                self.game.state_queue.put(self.game.state)
-            elif self.game.menu_index == 1:  # Deployed Quest Menu
-                self.game.state = "available_quest_menu"
-                self.game.state_queue.put(self.game.state)
-            
-        elif keys[pygame.K_UP]:
-            self.game.menu_index = (self.game.menu_index - 1) % 2
-        elif keys[pygame.K_DOWN]:
-            self.game.menu_index = (self.game.menu_index + 1) % 2
-    
-    def draw(self):
-        # for idx, quest in enumerate(self.game.available_quests):
-        #     color = (255, 0, 0) if idx == self.game.menu_index else TEXT
-        #     self.game.draw_text(quest., (self.game.screen.get_width() // 2, 50 + idx * 50), color, center=True)
-        # self.game.draw_text("Press Enter to select", (self.game.screen.get_width() // 2, self.game.screen.get_height() - 50), TEXT, center=True)
-         # Define the rectangle
-        rect_width = 800
-        rect_height = 50
-        rect_x = (self.game.screen.get_width() // 2) - rect_width // 2
-        rect_y = 50
-        border_radius = 20
-        shadow_offset = 0
-
-        # Draw the Title Box
-        self.game.draw_rounded_rect_with_shadow(self.game.screen, (rect_x, rect_y, rect_width, rect_height), BORDER, border_radius, shadow_offset)
-
-        # Draw a vertical line inside the rectangle, 1/4 of the way from the left
-        # line_x = rect_x + rect_width // 4
-        # pygame.draw.line(self.game.screen, BLACK, (line_x, rect_y), (line_x, rect_y + rect_height), 2)
-
-class CharacterDisplay(Menu):
-    def handle_input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_DOWN]:
-            self.game.menu_index = (self.game.menu_index + 1) % len(self.game.characters)
-        elif keys[pygame.K_UP]:
-            self.game.menu_index = (self.game.menu_index - 1) % len(self.game.characters)
-        # elif keys[pygame.K_RETURN]:
-        #     target_character = self.game.characters[self.game.menu_index]
-        #     if target_character != self.game.selected_character:
-        #         self.game.state = "opinion_display"
-        #         self.game.state_queue.put(self.game.state)
-
-    def draw(self):
-
-        character_info = social_engine.display_character_information(self.game.selected_character)
-
-        # Split the text into lines based on \n
-        lines = character_info
-        wrapped_lines = self.game.wrap_text(lines,self.game.screen.get_width() // 1.5)
-        # Render each line on the screen
-        placeholder = self.game.draw_multiline_text(wrapped_lines, (20, 50), TEXT)
-        
-        # Draw the submenu for getting opinions
-        # Smaller font for the opinion menu
-        smaller_font = pygame.font.Font(None, 20)
-        opinion_text = "Opinion of:"
-        self.game.draw_text(opinion_text, (20, placeholder[1]+30), TEXT, smaller_font)  # Adjust Y position as needed
-
-        # List other characters to get opinion
-        y_offset = placeholder[1] + 60  # Start a bit lower for character names
-        for idx, character in enumerate(self.game.characters):
-            if character != self.game.selected_character:  # Exclude the displayed character from the list
-                color = (255, 0, 0) if idx == self.game.menu_index else TEXT
-                if idx == self.game.menu_index:
-                    opinion = social_engine.get_opinions(self.game.selected_character, character)
-                    self.game.draw_text(str(opinion), (40, y_offset), color, smaller_font)
-                else:
-                    self.game.draw_text(character, (40, y_offset), color, smaller_font)  # Indent slightly
-                y_offset += 30  # Move down for the next character
-
-# class OpinionDisplay(Menu):
-#     def draw(self):
-#         target_character = self.game.characters[self.game.menu_index]
-#         opinion = social_engine.get_opinions(self.game.selected_character, target_character)
-#         if opinion:
-#             string = f"{self.game.selected_character}'s opinion of {target_character}: {opinion}"
-#         else:
-#             string = f"{self.game.selected_character} has no opinion of {target_character}."
-#         self.game.draw_text(string, (100, 240), TEXT)
 
 class Game:
     def __init__(self, screen):
         self.screen = screen
         self.font = pygame.font.Font(None, 24)
         self.menu_index = 0
-        self.quest_keeper = quest_keeper
-
+        self.social_engine = Social()
+        self.quest_keeper = QuestManager(self.social_engine)
         self.state_queue = queue.LifoQueue()  # Stack-based queue to hold game states
         self.state = "main_menu"  # Initial state is the main menu
         self.state_queue.put(self.state)  # Push initial state onto the stack
         self.week_number = 0
         self.selected_character = None  # To hold the selected character name
-        self.characters = social_engine.character_names
-        quest_keeper.add_quests_weekly()
-        self.available_quests = quest_keeper.possible_quests
-        self.active_quests = quest_keeper.deployed_quests
+        self.characters = self.social_engine.character_names
+        self.quest_keeper.add_quests_weekly()
+        self.available_quests = self.quest_keeper.possible_quests
+        self.active_quests = self.quest_keeper.deployed_quests
 
         # Initialize menu instances
         self.menus = {
