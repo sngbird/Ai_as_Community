@@ -59,6 +59,7 @@ class QuestManager:
     #Also thinking of moving this from here to be a Quest class method instead.
     def add_members(self, quest, character_name):
         able_to_add = True
+        rule = None
         #Check if:
         #   - party is not full
         #   - character is not already in party
@@ -67,24 +68,29 @@ class QuestManager:
         while able_to_add is True:
             if len(quest.current_members) >= int(quest.party_max):
                 able_to_add = False
+                rule = f"Party Is Max Size"
             elif character_name in quest.current_members: #These all have the same result, but separating them for clarity
                 able_to_add = False
+                rule = f"{character_name} in Current Party"
             elif character_name in self.unavailable_members:
+                rule = f"{character_name} in another Party"
                 able_to_add = False
             elif self.social_engine.is_injured(character_name) == True:
+                rule = f"{character_name} in Injured"
                 able_to_add = False
             #Insert "elif some social conflicts" here
             for current_member_name in quest.current_members:
                 relationships = self.social_engine.get_relationships(character_name, current_member_name)
                 if relationships[2] is True:
                     able_to_add = False
+                    rule = f"they are enemies with {current_member_name}"
             break       
         if able_to_add:
             quest.current_members.append(character_name)
             self.move_character_to_unavailable(character_name)
-            return "Successfully Added"
+            return None
         else:
-            return "Character Can't Join Party"
+            return f"{character_name} Can't Join Party because {rule}"
     
     #Actually run the quest and add the results to the player's gold count/stats, plus altering social states.
     def run_quest(self):
@@ -119,14 +125,14 @@ class QuestManager:
         if character_name in self.available_members:
             self.available_members.remove(character_name)
             self.unavailable_members.append(character_name)
-            print(f"moved {character_name} to unavailable")
+            return (f"moved {character_name} to unavailable")
 
     # Move a character to the available list
     def move_character_to_available(self, character_name):
         if character_name in self.unavailable_members:
             self.unavailable_members.remove(character_name)
             self.available_members.append(character_name)
-            print(f"moved {character_name} to available")
+            return (f"moved {character_name} to available")
 
 #Quest class!
 # quest.py
