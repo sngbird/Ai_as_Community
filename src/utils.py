@@ -88,6 +88,8 @@ def load_quests_from_xml(filename, quest_manager):
             alt_value = requirement.get('alt_value')
             if alt_value:
                 requirement_attr["alt_value"] = alt_value
+            if requirement_attr['type'] == 'SCK':
+                requirement_attr['opinion'] = requirement.get('opinion')
             requirements.append(requirement_attr)
         quests[name]["requirements"] = requirements
 
@@ -100,6 +102,8 @@ def load_quests_from_xml(filename, quest_manager):
             alt_value = risk.get('alt_value')
             if alt_value:
                 risk_attr["alt_value"] = alt_value
+            if requirement_attr['type'] == 'SCK':
+                requirement_attr['opinion'] = requirement.get('opinion')
             risks.append(risk_attr)
         quests[name]["risks"] = risks
 
