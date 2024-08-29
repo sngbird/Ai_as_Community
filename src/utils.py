@@ -4,8 +4,12 @@ def load_characters_from_xml(file_path):
     tree = ET.parse(file_path)
     root = tree.getroot()
 
-    character_names = [character_elem.get('name') for character_elem in root.findall('Character')]
-
+# #<Background>
+#             <Description name="Starbo Fantastica is a big-shot, cocky, pretty-boy knight who dresses in very gaudy, flamboyant armor, born from fallen stardust that fell into a royal wizard&apos;s brewing pot. Considered a gift from the heavens, Starbo was showered with praise, training, and special treatment his entire life. To many, Starbo is considered the face of knighthood, displaying incredible charm and skillfulness. However, his overconfidence is often his downfall. He sees demons as beneath him and wears very unprotected (but very flashy) armor when fighting them to prove that point."/>
+#         </Background>
+#         <Quotes>
+#             <Quote name="“Oh please, what armor is worth covering this beautiful stardust specimen I see in the mirror here? Those poor demons would never even land a scratch on a knight of my caliber. Pshaw! Fools I say, fools!”"/>
+#         </Quotes>
     characters = []
     for character_elem in root.findall('Character'):
         character_name = character_elem.get('name')
@@ -17,7 +21,15 @@ def load_characters_from_xml(file_path):
             'relationships': [], #This is for building the relationship matrix from XML given values
             'SCK': [], #Builds cultural_opinion matrix
             'injured': False,
+            'description': str,
+            'quote': str,
         }
+        # Load Description and Quotes
+        for _descript in character_elem.find('Background').findall('Description'):
+            character['description'] = _descript.get('name')
+        
+        for quote in character_elem.find('Quotes').findall('Quote'):
+            character['quote'] = quote.get('name')
 
         # Load traits
         for trait_elem in character_elem.find('Traits').findall('Trait'):
