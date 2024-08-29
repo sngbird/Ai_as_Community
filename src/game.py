@@ -264,6 +264,7 @@ class QuestMenu(Menu):
         member_height = (body_rect_y+body_rect_height//2 - 39) + (body_rect_height//1.75)//2
         for members in quest_current_members:
             self.game.draw_text(members, (self.game.screen.get_width() // 8 + idx * 200, member_height), TEXT, center=False)
+            idx += 1
         #Options Menu
         options = ["Add to Party", "Remove from Party", "Deploy"]
         for idx, option in enumerate(options):
