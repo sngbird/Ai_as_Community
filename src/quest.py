@@ -3,6 +3,7 @@ from utils import load_quests_from_xml
 from random import randint
 from social import Social
 import random
+import copy
 
 class QuestManager:
     def __init__(self, social_engine):
@@ -22,7 +23,10 @@ class QuestManager:
         self.possible_quests = []
         self.deployed_quests = []
         self.social_engine = social_engine
-        self.available_members = social_engine.character_names
+        self.all_members = social_engine.character_names
+        self.available_members = []
+        for name in self.all_members:
+            self.available_members.append(name)
         self.unavailable_members = []
 
     #Add a slightly varying number (3-5?) of quests for the week.
@@ -47,7 +51,8 @@ class QuestManager:
     #Remove a character from a quest
     def remove_members(self, quest, character_name):
         quest.current_members.remove(character_name)
-        self.move_character_to_unavailable(character_name)
+        self.move_character_to_available(character_name)
+        return f"{character_name} Removed From Party"
 
     #-----Unfinished------
     #Add a party member to the quest. Also requires social meddling, so I haven't done this yet either.
@@ -73,8 +78,7 @@ class QuestManager:
                 relationships = self.social_engine.get_relationships(character_name, current_member_name)
                 if relationships[2] is True:
                     able_to_add = False
-                    
-        
+            break       
         if able_to_add:
             quest.current_members.append(character_name)
             self.move_character_to_unavailable(character_name)
@@ -115,12 +119,15 @@ class QuestManager:
         if character_name in self.available_members:
             self.available_members.remove(character_name)
             self.unavailable_members.append(character_name)
+            print(f"moved {character_name} to unavailable")
 
     # Move a character to the available list
     def move_character_to_available(self, character_name):
         if character_name in self.unavailable_members:
             self.unavailable_members.remove(character_name)
             self.available_members.append(character_name)
+            print(f"moved {character_name} to available")
+
 #Quest class!
 # quest.py
 
