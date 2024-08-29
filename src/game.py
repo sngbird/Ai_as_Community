@@ -116,9 +116,9 @@ class QuestMenu(Menu):
                 self.add_character_selector = False
                 self.char_index = 0
             elif keys[pygame.K_UP]:
-                self.game.char_index = (self.game.char_index - 1) % len(self.game.characters)
+                self.char_index = (self.char_index - 1) % len(quest_keeper.available_members)
             elif keys[pygame.K_DOWN]:
-                self.game.char_index = (self.game.char_index + 1) % len(self.game.characters)
+                self.char_index = (self.char_index + 1) % len(quest_keeper.available_members)
         elif self.remove_character_selector: #Problem, currently the char select index isn't being properly reset
             if keys[pygame.K_RETURN]:
                 print(self.char_index)
@@ -127,9 +127,9 @@ class QuestMenu(Menu):
                 self.remove_character_selector = False
                 self.char_index = 0
             elif keys[pygame.K_UP]:
-                self.game.char_index = (self.game.char_index - 1) % len(self.game.available_quests[0].current_members)
+                self.char_index = (self.char_index - 1) % len(self.game.available_quests[0].current_members)
             elif keys[pygame.K_DOWN]:
-                self.game.char_index = (self.game.char_index + 1) % len(self.game.available_quests[0].current_members)
+                self.char_index = (self.char_index + 1) % len(self.game.available_quests[0].current_members)
         ##Quest Menu Selection
         else:
             if keys[pygame.K_RETURN]:
@@ -151,7 +151,7 @@ class QuestMenu(Menu):
 
     def character_select(self): #SUBMENU
         for idx, character in enumerate(quest_keeper.available_members):
-            color = (255, 0, 0) if idx == self.game.char_index else TEXT
+            color = (255, 0, 0) if idx == self.char_index else TEXT
             if idx >= 5:
                 self.game.draw_text(character, (self.game.screen.get_width() // 10 + (idx-5) * 200, self.game.screen.get_height()- 125), color, center=False)
             else:
@@ -160,7 +160,7 @@ class QuestMenu(Menu):
     
     def character_removal(self, quest):
         for idx, character in enumerate(quest.current_members):
-            color = (255, 0, 0) if idx == self.game.char_index else TEXT
+            color = (255, 0, 0) if idx == self.char_index else TEXT
             if idx >= 5:
                 self.game.draw_text(character, (self.game.screen.get_width() // 10 + (idx-5) * 200, self.game.screen.get_height()- 125), color, center=False)
             else:
