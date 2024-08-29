@@ -2,6 +2,7 @@
 from utils import load_quests_from_xml
 from random import randint
 from social import Social
+import random
 
 class QuestManager:
     def __init__(self, social_engine):
@@ -26,11 +27,10 @@ class QuestManager:
 
     #Add a slightly varying number (3-5?) of quests for the week.
     def add_quests_weekly(self):
-        random_quest_name, random_quest_info = self.quests.items()[randint(0,len(self.quests.keys()))] #Pick a random quest
-        while self.quest_in_bowl(random_quest_name):
-            random_quest_name, random_quest_info = self.quests.items()[randint(0,len(self.quests.keys()))]
-        new_quest = Quest(random_quest_name, random_quest_info)
-        self.possible_quests.append(new_quest)
+        if len(self.possible_quests)>= 1:
+            return
+        random_quest_name, random_quest_info = random.choice(list(self.quests.items()))  # Randomly select a quest        
+        self.possible_quests.append(random_quest_info)
 
     #Helper for selecting quests - checks if the quest is already deployed
     def quest_in_bowl(self, quest_name):

@@ -353,12 +353,17 @@ class Social:
 
         # Get SCK opinions
         sck_opinions = self.get_sck_opinions(character_name)
-
         # Get injury status
         injured_status = self.is_injured(character_name)
+        # Get character description and Quote
+        char_description = target_char['description']
+        char_quote = target_char['quote']
 
         # Format the output string
-        info = [f"Character Name: {character_name}"]
+        info = [f"Character Name: {character_name}\n"]
+        info.append(f"Description: {char_description}\n")
+        info.append(f"Quote: {char_quote}\n\n")
+
         info.append(f"Traits: {trait_keys}")
         info.append("Relationships with at least one 'True' status:")
         for other_name, status in relationships.items():
