@@ -361,7 +361,7 @@ def suggestionSetup():
 
                 # Become Allies setup ============================================================================================================================<>
                 becomeAllies = 0
-                if (opinions[0] > 80):
+                if (opinions[0] >= 80):
                     becomeAllies += 2
 
                 if becomeAllies > 0 and not relationships[0]: # No reason to become allies with someone you're already allies with
@@ -380,7 +380,7 @@ def suggestionSetup():
 
                 # End Allies setup ============================================================================================================================<>
                 endAllies = 0
-                if (opinions[0] < 30):
+                if (opinions[0] <= 30):
                     endAllies += 2
 
                 if endAllies > 0 and relationships[0]:
@@ -398,7 +398,7 @@ def suggestionSetup():
                         charASuggestions.append(suggestion("End Allies", "Split up", volition=volition, motives=motives))
                 # Become Lovers setup ============================================================================================================================<>
                 becomeLovers = 0
-                if (opinions[1] > 80):
+                if (opinions[1] >= 80):
                     becomeLovers += 2
                 becomeLovers += hasTrait("overly confident",val=1)
 
@@ -418,7 +418,7 @@ def suggestionSetup():
 
                 # End Lovers setup ============================================================================================================================<>
                 endLovers = 0
-                if (opinions[1] < 30):
+                if (opinions[1] <= 30):
                     endLovers += 2
 
                 if endLovers > 0 and relationships[1]:
@@ -437,7 +437,7 @@ def suggestionSetup():
 
                 # Become Enemies setup ============================================================================================================================<>
                 becomeEnemies = 0
-                if (opinions[0] < 30):
+                if (opinions[0] <= 30):
                     becomeEnemies += 2
 
                 if becomeEnemies > 0 and not relationships[2]:
@@ -456,7 +456,7 @@ def suggestionSetup():
 
                 # End Enemies setup ============================================================================================================================<>
                 endEnemies = 0
-                if (opinions[0] > 50):
+                if (opinions[0] >= 50):
                     endEnemies += 2
 
                 if endEnemies > 0 and relationships[2]:
