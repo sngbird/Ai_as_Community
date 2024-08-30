@@ -46,8 +46,12 @@ class QuestManager:
     #Deploy quest (remove it from possible, add it to deployed)
     def deploy_quest(self, quest):
         #To do: make sure all requirements are fulfilled
-        if quest.requirements_fulfilled():
-            if len(quest.get_current_members()) >= quest.get_minimum:
+        print("Pre-req check")
+        if quest.requirements_done(self.social_engine):
+            print("Post-req check")
+
+            if len(quest.get_current_members()) >= int(quest.get_minimum()):
+                print("Quest Deployed")
                 self.possible_quests.remove(quest)
                 self.deployed_quests.append(quest)
                 return "Quest successfully deployed!"
@@ -83,7 +87,7 @@ class QuestManager:
             elif character_name in self.unavailable_members:
                 rule = f"{character_name} in another Party"
                 able_to_add = False
-            elif self.social_engine.is_injured(character_name) == True:
+            elif self.social_engine.get_injury(character_name) == True:
                 rule = f"{character_name} in Injured"
                 able_to_add = False
             #Insert "elif some social conflicts" here
@@ -103,8 +107,8 @@ class QuestManager:
     #Actually run the quest and add the results to the player's gold count/stats, plus altering social states.
     def run_quest(self, quest):
         injuries_multiplier = quest.danger_level + quest.risks_taken(self.social_engine)
-        if injuries_multiplier > quest.max_party_size:
-            injuries_multiplier = quest.max_party_size
+        if injuries_multiplier > int(quest.get_maximum()):
+            injuries_multiplier = int(quest.get_maximum())
         injuries_num = randint(0, injuries_multiplier) #yeah I simplified this a bit. It's not what's most important.
         actual_injuries = 0
         for injury in range(injuries_num):
@@ -113,7 +117,7 @@ class QuestManager:
             if not self.social_engine.get_injury(injured_char):
                 actual_injuries += 1
             self.social_engine.set_injury(injured_char, True)
-        quest_score = (1/(1+actual_injuries)) * (len(quest.get_current_members()) * quest.get_num_dif_classes())
+        quest_score = (1/(1+actual_injuries)) * (len(quest.get_current_members()) * quest.get_num_dif_classes(self.social_engine))
         return f"Quest score of {quest_score}"
 
     def get_quests_description(self, quest_type):
@@ -164,7 +168,7 @@ class Quest:
         self.risks = risks
         self.party_min = min_party_size
         self.party_max = max_party_size
-        self.danger_level = randint(0, max_party_size-2)  # or any other default value or calculation
+        self.danger_level = randint(0, int(max_party_size)-2)  # or any other default value or calculation
         self.current_members = []
 
     def get_title(self):
@@ -205,76 +209,58 @@ class Quest:
     def get_num_dif_classes(self, social_engine):
         existing_classes = []
         for character in self.current_members:
-            char_class = social_engine.get_traits(character).keys()[0]
-            if char_class not in existing_classes:
+            char_class = list(social_engine.get_traits(character).keys())
+            if char_class[0] not in existing_classes:
                 existing_classes.append(char_class)
         return len(existing_classes)
     
     def requirements_done(self, social_engine):
-        requirements_unfulfilled = self.requirements
+        requirements_unfulfilled = list(self.requirements)  # Create a copy to modify
         for requirement in self.requirements:
             for party_member in self.current_members:
-                #Class
-                if requirement['type'] == "Class" and (social_engine.get_traits(party_member).keys()[0] == requirement['value'] or
-                                                       ('alt_value' in requirement.keys() and 
-                                                       social_engine.get_traits(party_member).keys()[0] == requirement['alt_value'])):
-                    requirements_unfulfilled.remove(requirement)
-                    continue
-                #Trait
+                traits = list(social_engine.get_traits(party_member).keys())
+                # Class
+                if requirement['type'] == "Class":
+                    print(traits[0])
+                    if traits[0] == requirement['value'] or ('alt_value' in requirement and traits[0] == requirement['alt_value']):
+                        requirements_unfulfilled.remove(requirement)
+                        break
+                # Trait
                 elif requirement['type'] == "Trait":
-                    fulfilled = False
-                    for trait in social_engine.get_traits(party_member).keys()[1:]:
-                        if trait == requirement['value'] or ('alt_value' in requirement.keys() and 
-                                                             trait == requirement['alt_value']):
-                            fulfilled = True
-                            requirements_unfulfilled.remove(requirement)
-                            break
-                    if fulfilled:
-                        continue
-                #SCK doesn't require alt value, thankfully (I say this but I added the alt values in the first place)
+                    if any(trait == requirement['value'] or ('alt_value' in requirement and trait == requirement['alt_value'])
+                        for trait in traits[1:]):
+                        requirements_unfulfilled.remove(requirement)
+                        break
+                # SCK
                 elif requirement['type'] == "SCK":
-                    fulfilled = False
-                    for knowledge, opinion in social_engine.get_sck_opinions(party_member).items():
-                        if requirement['value'] == knowledge and requirement['opinion'] == opinion:
-                            fulfilled = True
-                            requirements_unfulfilled.remove(requirement)
-                            break
-        if len(requirements_unfulfilled) == 0:
-            return True
-        else:
-            return False
-    
-    def risks_taken(self, social_engine): #risks is an array of dictionaries with keys: type, value, quantity, alt_value. Quantity is kind of pointless tho
+                    if any(knowledge == requirement['value'] and opinion == requirement['opinion']
+                        for knowledge, opinion in social_engine.get_sck_opinions(party_member).items()):
+                        requirements_unfulfilled.remove(requirement)
+                        break
+        print(len(requirements_unfulfilled))
+        return len(requirements_unfulfilled) == 0
+
+    def risks_taken(self, social_engine):
         total_risks = 0
-        for risk in self.risks: #Outermost loop: check risks
-            for party_member in self.current_members: #Next loop: loop through party members
-                # If it's Class, just look at the first trait. 
-                if risk['type'] == "Class" and social_engine.get_traits(party_member).keys()[0] == risk['value']:
-                    total_risks+=1
+        for risk in self.risks:
+            for party_member in self.current_members:
+                traits = list(social_engine.get_traits(party_member).keys())
+                # Class
+                if risk['type'] == "Class" and traits[0] == risk['value']:
+                    total_risks += 1
                     continue
-                # If it's Trait, look at all but the first trait.
+                # Trait
                 elif risk['type'] == "Trait":
-                    has_risk = False #only count any character's risk once, a character can only be so much of a walking red flag
-                    for trait in social_engine.get_traits(party_member).keys()[1:]:
-                        if trait == risk['value']:
-                            total_risks+=1
-                            has_risk = True
-                            break
-                    if has_risk:
+                    if any(trait == risk['value'] for trait in traits[1:]):
+                        total_risks += 1
                         continue
-                # If it's SCK, look at the SCK instead of traits.
+                # SCK
                 elif risk['type'] == "SCK":
-                    has_risk = False
-                    for knowledge, opinion in social_engine.get_sck_opinions(party_member).items():
-                        if risk['value'] == knowledge and risk['opinion'] == opinion:
-                            total_risks+= 1
-                            has_risk = True
-                            break
-                    if has_risk:
+                    if any(knowledge == risk['value'] and opinion == risk['opinion']
+                        for knowledge, opinion in social_engine.get_sck_opinions(party_member).items()):
+                        total_risks += 1
                         continue
         return total_risks
-
-    
 # social_engine = Social()
 # quest_man = QuestManager(social_engine)
 # #print(quest_man.get_quests_description('all'))

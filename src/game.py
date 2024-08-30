@@ -33,6 +33,7 @@ class Game:
         self.quest_keeper.add_quests_weekly()
         self.available_quests = self.quest_keeper.possible_quests
         self.active_quests = self.quest_keeper.deployed_quests
+        
 
         # Initialize menu instances
         self.menus = {

@@ -1,5 +1,5 @@
 <Quests>
-    <Quest name="Artifact Retrieval" description="Retrieve the artifact of a local god from some ruins and deliver it to the local temple.">
+    <!-- <Quest name="Artifact Retrieval" description="Retrieve the artifact of a local god from some ruins and deliver it to the local temple.">
         <Requirements>
             <Requirement type="Class" value="Monk" quantity="1"/>
             <Requirement type="Class" value="Paladin" quantity="1"/>
@@ -15,7 +15,7 @@
     </Quest>
     <Quest name="Diplomatic Rendezvous" description="We need to mend relationships with our neighboring town by sending an envoy.">
         <Requirements>
-            <Requirement type="Class" value="Bard" quantity="1"/>
+            <Requirement type="Class" value="Rogue" quantity="1"/>
             <Requirement type="Trait" value="Charming" quantity="1"/>
             <Requirement type="Trait" value="Loyal" quantity="1"/>
         </Requirements>
@@ -27,7 +27,7 @@
             <Minimum quantity="4"/>
             <Maximum quantity="6"/>
         </PartyNumbers>
-    </Quest>
+    </Quest> -->
     <Quest name="Message Delivery" description="One of the town's nobles wants us to deliver a letter to his mother in another city.">
         <Requirements>
             <Requirement type="Class" value="Ranger" alt_value="Rogue" quantity="1"/>
