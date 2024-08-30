@@ -141,7 +141,12 @@ class QuestMenu(Menu):
         title_rect_height = 50
         title_rect_x = (self.game.screen.get_width() // 2) - title_rect_width // 2
         title_rect_y = 25
-        quest = self.game.available_quests[0]
+        try:
+            # Attempt to access the first available quest
+            quest = self.game.available_quests[0]  ####Change this to quest_keeper's version
+        except IndexError:
+            # If an IndexError occurs (e.g., list is empty), use the first deployed quest
+            quest = self.game.deployed_quests[0]
         quest_title = quest.get_title()
         # Draw the Title Box
         self.game.draw_rounded_rect_with_shadow(self.game.screen, (title_rect_x, title_rect_y, title_rect_width, title_rect_height), BORDER, border_radius, shadow_offset)
