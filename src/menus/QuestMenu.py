@@ -61,7 +61,8 @@ class QuestMenu(Menu):
 
                 elif self.game.menu_index == 2: #Deploy Quest
                     self.game.quest_keeper.deploy_quest(self.game.quest_keeper.possible_quests[0])
-                    self.game.quest_keeper.run_quest(self.game.quest_keeper.deployed_quests[0])
+                    output = self.game.quest_keeper.run_quest(self.game.quest_keeper.deployed_quests[0])
+                    self.game.draw_results_window(self.game.screen,str(output))
             elif keys[pygame.K_UP]:
                 self.game.menu_index = (self.game.menu_index - 1) % 3
             elif keys[pygame.K_DOWN]:
@@ -197,7 +198,6 @@ class QuestMenu(Menu):
 
         if self.draw_results:
             self.game.draw_results_window(self.game.screen,self.add_result)
-            self.game.wait_for_keypress()
             self.draw_results = False
             self.add_result = "None"
 

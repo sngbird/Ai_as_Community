@@ -174,3 +174,4 @@ class Game:
 
         self.draw_text(str(lines), (rect_x+50,rect_y+76), TEXT)
         pygame.display.flip()
+        self.wait_for_keypress()
