@@ -1,5 +1,5 @@
 <Quests>
-    <Quest name="Artifact Retrieval" description="Retrieve the artifact of a local god from some ruins and deliver it to the local temple.">
+    <!-- <Quest name="Artifact Retrieval" description="Retrieve the artifact of a local god from some ruins and deliver it to the local temple.">
         <Requirements>
             <Requirement type="Class" value="Knight" quantity="1"/>
             <Requirement type="Class" value="Healer" quantity="1"/>
@@ -12,7 +12,7 @@
             <Minimum quantity="2"/>
             <Maximum quantity="8"/>
         </PartyNumbers>
-    </Quest>
+    </Quest> -->
 
     <Quest name="Diplomatic Rendezvous" description="We need to mend relationships with our neighboring town by sending an envoy.">
         <Requirements>
@@ -32,7 +32,7 @@
 
     <Quest name="Message Delivery" description="One of the town's nobles wants us to deliver a letter to his mother in another city.">
         <Requirements>
-            <Requirement type="Class" value="Knight" alt_value="Rogue" quantity="1"/>
+            <Requirement type="Class" value="Knight" alt_value="Rogue" quantity="2"/>
             <Requirement type="Trait" value="overprotective" quantity="1"/>
         </Requirements>
         <Risks>
@@ -45,7 +45,7 @@
         </PartyNumbers>
     </Quest>
 
-    <Quest name="Spell Translation" description="We retrieved some valuable spells from a wizard and need someone knowledgable in magic to translate them.">
+    <!-- <Quest name="Spell Translation" description="We retrieved some valuable spells from a wizard and need someone knowledgable in magic to translate them.">
         <Requirements>
             <Requirement type="Class" value="Mage" quantity="1"/>
             <Requirement type="Trait" value="cunning" alt_value="oddball" quantity="1"/>
@@ -121,5 +121,5 @@
             <Minimum quantity="3"/>
             <Maximum quantity="8"/>
         </PartyNumbers>
-    </Quest>
+    </Quest> -->
 </Quests>

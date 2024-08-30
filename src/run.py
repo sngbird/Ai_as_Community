@@ -16,7 +16,7 @@ def main():
                 pygame.quit()
                 sys.exit()
         frame_count += 1
-        if frame_count % 5 == 0: game.handle_input()
+        if frame_count % 10 == 0: game.handle_input()
         game.update()
         game.draw()
 
