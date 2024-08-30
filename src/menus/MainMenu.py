@@ -43,7 +43,10 @@ class MainGameMenu(Menu):
                 self.game.menu_index = 0
                 self.game.state_queue.put(self.game.state)
             elif self.game.menu_index == 2:  # Suggest Action
-                pass  # Implement suggestion logic here
+                self.game.state = "suggestion_menu"
+                self.game.menu_index = 0
+                self.game.state_queue.put(self.game.state)
+
             elif self.game.menu_index == 3:  # Exit
                 pygame.quit()
                 sys.exit()

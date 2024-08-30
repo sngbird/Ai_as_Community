@@ -7,6 +7,9 @@ from menus.Menu import Menu
 from menus.QuestMenu import QuestMenu
 from menus.MainMenu import MainMenu, MainGameMenu
 from menus.CharacterMenu import CharacterMenu, CharacterDisplay
+from menus.SuggestionMenu import SuggestionMenu, SuggestionResultsMenu
+import suggestions
+
 
 # Define Colors
 TEXT = (255, 255, 255)
@@ -33,7 +36,8 @@ class Game:
         self.quest_keeper.add_quests_weekly()
         self.available_quests = self.quest_keeper.possible_quests
         self.active_quests = self.quest_keeper.deployed_quests
-        
+        self.suggestions = suggestions.suggestionSetup() #Sets up the first group of suggestions from the starting social state
+
 
         # Initialize menu instances
         self.menus = {
