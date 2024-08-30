@@ -62,7 +62,8 @@
             <Trait name="oddball" value="True"/>
         </Traits>
         <SocialHistory>
-            <History name="BucketKnight" alliance="4.0" romance="0.0" reverence="0.0"/>
+            <History name="BucketKnight" alliance="5.0" romance="0.0" reverence="0.0"/>
+            <History name="VanessaConfessa" alliance="5.0" romance="20.0" reverence="0.0"/>
         </SocialHistory>
         <Relationships>
             <Relationship name="BucketKnight" friends="true" dating="false" enemies="false" party_member="false"/>
@@ -116,7 +117,7 @@
             <Trait name="overprotective" value="True"/>
         </Traits>
         <SocialHistory>
-            <History name="SheepGirl" alliance="3.0" romance="5.0" reverence="0.0"/>
+            <History name="SheepGirl" alliance="3.0" romance="65.0" reverence="0.0"/>
         </SocialHistory>
         <Relationships>
             <Relationship name="SheepGirl" friends="false" dating="true" enemies="false" party_member="false"/>

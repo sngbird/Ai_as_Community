@@ -22,7 +22,7 @@ class Social:
             for _ in range(self.num_characters)
         ]
         self.opinions_matrix = [
-            [{name: [0.0, 0.0, 0.0] for name in character_names} for _ in range(self.num_characters)]
+            [{name: [50.0, 50.0, 50.0] for name in character_names} for _ in range(self.num_characters)]
             for _ in range(self.num_characters)
         ]
         #Setup for SCK Matrix (holds SCK and which Opinions is associated )

@@ -387,7 +387,7 @@ def suggestionSetup():
 
                 # End Lovers setup ============================================================================================================================<>
                 endLovers = 0
-                if (opinions[0] < 30):
+                if (opinions[1] < 30):
                     endLovers += 2
 
                 if endLovers > 0 and relationships[1]:
@@ -428,7 +428,7 @@ def suggestionSetup():
                 if (opinions[0] > 50):
                     endEnemies += 2
 
-                if endEnemies > 0 and not relationships[2]:
+                if endEnemies > 0 and relationships[2]:
                     # Make Peace ------------------------------------------------------------------------>
                     volition = endEnemies
                     motives = []
@@ -440,7 +440,7 @@ def suggestionSetup():
                             volition += 10
                             motives.append(charA['name'] + " is romantically interested in " + charB['name'] + ".")
                         # Add suggestion
-                        charASuggestions.append(suggestion("Become Enemies", "Make Peace", volition=volition, motives=motives))
+                        charASuggestions.append(suggestion("End Enemies", "Make Peace", volition=volition, motives=motives))
 
                 # ... after rest of setup
                 # Order by volition, highest to lowest
