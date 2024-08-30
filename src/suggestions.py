@@ -502,6 +502,7 @@ def GetSuggestionResult(suggestion, charAName, charBName):
                 if person[1][2] == True and personB[1][0] == True: #A is allies but B is enemies
                     charBConflictingAllies.append(person[0])
 
+    success = 0
     # Determines which outcome to run based off the type of suggestion chosen
     match suggestion.name:
         # Alliance Up ============================================================================================================================<>
@@ -765,3 +766,8 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             else:
                 social.social_engine.update_relationship_name(charBName,charAName,relationships[:2] + [True] + relationships[3:])
                 social.social_engine.update_relationship_name(charAName,charBName,relationships[:2] + [True] + relationships[3:])
+    
+    if success > 0:
+        return True
+    else:
+        return False

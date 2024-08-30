@@ -42,6 +42,8 @@ class Game:
             "character_menu": CharacterMenu(self),
             "quest_menu": QuestMenu(self),
             "character_display": CharacterDisplay(self),
+            "suggestion_menu": SuggestionMenu(self),
+            "suggestion_results": SuggestionResultsMenu(self),
             #"deployed_display": DeployedDisplay(self),
             #"opinion_display": OpinionDisplay(self)
         }
