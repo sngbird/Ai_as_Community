@@ -23,10 +23,10 @@ def suggestionSetup():
     global suggestionStorage
     suggestionStorage = {}
     for charA in social.social_engine.characters:
-        charASuggestions = []
+        suggestionStorage[charA['name']] = {}
         for charB in social.social_engine.characters:
             if charA != charB:
-
+                charASuggestions = []
                 # Info pull
                 # [alliance, love, reverence]
                 opinions = social.social_engine.get_opinions(charA['name'], charB['name'])
@@ -442,14 +442,15 @@ def suggestionSetup():
                         # Add suggestion
                         charASuggestions.append(suggestion("Become Enemies", "Make Peace", volition=volition, motives=motives))
 
-        # ... after rest of setup
-        # Order by volition, highest to lowest
-        charASuggestions.sort(key=lambda sugg: sugg.volition, reverse=True)
-        # Include only the top 5, if longer than 5
-        if len(charASuggestions) > 5:
-            charASuggestions[:5]
-        # Input into suggestion dict
-        suggestionStorage[charA['name']][charB['name']] = charASuggestions
+                # ... after rest of setup
+                # Order by volition, highest to lowest
+                charASuggestions.sort(key=lambda sugg: sugg.volition, reverse=True)
+                # Include only the top 5, if longer than 5
+                if len(charASuggestions) > 5:
+                    charASuggestions = charASuggestions[:5]
+                # Input into suggestion dict
+                suggestionStorage[charA['name']][charB['name']] = charASuggestions
+                #print(charA['name'] + " to " + charB['name'] + ": " + str(len(charASuggestions)))
 
 # Gets the result of a suggestion. Input is the suggestion object, the charA object, and the charB object
 def GetSuggestionResult(suggestion, charAName, charBName):
