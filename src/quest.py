@@ -88,9 +88,9 @@ class QuestManager:
         if able_to_add:
             quest.current_members.append(character_name)
             self.move_character_to_unavailable(character_name)
-            return None
+            return "None"
         else:
-            return f"{character_name} Can't Join Party because {rule}"
+            return f"{character_name} CAN'T join party because {rule}"
     
     #Actually run the quest and add the results to the player's gold count/stats, plus altering social states.
     def run_quest(self):

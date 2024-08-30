@@ -12,6 +12,8 @@ class QuestMenu(Menu):
         self.add_character_selector = False
         self.remove_character_selector = False
         self.char_index = 0
+        self.draw_results = False
+        self.add_result = "None"
 
 
 #Available Quests, and the options to assign characters
@@ -19,10 +21,15 @@ class QuestMenu(Menu):
         keys = pygame.key.get_pressed()
 
         ##These are for handling the sub menu selections
+        #def draw_results_window(self, screen, rect, color, border_radius, shadow_offset, lines, text_color):
+
         if self.add_character_selector:
             if keys[pygame.K_RETURN]:
                 self.game.selected_character = self.game.quest_keeper.available_members[self.char_index]
-                print(self.game.quest_keeper.add_members(self.game.available_quests[0], self.game.selected_character))
+                self.add_result = self.game.quest_keeper.add_members(self.game.available_quests[0], self.game.selected_character)
+                if self.add_result != "None":
+                    self.draw_results = True
+                    
                 self.add_character_selector = False
                 self.char_index = 0
             elif keys[pygame.K_UP]:
@@ -118,6 +125,7 @@ class QuestMenu(Menu):
         
         return formatted_risks
 
+
     def draw(self):
         # for idx, quest in enumerate(self.game.available_quests):
         #     color = (255, 0, 0) if idx == self.game.menu_index else TEXT
@@ -185,3 +193,10 @@ class QuestMenu(Menu):
             self.character_select()
         if self.remove_character_selector:
             self.character_removal(quest)
+
+        if self.draw_results:
+            self.game.draw_results_window(self.game.screen,self.add_result)
+            self.game.wait_for_keypress()
+            self.draw_results = False
+            self.add_result = "None"
+

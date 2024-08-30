@@ -58,6 +58,16 @@ class Game:
     def update(self):
         # Update game state
         pass
+    
+    def wait_for_keypress(self):
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.KEYDOWN:
+                    waiting = False  # Exit the loop when any key is pressed
 
     def draw(self):
         self.screen.fill((0, 18, 90))  # Clear the screen
@@ -139,5 +149,27 @@ class Game:
         # Draw border rectangle
         pygame.draw.rect(screen, color, rect,4, border_radius=border_radius)
 
+    def draw_results_window(self, screen, lines):
+        screen_width, screen_height = screen.get_size()
+        width = 800
+        height = 200
+        color = BORDER
+        # Center the rect on the screen
+        rect_x = (screen_width - width) // 2
+        rect_y = (screen_height - height) // 2
+        rect = (rect_x, rect_y, width, height)
+        border_radius = 20
+        text_color = TEXT
+        # Draw shadow
+        shadow_rect = (rect_x - 2, rect_y - 2, width + 4, height + 4)
+        rect = (rect_x, rect_y, width, height)
+        pygame.draw.rect(screen, GRAY, shadow_rect, 8, border_radius=border_radius + 2)
 
+        # Draw border rectangle
+        pygame.draw.rect(screen, color, rect, 0, border_radius=border_radius)
 
+        # Center and draw each line of text
+        font = pygame.font.Font(None, 24)  # Adjust font size as needed
+
+        self.draw_text(str(lines), (rect_x+50,rect_y+76), TEXT)
+        pygame.display.flip()
