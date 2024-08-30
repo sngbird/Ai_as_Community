@@ -141,9 +141,9 @@ class SuggestionResultsMenu(Menu):
 
     def performSuggestion(self):
         if self.suggestion != None:
-            self.succeeded = suggestions.GetSuggestionResult(self.suggestion, self.charA, self.charB)
+            self.succeeded = suggestions.GetSuggestionResult(self.game.social_engine ,self.suggestion, self.charA, self.charB)
             self.game.social_engine.apply_rules()
-            suggestions.suggestionSetup()
+            suggestions.suggestionSetup(self.game.social_engine)
 
 
     def handle_input(self):

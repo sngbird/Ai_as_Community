@@ -93,6 +93,7 @@ class QuestManager:
             #Insert "elif some social conflicts" here
             for current_member_name in quest.current_members:
                 relationships = self.social_engine.get_relationships(character_name, current_member_name)
+                print(f"{character_name} and {current_member_name} relationships: {relationships}")
                 if relationships[2] is True:
                     able_to_add = False
                     rule = f"they are enemies with {current_member_name}"

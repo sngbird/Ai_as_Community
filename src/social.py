@@ -95,8 +95,8 @@ class Social:
         
         # Perform logical "and" operation between the existing status and the new status
         updated_status = [current and new for current, new in zip(current_status, relationship_status)]
-        print(updated_status)
         self.relationships_matrix[source_index][target_index][target_name] = updated_status
+
 
     def initialize_opinions(self, index, social_history):
         """

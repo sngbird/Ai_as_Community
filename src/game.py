@@ -36,7 +36,7 @@ class Game:
         self.quest_keeper.add_quests_weekly()
         self.available_quests = self.quest_keeper.possible_quests
         self.active_quests = self.quest_keeper.deployed_quests
-        self.suggestions = suggestions.suggestionSetup() #Sets up the first group of suggestions from the starting social state
+        self.suggestions = suggestions.suggestionSetup(self.social_engine) #Sets up the first group of suggestions from the starting social state
         self.score = 0
         self.suggestions_remaining = 5
         self.image_cache = {}

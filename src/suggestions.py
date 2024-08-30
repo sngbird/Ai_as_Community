@@ -16,31 +16,31 @@ class suggestion:
         self.motives = motives
 
 #Sets up the suggestions for each and every combination of characters
-def suggestionSetup():
+def suggestionSetup(social_engine):
     # for characterA in social.characters,
         # and for every characterB in social.characters
             # if characterA != characterB
     global suggestionStorage
     suggestionStorage = {}
-    for charA in social.social_engine.characters:
+    for charA in social_engine.characters:
         suggestionStorage[charA['name']] = {}
-        for charB in social.social_engine.characters:
+        for charB in social_engine.characters:
             if charA != charB:
                 charASuggestions = []
                 # Info pull
                 # [alliance, love, reverence]
-                opinions = social.social_engine.get_opinions(charA['name'], charB['name'])
+                opinions = social_engine.get_opinions(charA['name'], charB['name'])
                 # [allies, lovers, enemies]
-                relationships = social.social_engine.get_relationships(charA['name'], charB['name'])
+                relationships = social_engine.get_relationships(charA['name'], charB['name'])
                 # {Traitname: true/false, ...}
-                charATraits = social.social_engine.get_traits(charA['name'])
-                charBTraits = social.social_engine.get_traits(charB['name'])
+                charATraits = social_engine.get_traits(charA['name'])
+                charBTraits = social_engine.get_traits(charB['name'])
                 # {SCKName: 'like'/'dislike'/etc ...}
-                charASCK = social.social_engine.get_sck_opinions(charA['name'])
-                charBSCK = social.social_engine.get_sck_opinions(charB['name'])
+                charASCK = social_engine.get_sck_opinions(charA['name'])
+                charBSCK = social_engine.get_sck_opinions(charB['name'])
                 # {SCKName: ??? ...}
-                diffSCK = social.social_engine.compare_sck_opinions(charA['name'], charB['name'])
-                sameSCK = social.social_engine.compare_sck_opinions_same(charA['name'], charB['name'])
+                diffSCK = social_engine.compare_sck_opinions(charA['name'], charB['name'])
+                sameSCK = social_engine.compare_sck_opinions_same(charA['name'], charB['name'])
                 classList = ["Knight", "Healer", "Rogue", "Barbarian", "Mage"]
                 # shared relationships
                 sharedAllies = []
@@ -484,21 +484,21 @@ def suggestionSetup():
                 #print(charA['name'] + " to " + charB['name'] + ": " + str(len(charASuggestions)))
 
 # Gets the result of a suggestion. Input is the suggestion object, the charA object, and the charB object
-def GetSuggestionResult(suggestion, charAName, charBName):
+def GetSuggestionResult(social_engine,suggestion, charAName, charBName):
     # Info pull
     # [alliance, love, reverence]
-    opinionsB = social.social_engine.get_opinions(charAName, charBName)
+    opinionsB = social_engine.get_opinions(charAName, charBName)
     # [allies, lovers, enemies, partyMembers]
-    relationships = social.social_engine.get_relationships(charAName, charBName)
+    relationships = social_engine.get_relationships(charAName, charBName)
     # {Traitname: true/false, ...}
-    charATraits = social.social_engine.get_traits(charAName)
-    charBTraits = social.social_engine.get_traits(charBName)
+    charATraits = social_engine.get_traits(charAName)
+    charBTraits = social_engine.get_traits(charBName)
     # {SCKName: 'like'/'dislike'/etc ...}
-    charASCK = social.social_engine.get_sck_opinions(charAName)
-    charBSCK = social.social_engine.get_sck_opinions(charBName)
+    charASCK = social_engine.get_sck_opinions(charAName)
+    charBSCK = social_engine.get_sck_opinions(charBName)
     # {SCKName: ??? ...}
-    diffSCK = social.social_engine.compare_sck_opinions(charAName, charBName)
-    sameSCK = social.social_engine.compare_sck_opinions_same(charAName, charBName)
+    diffSCK = social_engine.compare_sck_opinions(charAName, charBName)
+    sameSCK = social_engine.compare_sck_opinions_same(charAName, charBName)
     classList = ["Knight", "Healer", "Rogue", "Barbarian", "Mage"]
 
     
@@ -510,7 +510,7 @@ def GetSuggestionResult(suggestion, charAName, charBName):
     # Need the below for these relationships specifically.
     charA = None
     charB = None
-    for person in social.social_engine.characters:
+    for person in social_engine.characters:
         if person['name'] == charAName:
             charA = person
             continue
@@ -551,10 +551,10 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,10,0,0)
-                social.social_engine.update_opinion(charAName,charBName,10,0,0)
+                social_engine.update_opinion(charBName,charAName,10,0,0)
+                social_engine.update_opinion(charAName,charBName,10,0,0)
             else:
-                social.social_engine.update_opinion(charBName,charAName,-10,0,0)
+                social_engine.update_opinion(charBName,charAName,-10,0,0)
         case "Bond Over Shared Interest":
             success = 0
             success += 2 * len(sameSCK) # agreement worth twice as much as disagreement
@@ -566,10 +566,10 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             success += max(0, (50 - opinionsB[0]) / 50) # potential negative effect of low current alliance is ignored here
 
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,15,0,0)
-                social.social_engine.update_opinion(charAName,charBName,15,0,0)
+                social_engine.update_opinion(charBName,charAName,15,0,0)
+                social_engine.update_opinion(charAName,charBName,15,0,0)
             else:
-                social.social_engine.update_opinion(charBName,charAName,-10,0,0)
+                social_engine.update_opinion(charBName,charAName,-10,0,0)
         # Alliance Down ============================================================================================================================<>
         case "Be Rude":
             success = 1
@@ -583,11 +583,11 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             success += - ( (50 - opinionsB[0]) / 50) # inverted version of Be Kind
             
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,-10,0,0)
-                social.social_engine.update_opinion(charAName,charBName,-10,0,0)
+                social_engine.update_opinion(charBName,charAName,-10,0,0)
+                social_engine.update_opinion(charAName,charBName,-10,0,0)
             else:
                 # No result if failure here
-                social.social_engine.update_opinion(charBName,charAName,0,0,0)
+                social_engine.update_opinion(charBName,charAName,0,0,0)
         case "Argue Over Topic":
             success = 0
             success += 2 * len(diffSCK) # agreement worth twice as much as disagreement
@@ -599,10 +599,10 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             success += max(0, - ( (50 - opinionsB[0]) / 50))
 
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,-15,0,0)
-                social.social_engine.update_opinion(charAName,charBName,-15,0,0)
+                social_engine.update_opinion(charBName,charAName,-15,0,0)
+                social_engine.update_opinion(charAName,charBName,-15,0,0)
             else:
-                social.social_engine.update_opinion(charBName,charAName,10,0,0)
+                social_engine.update_opinion(charBName,charAName,10,0,0)
         # Romance Up ============================================================================================================================<>
         case "Flirt":
             #Determine success score
@@ -624,10 +624,10 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,0,10,0)
-                social.social_engine.update_opinion(charAName,charBName,0,10,0)
+                social_engine.update_opinion(charBName,charAName,0,10,0)
+                social_engine.update_opinion(charAName,charBName,0,10,0)
             else:
-                social.social_engine.update_opinion(charBName,charAName,0,-10,0)
+                social_engine.update_opinion(charBName,charAName,0,-10,0)
         # Romance Down ============================================================================================================================<>
         case "Disrespect":
             #Determine success score
@@ -645,10 +645,10 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,0,-10,0)
-                social.social_engine.update_opinion(charAName,charBName,0,-10,0)
+                social_engine.update_opinion(charBName,charAName,0,-10,0)
+                social_engine.update_opinion(charAName,charBName,0,-10,0)
             else:
-                social.social_engine.update_opinion(charBName,charAName,0,10,0)
+                social_engine.update_opinion(charBName,charAName,0,10,0)
         # Reverence Up ============================================================================================================================<>
         case "Brag":
             #Determine success score
@@ -663,10 +663,10 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,0,0,10)
-                social.social_engine.update_opinion(charAName,charBName,0,0,10)
+                social_engine.update_opinion(charBName,charAName,0,0,10)
+                social_engine.update_opinion(charAName,charBName,0,0,10)
             else:
-                social.social_engine.update_opinion(charBName,charAName,0,0,-10)
+                social_engine.update_opinion(charBName,charAName,0,0,-10)
         # Reverence Down ============================================================================================================================<>
         case "Weird Out":
             #Determine success score
@@ -680,10 +680,10 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_opinion(charBName,charAName,0,0,10)
-                social.social_engine.update_opinion(charAName,charBName,0,0,10)
+                social_engine.update_opinion(charBName,charAName,0,0,10)
+                social_engine.update_opinion(charAName,charBName,0,0,10)
             else:
-                social.social_engine.update_opinion(charBName,charAName,0,0,-10)
+                social_engine.update_opinion(charBName,charAName,0,0,-10)
         # Become Allies ============================================================================================================================<>
         case "Befriend":
             #Determine success score
@@ -697,11 +697,11 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0: # Become friends, and end current enemies if have one
-                social.social_engine.update_relationship_name(charBName,charAName,[True] + relationships[1] + [False] + relationships[3:])
-                social.social_engine.update_relationship_name(charAName,charBName,[True] + relationships[1] + [False] + relationships[3:])
+                social_engine.update_relationship_name(charBName,charAName,[True] + relationships[1] + [False] + relationships[3:])
+                social_engine.update_relationship_name(charAName,charBName,[True] + relationships[1] + [False] + relationships[3:])
             else:
-                social.social_engine.update_relationship_name(charBName,charAName,[False] + relationships[1:])
-                social.social_engine.update_relationship_name(charAName,charBName,[False] + relationships[1:])
+                social_engine.update_relationship_name(charBName,charAName,[False] + relationships[1:])
+                social_engine.update_relationship_name(charAName,charBName,[False] + relationships[1:])
         # End Allies ============================================================================================================================<>
         case "Split up":
             #Determine success score
@@ -715,11 +715,11 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_relationship_name(charBName,charAName,[False] + relationships[1:])
-                social.social_engine.update_relationship_name(charAName,charBName,[False] + relationships[1:])
+                social_engine.update_relationship_name(charBName,charAName,[False] + relationships[1:])
+                social_engine.update_relationship_name(charAName,charBName,[False] + relationships[1:])
             else:
-                social.social_engine.update_relationship_name(charBName,charAName,[True] + relationships[1:])
-                social.social_engine.update_relationship_name(charAName,charBName,[True] + relationships[1:])
+                social_engine.update_relationship_name(charBName,charAName,[True] + relationships[1:])
+                social_engine.update_relationship_name(charAName,charBName,[True] + relationships[1:])
         # Become Lovers ============================================================================================================================<>
         case "Ask Out":
             #Determine success score
@@ -736,11 +736,11 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [True] + relationships[2:])
-                social.social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [True] + relationships[2:])
+                social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [True] + relationships[2:])
+                social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [True] + relationships[2:])
             else:
-                social.social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [False] + relationships[2:])
-                social.social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [False] + relationships[2:])
+                social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [False] + relationships[2:])
+                social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [False] + relationships[2:])
         # End Lovers ============================================================================================================================<>
         case "Break Up":
             #Determine success score
@@ -756,11 +756,11 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [False] + relationships[2:])
-                social.social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [False] + relationships[2:])
+                social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [False] + relationships[2:])
+                social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [False] + relationships[2:])
             else:
-                social.social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [True] + relationships[2:])
-                social.social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [True] + relationships[2:])
+                social_engine.update_relationship_name(charBName,charAName,relationships[:1] + [True] + relationships[2:])
+                social_engine.update_relationship_name(charAName,charBName,relationships[:1] + [True] + relationships[2:])
         # Become Enemies ============================================================================================================================<>
         case "Start Feud":
             #Determine success score
@@ -774,11 +774,11 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0: # Become enemies, and end current alliance + lover if True
-                social.social_engine.update_relationship_name(charBName,charAName,[False, False, True] + relationships[3:])
-                social.social_engine.update_relationship_name(charAName,charBName,[False, False, True] + relationships[3:])
+                social_engine.update_relationship_name(charBName,charAName,[False, False, True] + relationships[3:])
+                social_engine.update_relationship_name(charAName,charBName,[False, False, True] + relationships[3:])
             else:
-                social.social_engine.update_relationship_name(charBName,charAName,relationships[:2] + [False] + relationships[3:])
-                social.social_engine.update_relationship_name(charAName,charBName,relationships[:2] + [False] + relationships[3:])
+                social_engine.update_relationship_name(charBName,charAName,relationships[:2] + [False] + relationships[3:])
+                social_engine.update_relationship_name(charAName,charBName,relationships[:2] + [False] + relationships[3:])
         # End Enemies ============================================================================================================================<>
         case "Make Peace":
             #Determine success score
@@ -792,11 +792,13 @@ def GetSuggestionResult(suggestion, charAName, charBName):
             
             #Determine if succeed/failure, and results
             if success > 0:
-                social.social_engine.update_relationship_name(charBName,charAName,relationships[:2] + [False] + relationships[3:])
-                social.social_engine.update_relationship_name(charAName,charBName,relationships[:2] + [False] + relationships[3:])
+                social_engine.update_relationship_name(charBName,charAName,relationships[:2] + [False] + relationships[3:])
+                social_engine.update_relationship_name(charAName,charBName,relationships[:2] + [False] + relationships[3:])
+                relationships = social_engine.get_relationships(charAName, charBName)
+                print(f"{charAName} and {charBName} relationships: {relationships}")
             else:
-                social.social_engine.update_relationship_name(charBName,charAName,relationships[:2] + [True] + relationships[3:])
-                social.social_engine.update_relationship_name(charAName,charBName,relationships[:2] + [True] + relationships[3:])
+                social_engine.update_relationship_name(charBName,charAName,relationships[:2] + [True] + relationships[3:])
+                social_engine.update_relationship_name(charAName,charBName,relationships[:2] + [True] + relationships[3:])
     
     if success > 0:
         return True
