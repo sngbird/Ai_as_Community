@@ -5,6 +5,7 @@ TEXT = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (136, 136, 136)
 BORDER = (77,17,150)
+PORTRAIT = (6, 212, 37)
 
 class QuestMenu(Menu):
     def __init__(self, game):
@@ -185,11 +186,28 @@ class QuestMenu(Menu):
         
         #Active Party Box - Will Contain Portraits eventually
         self.game.draw_rounded_rect_with_shadow(self.game.screen, (body_rect_x+12, body_rect_y+body_rect_height//2 - 39, body_rect_width-24, body_rect_height//1.75), BORDER, border_radius, shadow_offset)
+        scaled_width = 150  # Desired width of the scaled image
+        scaled_height = 150  # Desired height of the scaled image
+
         idx = 0
-        member_height = (body_rect_y+body_rect_height//2 - 39) + (body_rect_height//1.75)//2
-        for members in quest_current_members:
-            self.game.draw_text(members, (self.game.screen.get_width() // 8 + idx * 200, member_height), TEXT, center=False)
-            idx += 1
+        member_height = body_rect_y + 1.5*scaled_height - 25
+
+        for member in quest_current_members:
+            if member in self.game.image_cache:
+                # Retrieve the cached image
+                portrait_image = self.game.image_cache[member]
+                
+                # Scale the image to the desired size
+                scaled_image = pygame.transform.scale(portrait_image, (scaled_width, scaled_height))
+                
+                # Calculate the position and blit the scaled image to the screen
+                x_position = body_rect_x + 24 + idx * 150 
+                self.game.screen.blit(scaled_image, (x_position, member_height))
+                
+                # Draw the member's name
+                self.game.draw_text(member, (x_position+(scaled_width//2), member_height + scaled_height - 5), PORTRAIT, center=True)
+                
+                idx += 1
         #Options Menu
         options = ["Add to Party", "Remove from Party", "Deploy"]
         for idx, option in enumerate(options):
