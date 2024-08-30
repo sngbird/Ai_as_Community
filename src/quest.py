@@ -158,6 +158,11 @@ class QuestManager:
             self.available_members.append(character_name)
             return (f"moved {character_name} to available")
 
+    def advance_time(self):
+        score = self.run_quest(self.deployed_quests[0])
+        self.deployed_quests.remove(self.deployed_quests[0])
+        self.add_quests_weekly()
+        return score
 #Quest class!
 
 class Quest:

@@ -60,9 +60,9 @@ class QuestMenu(Menu):
                     self.game.char_index = 0
 
                 elif self.game.menu_index == 2: #Deploy Quest
-                    self.game.quest_keeper.deploy_quest(self.game.quest_keeper.possible_quests[0])
-                    output = self.game.quest_keeper.run_quest(self.game.quest_keeper.deployed_quests[0])
+                    output = self.game.quest_keeper.deploy_quest(self.game.quest_keeper.possible_quests[0])
                     self.game.draw_results_window(self.game.screen,str(output))
+                    self.game.menu_index = 0
             elif keys[pygame.K_UP]:
                 self.game.menu_index = (self.game.menu_index - 1) % 3
             elif keys[pygame.K_DOWN]:
@@ -143,10 +143,10 @@ class QuestMenu(Menu):
         title_rect_y = 25
         try:
             # Attempt to access the first available quest
-            quest = self.game.available_quests[0]  ####Change this to quest_keeper's version
+            quest = self.game.quest_keeper.possible_quests[0]  
         except IndexError:
             # If an IndexError occurs (e.g., list is empty), use the first deployed quest
-            quest = self.game.deployed_quests[0]
+            quest = self.game.quest_keeper.deployed_quests[0]
         quest_title = quest.get_title()
         # Draw the Title Box
         self.game.draw_rounded_rect_with_shadow(self.game.screen, (title_rect_x, title_rect_y, title_rect_width, title_rect_height), BORDER, border_radius, shadow_offset)

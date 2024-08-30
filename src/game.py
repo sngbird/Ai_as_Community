@@ -8,7 +8,7 @@ from menus.MainMenu import MainMenu, MainGameMenu
 from menus.CharacterMenu import CharacterMenu, CharacterDisplay
 from menus.SuggestionMenu import SuggestionMenu, SuggestionResultsMenu
 import suggestions
-
+import re
 
 # Define Colors
 TEXT = (255, 255, 255)
@@ -36,7 +36,9 @@ class Game:
         self.available_quests = self.quest_keeper.possible_quests
         self.active_quests = self.quest_keeper.deployed_quests
         self.suggestions = suggestions.suggestionSetup() #Sets up the first group of suggestions from the starting social state
-
+        self.score = 0
+        self.suggestions_remaining = 5
+        
 
         # Initialize menu instances
         self.menus = {
@@ -180,3 +182,14 @@ class Game:
         self.draw_text(str(lines), (rect_x+50,rect_y+76), TEXT)
         pygame.display.flip()
         self.wait_for_keypress()
+    
+    def advance_time(self, score):
+        quest_score = 0
+        self.week_number += 1
+        self.draw_results_window(self.screen, score)
+        match = re.search(r"[-+]?\d*\.\d+|\d+", score)
+        if match:
+            quest_score = float(match.group())
+
+        self.score += quest_score
+        self.suggestions_remaining = 5
