@@ -50,9 +50,9 @@ def suggestionSetup():
                 for person in charA["relationships"]:
                     for personB in charB["relationships"]:
                         if person[0] == personB[0]: #each person is formatted as ("name", (ally,lover,enemy,partymember))
-                            if person[1][0] == personB[1][0]:
+                            if person[1][0] == True and person[1][0] == personB[1][0]:
                                 sharedAllies.append(person[0])
-                            if person[1][2] == personB[1][2]:
+                            if person[1][2] == True and person[1][2] == personB[1][2]:
                                 sharedEnemies.append(person[0])
                             if person[1][0] == True and personB[1][2] == True: #A is allies but B is enemies
                                 charAConflictingAllies.append(person[0])
@@ -121,6 +121,10 @@ def suggestionSetup():
                 allianceUp += hasTrait("cheerful",val=1)
                 if hasTrait("overprotective",val=1) >= 1: # If A is overprotective, they will consider allUp less for every ally who has B as an enemy
                     allianceUp += alliedWithEnemy(val=-1)
+                if relationships[2]: #charA and charB are enemies
+                    allianceDown -= 5
+                if relationships[1]: #charA and charB are lovers
+                    allianceDown += 5
                 
                 # Consider alliance Up suggestions
                 if allianceUp > 0:
@@ -131,14 +135,14 @@ def suggestionSetup():
 
                     # Determine whether to include suggestion
                     if (opinions[0] >= 80):
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " is close friends with " + charB['name'])
                     volition += haveSharedAlly()
 
                     if volition > allianceUp:
                         # Determine further desire to include suggestion
                         if (opinions[2] >= 50):
-                            volition += 10
+                            volition += 5
                             motives.append(charA['name'] + " thinks " + charB['name'] + " is extraordinary.")
                         # Add suggestion
                         charASuggestions.append(suggestion("Increase Alliance", "Be Kind", volition=volition, motives=motives))
@@ -148,7 +152,7 @@ def suggestionSetup():
                     motives = []
 
                     for item, value in sameSCK: # if share opinion on SCK
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " and " + charB['name'] + " both " + value + " " + item + ".")
                     volition += haveSharedAlly()
                     volition += haveSharedEnemy()
@@ -156,7 +160,7 @@ def suggestionSetup():
                     if volition > allianceUp:
                         for trait in charATraits:
                             if trait in classList and trait in charBTraits:
-                                volition += 10
+                                volition += 5
                                 motives.append(charA['name'] + " and " + charB['name'] + " are the same class.")
                                 break # can only have 1 class, so if you find it might as well stop
                         volition += haveSharedAlly()
@@ -167,13 +171,18 @@ def suggestionSetup():
                 allianceDown = 0
                 if (opinions[0] <= 60):
                     allianceDown += 2
-                if (opinions[1] >= 60): # mildly romantically interested
+                if (opinions[1] <= 40): # mildly romantically disinterested
                     allianceDown += 1
                 if (opinions[2] <= 40): # thinks they're boring
                     allianceDown += 1
                 allianceDown += hasTrait("aggressive",val=1)
                 allianceDown += hasTrait("loyal",val=-1)
                 allianceDown += alliedWithEnemy(val=1)
+                if relationships[2]: #charA and charB are enemies
+                    allianceDown += 5
+                if relationships[1]: #charA and charB are lovers
+                    allianceDown -= 5
+                    #motives.append(charB['name'] + " and " + charA['name'] " are lovers. (therefore " + charA['name'] + "wants this less)")
 
                 if allianceDown > 0:
                     # Be Rude ------------------------------------------------------------------------>
@@ -181,14 +190,16 @@ def suggestionSetup():
                     motives = []
 
                     if (opinions[0] <= 30):
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " dislikes " + charB['name'])
+
 
                     if volition > allianceDown:
                         # Determine further desire to include suggestion
                         if (opinions[2] <= 50):
-                            volition += 10
+                            volition += 5
                             motives.append(charA['name'] + " thinks " + charB['name'] + " is boring.")
+                        
                         # Add suggestion
                         charASuggestions.append(suggestion("Decrease Alliance", "Be Rude", volition=volition, motives=motives))
 
@@ -197,13 +208,13 @@ def suggestionSetup():
                     motives = []
 
                     for item, value in diffSCK: # if diff opinion on SCK
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " and " + charB['name'] + " disagree on " + item + ".")
                     
                     if volition > allianceDown:
                         for trait in charATraits:
                             if trait in classList and not (trait in charBTraits):
-                                volition += 10
+                                volition += 5
                                 motives.append(charA['name'] + " and " + charB['name'] + " are different classes.")
                                 break # can only have 1 class, so if you find it might as well stop
                         charASuggestions.append(suggestion("Decrease Alliance", "Argue Over Topic", volition=volition, motives=motives))
@@ -216,7 +227,11 @@ def suggestionSetup():
                     romanceUp += 1
                 if (opinions[2] >= 60): # thinks they're cool
                     romanceUp += 1
-                romanceUp = hasTrait("romantic",val=1)
+                romanceUp += hasTrait("romantic",val=1)
+                if relationships[2]: #charA and charB are enemies
+                    allianceDown -= 5
+                if relationships[0]: #charA and charB are friends
+                    allianceDown += 3
 
                 if romanceUp > 0:
                     # Flirt ------------------------------------------------------------------------>
@@ -226,13 +241,13 @@ def suggestionSetup():
 
                     # Determine whether to include suggestion
                     if (opinions[1] >= 80):
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " is very romantically interested in " + charB['name'] + ".")
 
                     if volition > romanceUp:
                         # Determine further desire to include suggestion
                         if (opinions[2] >= 70):
-                            volition += 10
+                            volition += 5
                             motives.append(charA['name'] + " thinks " + charB['name'] + " is extraordinary.")
                         if "charming" in charBTraits:
                             volition += 5
@@ -248,7 +263,11 @@ def suggestionSetup():
                     romanceDown += 1
                 if (opinions[2] <= 40): # thinks they're boring
                     romanceDown += 1
-                romanceDown = hasTrait("alcoholic",val=1) # character is drunk and makes bad decisions? bit odd but it works
+                romanceDown += hasTrait("alcoholic",val=1) # character is drunk and makes bad decisions? bit odd but it works
+                if relationships[2]: #charA and charB are enemies
+                    allianceDown += 5
+                if relationships[0]: #charA and charB are friends
+                    allianceDown -= 3
 
                 if romanceDown > 0:
                     # Disrespect ------------------------------------------------------------------------>
@@ -256,16 +275,16 @@ def suggestionSetup():
                     motives = []
 
                     if (opinions[1] <= 30):
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " wants nothing to do with " + charB['name'] + ".")
 
                     if volition > romanceDown:
                         if (opinions[2] <= 50):
-                            volition += 10
+                            volition += 5
                             motives.append(charA['name'] + " thinks " + charB['name'] + " is boring.")
                         if "charming" in charBTraits: #Negative effect on volition
-                            volition -= 5
-                            motives.append(charB['name'] + " is charming.")
+                            volition -= 3
+                            motives.append(charB['name'] + " is charming. (therefore " + charA['name'] + "wants this less)")
                         # Add suggestion
                         charASuggestions.append(suggestion("Decrease Romance", "Disrespect", volition=volition, motives=motives))
 
@@ -277,7 +296,13 @@ def suggestionSetup():
                     reverenceUp += 1
                 if (opinions[1] >= 60): # mildly romantically interested
                     reverenceUp += 1
-                reverenceUp = hasTrait("cunning",val=1)
+                reverenceUp += hasTrait("cunning",val=1)
+                if relationships[0]: #charA and charB are friends
+                    allianceDown += 2
+                if relationships[1]: #charA and charB are lovers
+                    allianceDown += 2
+                if relationships[2]: #charA and charB are enemies
+                    allianceDown -= 2
 
                 if reverenceUp > 0:
                     # Brag ------------------------------------------------------------------------>
@@ -286,13 +311,13 @@ def suggestionSetup():
 
                     # Determine whether to include suggestion
                     if (opinions[2] >= 80):
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " thinks " + charB['name'] + " is extraordinary.")
 
                     if volition > reverenceUp:
                         # Determine further desire to include suggestion
                         if (opinions[1] >= 50):
-                            volition += 10
+                            volition += 5
                             motives.append(charA['name'] + " is romantically interested in " + charB['name'] + ".")
                         # Add suggestion
                         charASuggestions.append(suggestion("Increase Reverence", "Brag", volition=volition, motives=motives))
@@ -303,9 +328,15 @@ def suggestionSetup():
                     reverenceDown += 2
                 if (opinions[0] <= 40): # on bad terms
                     reverenceDown += 1
-                if (opinions[2] <= 40): # mildly romantically disinterested
+                if (opinions[1] <= 40): # mildly romantically disinterested
                     reverenceDown += 1
-                reverenceDown = hasTrait("secretive",val=1)
+                reverenceDown += hasTrait("secretive",val=1)
+                if relationships[0]: #charA and charB are friends
+                    allianceDown -= 2
+                if relationships[1]: #charA and charB are lovers
+                    allianceDown -= 2
+                if relationships[2]: #charA and charB are enemies
+                    allianceDown += 2
 
                 if reverenceDown > 0:
                     # Weird Out ------------------------------------------------------------------------>
@@ -314,16 +345,16 @@ def suggestionSetup():
 
                     # Determine whether to include suggestion
                     if (opinions[2] <= 30):
-                        volition += 2
+                        volition += 5
                         motives.append(charA['name'] + " thinks " + charB['name'] + " is boring.")
                     for item, value in diffSCK: # if diff opinion on SCK
-                        volition += 1
+                        volition += 5
                         motives.append(charA['name'] + " and " + charB['name'] + " disagree on " + item + ".")
 
                     if volition > reverenceDown:
                         # Determine further desire to include suggestion
                         if (opinions[1] <= 30):
-                            volition += 10
+                            volition += 5
                             motives.append(charA['name'] + " wants nothing to do with " + charB['name'] + ".")
                         # Add suggestion
                         charASuggestions.append(suggestion("Decrease Reverence", "Weird Out", volition=volition, motives=motives))
@@ -369,7 +400,7 @@ def suggestionSetup():
                 becomeLovers = 0
                 if (opinions[1] > 80):
                     becomeLovers += 2
-                becomeLovers = hasTrait("overly confident",val=1)
+                becomeLovers += hasTrait("overly confident",val=1)
 
                 if becomeLovers > 0 and not relationships[1] and not relationships[2]: # cant be lovers while enemies
                     # Ask Out ------------------------------------------------------------------------>
