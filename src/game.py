@@ -1,4 +1,3 @@
-import sys
 from social import Social
 from quest import QuestManager
 import pygame

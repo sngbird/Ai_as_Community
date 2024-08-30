@@ -5,6 +5,7 @@ import suggestions
 TEXT = (255, 255, 255)
 
 
+# Menu where the player can select suggestions
 class SuggestionMenu(Menu):
     def __init__(self, game):
         self.game = game
@@ -28,7 +29,7 @@ class SuggestionMenu(Menu):
                     self.game.menu_index = 1
                     self.charBIndex = 1
                 self.menuDepth += 1
-                print("selected char index " + str(self.charAIndex))
+                #print("selected char index " + str(self.charAIndex))
             elif keys[pygame.K_UP]:
                 self.game.menu_index = (self.game.menu_index - 1) % len(self.game.characters)
                 self.charAIndex = self.game.menu_index
@@ -66,20 +67,18 @@ class SuggestionMenu(Menu):
                     self.menuDepth -= 1
                     self.game.menu_index = self.charBIndex
                 else:
-                    #self.game.selected_character = self.game.characters[self.game.menu_index]
-                    #self.game.state = "suggestion_display"
-                    #self.game.state_queue.put(self.game.state)
-                    #self.char_index = 0
-                    #self.menuDepth += 1
-                    #self.charBIndex = self.game.menu_index
-                    print("todo")
+                    #print("todo")
+                    self.game.state = "suggestion_results"
+                    self.game.state_queue.put(self.game.state)
+                    self.game.menus["suggestion_results"].reset(suggestions.suggestionStorage[self.game.characters[self.charAIndex]][self.game.characters[self.charBIndex]][self.game.menu_index], self.charAIndex, self.charBIndex)
+                    self.game.menus["suggestion_results"].performSuggestion()
             elif keys[pygame.K_UP]:
                 self.game.menu_index = (self.game.menu_index - 1) % (self.suggListLen + 1)
                 #self.charBIndex = self.game.menu_index
             elif keys[pygame.K_DOWN]:
                 self.game.menu_index = (self.game.menu_index + 1) % (self.suggListLen + 1)
                 #self.charBIndex = self.game.menu_index
-
+    
     def draw(self):
         # charA list
         for idx, character in enumerate(self.game.characters):
@@ -115,7 +114,6 @@ class SuggestionMenu(Menu):
                         placeholder = self.game.draw_multiline_text(wrapped_lines, (self.game.screen.get_width() * 13 // 20, 250 + idx2 * 75), TEXT)
             color = (255, 0, 0) if self.suggListLen == self.game.menu_index else TEXT
             self.game.draw_text("Go back", (self.game.screen.get_width() // 2, 50 + self.suggListLen * 50), color, center=False)
-
 
 
 class SuggestionResultsMenu(Menu):

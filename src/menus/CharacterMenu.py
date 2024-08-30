@@ -39,7 +39,7 @@ class CharacterDisplay(Menu):
 
     def draw(self):
 
-        character_info = social_engine.display_character_information(self.game.selected_character)
+        character_info = self.game.social_engine.display_character_information(self.game.selected_character)
 
         # Split the text into lines based on \n
         lines = character_info
@@ -59,7 +59,7 @@ class CharacterDisplay(Menu):
             if character != self.game.selected_character:  # Exclude the displayed character from the list
                 color = (255, 0, 0) if idx == self.game.menu_index else TEXT
                 if idx == self.game.menu_index:
-                    opinion = social_engine.get_opinions(self.game.selected_character, character)
+                    opinion = self.game.social_engine.get_opinions(self.game.selected_character, character)
                     self.game.draw_text(str(opinion), (40, y_offset), color, smaller_font)
                 else:
                     self.game.draw_text(character, (40, y_offset), color, smaller_font)  # Indent slightly

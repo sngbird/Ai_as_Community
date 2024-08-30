@@ -1,3 +1,4 @@
+import sys
 from menus.Menu import Menu
 import pygame
 
