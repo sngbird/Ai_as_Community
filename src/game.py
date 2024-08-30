@@ -385,7 +385,7 @@ class SuggestionMenu(Menu):
                     self.game.menu_index = 1
                     self.charBIndex = 1
                 self.menuDepth += 1
-                print("selected char index " + str(self.charAIndex))
+                #print("selected char index " + str(self.charAIndex))
             elif keys[pygame.K_UP]:
                 self.game.menu_index = (self.game.menu_index - 1) % len(self.game.characters)
                 self.charAIndex = self.game.menu_index
@@ -423,13 +423,11 @@ class SuggestionMenu(Menu):
                     self.menuDepth -= 1
                     self.game.menu_index = self.charBIndex
                 else:
-                    #self.game.selected_character = self.game.characters[self.game.menu_index]
-                    #self.game.state = "suggestion_display"
-                    #self.game.state_queue.put(self.game.state)
-                    #self.char_index = 0
-                    #self.menuDepth += 1
-                    #self.charBIndex = self.game.menu_index
-                    print("todo")
+                    #print("todo")
+                    self.game.state = "suggestion_results"
+                    self.game.state_queue.put(self.game.state)
+                    self.game.menus["suggestion_results"].reset(suggestions.suggestionStorage[self.game.characters[self.charAIndex]][self.game.characters[self.charBIndex]][self.game.menu_index], self.charAIndex, self.charBIndex)
+                    self.game.menus["suggestion_results"].performSuggestion()
             elif keys[pygame.K_UP]:
                 self.game.menu_index = (self.game.menu_index - 1) % (self.suggListLen + 1)
                 #self.charBIndex = self.game.menu_index
@@ -473,6 +471,62 @@ class SuggestionMenu(Menu):
             color = (255, 0, 0) if self.suggListLen == self.game.menu_index else TEXT
             self.game.draw_text("Go back", (self.game.screen.get_width() // 2, 50 + self.suggListLen * 50), color, center=False)
 
+# Result screen for suggestions
+class SuggestionResultsMenu(Menu):
+    def __init__(self, game):
+        self.game = game
+        self.state = "waiting"
+        self.suggestion = None
+        self.charA = None
+        self.charB = None
+        self.succeeded = False
+
+    def reset(self, sugg=None,charAIndex=None,charBIndex=None):
+        self.state = "waiting"
+        self.suggestion = sugg
+        if charAIndex!=None and charBIndex!=None and charAIndex!=charBIndex:
+            self.charA = self.game.characters[charAIndex]
+            self.charB = self.game.characters[charBIndex]
+        else:
+            self.charA,self.charB = None,None
+
+    def performSuggestion(self):
+        if self.suggestion != None:
+            self.succeeded = suggestions.GetSuggestionResult(self.suggestion, self.charA, self.charB)
+
+    def handle_input(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            if self.state == "waiting":
+                self.state = "show result"
+            elif self.state == "show result":
+                self.game.state = "main_game_menu"
+                self.game.state_queue.put(self.game.state)
+                self.reset()
+
+    def draw(self):
+        color = TEXT
+        self.game.draw_text("SUGGESTION ATTEMPT", (self.game.screen.get_width() // 2, 50), color, center=True)
+        self.game.draw_text(self.charA + " attempts to", (self.game.screen.get_width() // 2, 100), color, center=True)
+        self.game.draw_text(self.suggestion.name, (self.game.screen.get_width() // 2, 125), color, center=True)
+        # account for odd grammer by adjusting next line
+        if self.suggestion.name in ["Be Kind","Be Rude","Brag"]:
+            self.game.draw_text("to " + self.charB + "...", (self.game.screen.get_width() // 2, 150), color, center=True)
+        elif self.suggestion.name in ["Bond Over Shared Interest","Argue Over Topic","Flirt","Split up","Break Up","Make Peace"]:
+            self.game.draw_text("with " + self.charB + "...", (self.game.screen.get_width() // 2, 150), color, center=True)
+        else: # No extra words needed
+            self.game.draw_text(self.charB + "...", (self.game.screen.get_width() // 2, 150), color, center=True)
+        
+        if self.state == "waiting":
+            self.game.draw_text("(Press enter to continue)", (self.game.screen.get_width() // 2, 200), color, center=True)
+        else:
+            if self.succeeded:
+                self.game.draw_text("and they succeeded!", (self.game.screen.get_width() // 2, 200), color, center=True)
+            else:
+                self.game.draw_text("but they failed!", (self.game.screen.get_width() // 2, 200), color, center=True)
+            self.game.draw_text("(Press enter to continue)", (self.game.screen.get_width() // 2, 250), color, center=True)
+
+
 
 # class OpinionDisplay(Menu):
 #     def draw(self):
@@ -510,6 +564,7 @@ class Game:
             "quest_menu": QuestMenu(self),
             "character_display": CharacterDisplay(self),
             "suggestion_menu": SuggestionMenu(self),
+            "suggestion_results": SuggestionResultsMenu(self),
             #"deployed_display": DeployedDisplay(self),
             #"opinion_display": OpinionDisplay(self)
         }
