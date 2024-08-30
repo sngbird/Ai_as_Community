@@ -27,7 +27,7 @@ class QuestMenu(Menu):
         if self.add_character_selector:
             if keys[pygame.K_RETURN]:
                 self.game.selected_character = self.game.quest_keeper.available_members[self.char_index]
-                self.add_result = self.game.quest_keeper.add_members(self.game.available_quests[0], self.game.selected_character)
+                self.add_result = self.game.quest_keeper.add_members(self.game.quest_keeper.possible_quests[0], self.game.selected_character)
                 if self.add_result != "None":
                     self.draw_results = True
                     
@@ -201,7 +201,7 @@ class QuestMenu(Menu):
                 scaled_image = pygame.transform.scale(portrait_image, (scaled_width, scaled_height))
                 
                 # Calculate the position and blit the scaled image to the screen
-                x_position = body_rect_x + 24 + idx * 150 
+                x_position = body_rect_x + 16 + idx * 150 
                 self.game.screen.blit(scaled_image, (x_position, member_height))
                 
                 # Draw the member's name
