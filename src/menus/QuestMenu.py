@@ -201,7 +201,7 @@ class QuestMenu(Menu):
                 scaled_image = pygame.transform.scale(portrait_image, (scaled_width, scaled_height))
                 
                 # Calculate the position and blit the scaled image to the screen
-                x_position = self.game.screen.get_width() // 14 + idx * 150 - 20
+                x_position = body_rect_x + 24 + idx * 150 
                 self.game.screen.blit(scaled_image, (x_position, member_height))
                 
                 # Draw the member's name

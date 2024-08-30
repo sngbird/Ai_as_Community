@@ -160,6 +160,9 @@ class QuestManager:
 
     def advance_time(self):
         score = self.run_quest(self.deployed_quests[0])
+        #Free The characters Up
+        for char in self.deployed_quests[0].current_members:
+            self.move_character_to_available(char)
         self.deployed_quests.remove(self.deployed_quests[0])
         self.add_quests_weekly()
         return score
@@ -239,7 +242,7 @@ class Quest:
                 # SCK
                 elif requirement['type'] == "SCK":
                     if any(knowledge == requirement['value'] and opinion == requirement['opinion']
-                        for knowledge, opinion in social_engine.get_sck_opinions(party_member).items()):
+                        for knowledge, opinion in social_engine.get_sck_opinions(party_member)):
                         requirements_unfulfilled.remove(requirement)
                         break
         print(len(requirements_unfulfilled))
@@ -262,7 +265,7 @@ class Quest:
                 # SCK
                 elif risk['type'] == "SCK":
                     if any(knowledge == risk['value'] and opinion == risk['opinion']
-                        for knowledge, opinion in social_engine.get_sck_opinions(party_member).items()):
+                        for knowledge, opinion in social_engine.get_sck_opinions(party_member)):
                         total_risks += 1
                         continue
         return total_risks
