@@ -12,7 +12,7 @@ class SuggestionMenu(Menu):
         self.menuDepth = 0 # 0=choosing charA, 1=choosing charB, 2=choosing suggestions
         self.charAIndex = 0 # suggestion performer index
         self.charBIndex = 0 # suggestion target index
-        self.suggListLen = 5 # dedicated variable, as the full len func would take >50% of my screen width
+        self.suggListLen = 5 # dedicated variable, as the full len func takes up >50% of my screen width
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
@@ -72,6 +72,11 @@ class SuggestionMenu(Menu):
                     self.game.state_queue.put(self.game.state)
                     self.game.menus["suggestion_results"].reset(suggestions.suggestionStorage[self.game.characters[self.charAIndex]][self.game.characters[self.charBIndex]][self.game.menu_index], self.charAIndex, self.charBIndex)
                     self.game.menus["suggestion_results"].performSuggestion()
+                    self.menuDepth = 0
+                    self.charAIndex = 0
+                    self.charBIndex = 0
+                    self.game.menu_index = 0
+
             elif keys[pygame.K_UP]:
                 self.game.menu_index = (self.game.menu_index - 1) % (self.suggListLen + 1)
                 #self.charBIndex = self.game.menu_index
