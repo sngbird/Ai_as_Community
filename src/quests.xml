@@ -1,9 +1,9 @@
 <Quests>
-    <!-- <Quest name="Artifact Retrieval" description="Retrieve the artifact of a local god from some ruins and deliver it to the local temple.">
+    <Quest name="Artifact Retrieval" description="Retrieve the artifact of a local god from some ruins and deliver it to the local temple.">
         <Requirements>
-            <Requirement type="Class" value="Monk" quantity="1"/>
-            <Requirement type="Class" value="Paladin" quantity="1"/>
-            <Requirement type="Trait" value="Religious" quantity="1"/>
+            <Requirement type="Class" value="Knight" quantity="1"/>
+            <Requirement type="Class" value="Healer" quantity="1"/>
+            <Requirement type="Trait" value="religious" quantity="1"/>
         </Requirements>
         <Risks>
             <Risk type="SCK" value="Demon Lord" opinion="Like" quantity="1"/>
@@ -13,32 +13,113 @@
             <Maximum quantity="8"/>
         </PartyNumbers>
     </Quest>
+
     <Quest name="Diplomatic Rendezvous" description="We need to mend relationships with our neighboring town by sending an envoy.">
         <Requirements>
-            <Requirement type="Class" value="Rogue" quantity="1"/>
-            <Requirement type="Trait" value="Charming" quantity="1"/>
-            <Requirement type="Trait" value="Loyal" quantity="1"/>
+            <Requirement type="Class" value="Mage" quantity="1"/>
+            <Requirement type="Trait" value="charming" quantity="1"/>
+            <Requirement type="Trait" value="loyal" quantity="1"/>
         </Requirements>
         <Risks>
             <Risk type="Class" value="Barbarian" quantity="1"/>
-            <Risk type="Trait" value="Aggressive" quantity="1"/>
+            <Risk type="Trait" value="aggressive" quantity="1"/>
         </Risks>
         <PartyNumbers>
             <Minimum quantity="4"/>
             <Maximum quantity="6"/>
         </PartyNumbers>
-    </Quest> -->
+    </Quest>
+
     <Quest name="Message Delivery" description="One of the town's nobles wants us to deliver a letter to his mother in another city.">
         <Requirements>
-            <Requirement type="Class" value="Ranger" alt_value="Rogue" quantity="1"/>
+            <Requirement type="Class" value="Knight" alt_value="Rogue" quantity="1"/>
+            <Requirement type="Trait" value="overprotective" quantity="1"/>
         </Requirements>
         <Risks>
-            <Risk type="Trait" value="Clumsy" quantity="1"/>
-            <Risk type="Trait" value="Alcoholic" quantity="1"/>
+            <Risk type="Trait" value="clumsy" quantity="1"/>
+            <Risk type="Trait" value="alcoholic" quantity="1"/>
         </Risks>
         <PartyNumbers>
             <Minimum quantity="1"/>
             <Maximum quantity="3"/>
+        </PartyNumbers>
+    </Quest>
+
+    <Quest name="Spell Translation" description="We retrieved some valuable spells from a wizard and need someone knowledgable in magic to translate them.">
+        <Requirements>
+            <Requirement type="Class" value="Mage" quantity="1"/>
+            <Requirement type="Trait" value="cunning" alt_value="oddball" quantity="1"/>
+        </Requirements>
+        <Risks>
+            <Risk type="Class" value="Barbarian" quantity="1"/>
+            <Risk type="Trait" value="oblivious" quantity="1"/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity="1"/>
+            <Maximum quantity="3"/>
+        </PartyNumbers>
+    </Quest>
+    
+    <Quest name="Mead Tasting" description="The local tavern has requested a few volunteers to try out their new mead recipe! Probably someone who knows what they're talking about?">
+        <Requirements>
+            <Requirement type="Trait" value="alcoholic" quantity="1"/>
+            <Requirement type="Class" value="Barbarian" quantity="1"/>
+            <Requirement type="SCK" value="Booze" opinion="Like" quantity="2"/>
+        </Requirements>
+        <Risks>
+            <Risk type="Trait" value="aggressive" quantity="1"/>
+            <Risk type="Trait" value="religious" quantity="1"/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity="2"/>
+            <Maximum quantity="5"/>
+        </PartyNumbers>
+    </Quest>
+
+    <Quest name="Hunting Ritual" description="We should appease the local nature spirits by performing the annual hunt on a sacred deer species.">
+        <Requirements>
+            <Requirement type="Class" value="Knight" alt_value="Barbarian" quantity="1"/>
+            <Requirement type="SCK" value="Clown Flowers" opinion="Like" quantity="1"/>
+        </Requirements>
+        <Risks>
+            <Risk type="Trait" value="aggressive" quantity="1"/>
+            <Risk type="Trait" value="religious" quantity="1"/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity="3"/>
+            <Maximum quantity="6"/>
+        </PartyNumbers>
+    </Quest>
+
+    <Quest name="Robin Hood" description="Some of the richer people in the town are trying to lower the wages of our poorer citizens. The Guild has been asked to take them down a peg.">
+        <Requirements>
+            <Requirement type="Class" value="Rogue" quantity="1"/>
+            <Requirement type="Trait" value="cunning" quantity="1"/>
+            <Requirement type="Trait" value="secretive" quantity="1"/>
+        </Requirements>
+        <Risks>
+            <Risk type="Trait" value="religious" quantity="1"/>
+            <Risk type="Trait" value="loyal" quantity="1"/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity="2"/>
+            <Maximum quantity="4"/>
+        </PartyNumbers>
+    </Quest>
+
+    <Quest name="Public Speaking" description="The Guild's reputation is a little low... We need to hire a few speakers to hold a rally in the town square.">
+        <Requirements>
+            <Requirement type="Trait" value="overly confident" quantity="1"/>
+            <Requirement type="Trait" value="charming" quantity="2"/>
+            <Requirement type="SCK" value="Steve Guy (the town guy)" opinion="Like" quantity="1"/>
+        </Requirements>
+        <Risks>
+            <Risk type="Trait" value="oddball" quantity="1"/>
+            <Risk type="Trait" value="secretive" quantity="1"/>
+        </Risks>
+        <PartyNumbers>
+            <Minimum quantity="3"/>
+            <Maximum quantity="8"/>
         </PartyNumbers>
     </Quest>
 </Quests>
