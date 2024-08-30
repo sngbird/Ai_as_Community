@@ -292,7 +292,7 @@ class Social:
 
         return differences
 
-    def is_injured(self, character_name):
+    def get_injury(self, character_name):
         """
         Returns whether the character is injured or not. 
 
@@ -354,7 +354,7 @@ class Social:
         # Get SCK opinions
         sck_opinions = self.get_sck_opinions(character_name)
         # Get injury status
-        injured_status = self.is_injured(character_name)
+        injured_status = self.get_injury(character_name)
         # Get character description and Quote
         char_description = target_char['description']
         char_quote = target_char['quote']

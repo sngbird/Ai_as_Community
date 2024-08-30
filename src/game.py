@@ -1,9 +1,13 @@
+import sys
 from social import Social
 from quest import QuestManager
 import pygame
-import sys
 import queue
 import suggestions
+from menus.Menu import Menu
+from menus.QuestMenu import QuestMenu
+from menus.MainMenu import MainMenu, MainGameMenu
+from menus.CharacterMenu import CharacterMenu, CharacterDisplay
 
 # Define Colors
 TEXT = (255, 255, 255)
@@ -485,16 +489,18 @@ class Game:
         self.screen = screen
         self.font = pygame.font.Font(None, 24)
         self.menu_index = 0
-
+        self.social_engine = Social()
+        self.quest_keeper = QuestManager(self.social_engine)
         self.state_queue = queue.LifoQueue()  # Stack-based queue to hold game states
         self.state = "main_menu"  # Initial state is the main menu
         self.state_queue.put(self.state)  # Push initial state onto the stack
         self.week_number = 0
         self.selected_character = None  # To hold the selected character name
-        self.characters = social_engine.character_names
-        quest_keeper.add_quests_weekly()
-        self.available_quests = quest_keeper.possible_quests
-        self.active_quests = quest_keeper.deployed_quests
+        self.characters = self.social_engine.character_names
+        self.quest_keeper.add_quests_weekly()
+        self.available_quests = self.quest_keeper.possible_quests
+        self.active_quests = self.quest_keeper.deployed_quests
+        
 
         # Initialize menu instances
         self.menus = {
@@ -521,6 +527,16 @@ class Game:
     def update(self):
         # Update game state
         pass
+    
+    def wait_for_keypress(self):
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.KEYDOWN:
+                    waiting = False  # Exit the loop when any key is pressed
 
     def draw(self):
         self.screen.fill((0, 18, 90))  # Clear the screen
@@ -591,14 +607,39 @@ class Game:
             if current_line:
                 lines.append(current_line)
         return lines
+    
+    def draw_rounded_rect_with_shadow(self,screen, rect, color, border_radius, shadow_offset):
+        x, y, width, height = rect
 
-def draw_rounded_rect_with_shadow(screen, rect, color, border_radius, shadow_offset):
-    x, y, width, height = rect
+        # Draw shadow
+        shadow_rect = (x-2, y-2,  width+4, height+4)
+        pygame.draw.rect(screen, GRAY, shadow_rect,8, border_radius=border_radius+2)
 
-    # Draw shadow
-    shadow_rect = (x-2, y-2,  width+4, height+4)
-    pygame.draw.rect(screen, GRAY, shadow_rect,8, border_radius=border_radius+2)
+        # Draw border rectangle
+        pygame.draw.rect(screen, color, rect,4, border_radius=border_radius)
 
-    # Draw border rectangle
-    pygame.draw.rect(screen, color, rect,4, border_radius=border_radius)
+    def draw_results_window(self, screen, lines):
+        screen_width, screen_height = screen.get_size()
+        width = 800
+        height = 200
+        color = BORDER
+        # Center the rect on the screen
+        rect_x = (screen_width - width) // 2
+        rect_y = (screen_height - height) // 2
+        rect = (rect_x, rect_y, width, height)
+        border_radius = 20
+        text_color = TEXT
+        # Draw shadow
+        shadow_rect = (rect_x - 2, rect_y - 2, width + 4, height + 4)
+        rect = (rect_x, rect_y, width, height)
+        pygame.draw.rect(screen, GRAY, shadow_rect, 8, border_radius=border_radius + 2)
 
+        # Draw border rectangle
+        pygame.draw.rect(screen, color, rect, 0, border_radius=border_radius)
+
+        # Center and draw each line of text
+        font = pygame.font.Font(None, 24)  # Adjust font size as needed
+
+        self.draw_text(str(lines), (rect_x+50,rect_y+76), TEXT)
+        pygame.display.flip()
+        self.wait_for_keypress()
