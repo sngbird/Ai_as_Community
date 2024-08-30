@@ -149,9 +149,11 @@ class SuggestionResultsMenu(Menu):
             if self.state == "waiting":
                 self.state = "show result"
             elif self.state == "show result":
-                self.game.state = "main_game_menu"
-                self.game.state_queue.put(self.game.state)
                 self.reset()
+                #Do 2 pops in order to remove the sugg pages, and to return to main menu
+                self.game.state_queue.get()
+                self.game.state_queue.get()
+                self.game.state = "main_game_menu"
 
     def draw(self):
         color = TEXT
