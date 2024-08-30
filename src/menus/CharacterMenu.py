@@ -38,9 +38,16 @@ class CharacterDisplay(Menu):
         #         self.game.state_queue.put(self.game.state)
 
     def draw(self):
+        rect_width = 250
+        rect_height = 350
+        rect_x = (self.game.screen.get_width() - 300)
+        rect_y = 50
+        self.game.draw_rounded_rect_with_shadow(self.game.screen,(rect_x,rect_y, rect_width, rect_height), BORDER, 20, 0)
 
         character_info = self.game.social_engine.display_character_information(self.game.selected_character)
-
+        if self.game.selected_character in self.game.image_cache:
+            portrait_image = self.game.image_cache[self.game.selected_character]
+            self.game.screen.blit(portrait_image, (rect_x-20, rect_y+20))
         # Split the text into lines based on \n
         lines = character_info
         wrapped_lines = self.game.wrap_text(lines,self.game.screen.get_width() // 1.5)

@@ -9,6 +9,7 @@ from menus.CharacterMenu import CharacterMenu, CharacterDisplay
 from menus.SuggestionMenu import SuggestionMenu, SuggestionResultsMenu
 import suggestions
 import re
+import os
 
 # Define Colors
 TEXT = (255, 255, 255)
@@ -38,7 +39,8 @@ class Game:
         self.suggestions = suggestions.suggestionSetup() #Sets up the first group of suggestions from the starting social state
         self.score = 0
         self.suggestions_remaining = 5
-        
+        self.image_cache = {}
+        self.load_portraits()
 
         # Initialize menu instances
         self.menus = {
@@ -194,4 +196,20 @@ class Game:
         self.score += quest_score
         self.suggestions_remaining = 5
     
-    def load_images(character_name)
+    def load_n_cache_images(self,character_name, image_path):
+        image = pygame.image.load(image_path)
+        self.image_cache[character_name] = image
+    
+    def load_portraits(self):
+        base_path = os.path.join(os.path.dirname(__file__), 'portraits')
+        
+        self.load_n_cache_images("BucketKnight", os.path.join(base_path, 'bucketknight.png'))
+        self.load_n_cache_images("SheepGirl", os.path.join(base_path, 'sheep_girl.png'))
+        self.load_n_cache_images("StarboFantastica", os.path.join(base_path, 'Starbo.png'))
+        self.load_n_cache_images("VanessaConfessa", os.path.join(base_path, 'Vanessa.png'))
+        self.load_n_cache_images("GrumblarTheDestructor", os.path.join(base_path, 'Grumblar.png'))
+        self.load_n_cache_images("BarklerTrobbofield", os.path.join(base_path, 'Barkler.png'))
+        self.load_n_cache_images("WillabeeFreaky", os.path.join(base_path, 'Willabee.png'))
+        self.load_n_cache_images("DJWizard", os.path.join(base_path, 'dj_wizard.png'))
+        self.load_n_cache_images("TamberGauzeman", os.path.join(base_path, 'Tamber.png'))
+        self.load_n_cache_images("MossaWillows", os.path.join(base_path, 'Mossa.png'))
