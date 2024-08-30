@@ -193,3 +193,5 @@ class Game:
 
         self.score += quest_score
         self.suggestions_remaining = 5
+    
+    def load_images(character_name)
