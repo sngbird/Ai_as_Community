@@ -142,6 +142,9 @@ class SuggestionResultsMenu(Menu):
     def performSuggestion(self):
         if self.suggestion != None:
             self.succeeded = suggestions.GetSuggestionResult(self.suggestion, self.charA, self.charB)
+            self.game.social_engine.apply_rules()
+            suggestions.suggestionSetup()
+
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
@@ -176,3 +179,11 @@ class SuggestionResultsMenu(Menu):
             else:
                 self.game.draw_text("but they failed!", (self.game.screen.get_width() // 2, 200), color, center=True)
             self.game.draw_text("(Press enter to continue)", (self.game.screen.get_width() // 2, 250), color, center=True)
+        
+        #Images
+        if self.charA != None:
+            portrait_image = self.game.image_cache[self.charA]
+            self.game.screen.blit(portrait_image, (0, self.game.screen.get_height() * 2 // 3))
+        if self.charB != None:
+            portrait_image = self.game.image_cache[self.charB]
+            self.game.screen.blit(portrait_image, (self.game.screen.get_width() * 3 // 4, self.game.screen.get_height() * 2 // 3))
